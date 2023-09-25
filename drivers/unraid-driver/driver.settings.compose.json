@@ -1,0 +1,68 @@
+[
+    {
+        "id": "host",
+        "type": "text",
+        "label": { 
+          "en": "Host"
+        },
+        "value": "",
+        "hint": {
+          "en": "The hostname/ip addess of Unraid Server"
+        }
+    },
+    {
+        "id": "username",
+        "type": "text",
+        "label": { 
+          "en": "Username"
+        },
+        "value": "",
+        "hint": {
+          "en": "The username to login to Unraid Server"
+        }
+    },
+    {
+        "id": "password",
+        "type": "password",
+        "label": { 
+          "en": "Password"
+        },
+        "value": "",
+        "hint": {
+          "en": "The password to login to Unraid Server"
+        }
+    },
+    {
+        "id": "port",
+        "type": "number",
+        "label": { 
+          "en": "Port"
+        },
+        "value": 22,
+        "hint": {
+          "en": "The ssh port of Unraid Server. Default: 22"
+        }
+    },
+    {
+        "id": "pingInterval",
+        "type": "number",
+        "label": { 
+          "en": "Ping Interval"
+        },
+        "value": 30,
+        "hint": {
+          "en": "The ping interval in seconds to check online status. Default: 30"
+        }
+    },
+    {
+        "id": "macaddress",
+        "type": "text",
+        "label": { 
+          "en": "MAC Address"
+        },
+        "value": "",
+        "hint": {
+          "en": "If set and both Homey and Unraid Server are in the same LAN, you'll be able to send a magic packet to wake up the Unraid."
+        }
+    }
+]

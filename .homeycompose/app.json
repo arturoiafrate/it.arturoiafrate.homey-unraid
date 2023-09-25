@@ -1,0 +1,29 @@
+{
+  "id": "it.arturoiafrate.homey-unraid",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "name": {
+    "en": "Unraid"
+  },
+  "description": {
+    "en": "Adds support for Unraid Servers."
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Arturo Iafrate",
+    "email": "arturo.iafrate@gmail.com"
+  }
+}
