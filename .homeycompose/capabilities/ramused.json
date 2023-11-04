@@ -1,0 +1,11 @@
+{
+    "type": "number",
+    "title": { "en": "RAM Used" },
+    "uiComponent": "sensor",
+    "getable": true,
+    "setable": false,
+    "insights": true,
+    "units": { "en": "%" },
+    "decimals": 2,
+    "icon": "/assets/icon.svg"
+}

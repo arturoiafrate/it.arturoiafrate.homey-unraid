@@ -1,0 +1,10 @@
+{
+    "type": "number",
+    "title": { "en": "Array Used" },
+    "uiComponent": "sensor",
+    "getable": true,
+    "setable": false,
+    "insights": true,
+    "units": { "en": "%" },
+    "icon": "/assets/icon.svg"
+}

@@ -4,7 +4,14 @@
   },
   "class": "remote",
   "capabilities": [
-    "onoff"
+    "onoff",
+    "cpuused",
+    "raminfo",
+    "ramused",
+    "uptime",
+    "arrayinfo",
+    "arrayused",
+    "cacheused"
   ],
   "platforms": [
     "local",

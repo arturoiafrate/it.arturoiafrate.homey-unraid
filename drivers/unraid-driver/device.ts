@@ -4,8 +4,9 @@ import { UnraidRemote } from './unraid-remote/UnraidRemote';
 class UnraidRemoteDevice extends Homey.Device {
 
   _unraidRemote?: UnraidRemote;
-
   _pingPoller?: NodeJS.Timeout;
+  _checkPoller?: NodeJS.Timeout;
+  _systemInfo?: any;
 
 
   async onInit() {
@@ -16,8 +17,29 @@ class UnraidRemoteDevice extends Homey.Device {
         await this.#turnOff();
       }
     });
+    if (this.hasCapability('raminfo') === false) {
+      await this.addCapability('raminfo');
+    }
+    if (this.hasCapability('ramused') === false) {
+      await this.addCapability('ramused');
+    }
+    if (this.hasCapability('arrayinfo') === false) {
+      await this.addCapability('arrayinfo');
+    }
+    if (this.hasCapability('arrayused') === false) {
+      await this.addCapability('arrayused');
+    }
+    if (this.hasCapability('cacheused') === false) {
+      await this.addCapability('cacheused');
+    }
+    if (this.hasCapability('uptime') === false) {
+      await this.addCapability('uptime');
+    }
+    if (this.hasCapability('cpuused') === false) {
+      await this.addCapability('cpuused');
+    }
     const settings = await this.getSettings();
-    this.#initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval);
+    this.#initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
   }
 
   async onAdded() {}
@@ -35,7 +57,7 @@ class UnraidRemoteDevice extends Homey.Device {
     newSettings: { [key: string]: boolean | string | number | undefined | null };
     changedKeys: string[];
   }): Promise<string | void> {
-    const settings = await this.getSettings();
+    let settings = await this.getSettings();
     changedKeys.forEach((settingKey) => {//Reading new settings
       if(settingKey === 'host') {
         settings.host = newSettings[settingKey];
@@ -55,13 +77,17 @@ class UnraidRemoteDevice extends Homey.Device {
       if(settingKey === 'macaddress'){
         settings.macaddress = newSettings[settingKey];
       }
+      if(settingKey === 'checkInterval'){
+        settings.checkInterval = newSettings[settingKey];
+      }
     });
-    this.#initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval);
+    this.#initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
     return this.homey.__("settings_saved_ok");
   }
 
   async onDeleted() {
     this.#pingPollerStop();
+    this.#checkPollerStop();
     if(this._unraidRemote){
       this._unraidRemote.unsubscribeAll();
       this._unraidRemote.disconnect();
@@ -69,7 +95,7 @@ class UnraidRemoteDevice extends Homey.Device {
     }
   }
 
-  async #initUnraidRemote(url: string, username: string, password: string, port: number, pingInterval: number) {
+  async #initUnraidRemote(url: string, username: string, password: string, port: number, pingInterval: number, checkInterval: number) {
     if(this._unraidRemote){
       this._unraidRemote.unsubscribeAll();
       this._unraidRemote.disconnect();
@@ -81,6 +107,19 @@ class UnraidRemoteDevice extends Homey.Device {
           this.homey.setTimeout(() => {
             this.setCapabilityValue("onoff", true); 
             this.setAvailable();
+            if(!this._systemInfo && this._unraidRemote){
+              this._unraidRemote.systemInfo().then((systemInfo) => {
+                this._systemInfo = systemInfo;
+                //this.log('systemInfo: ' + JSON.stringify(systemInfo));
+                this.setCapabilityValue("raminfo", systemInfo.ram.total).catch(this.error);
+                this.setCapabilityValue("ramused", systemInfo.ram.percentUsed).catch(this.error);
+                this.setCapabilityValue("arrayinfo", systemInfo.array.total).catch(this.error);
+                this.setCapabilityValue("arrayused", systemInfo.array.percentUsed).catch(this.error);
+                this.setCapabilityValue("cacheused", systemInfo.cache.percentUsed).catch(this.error);
+                this.setCapabilityValue("uptime", systemInfo.uptime.upSince).catch(this.error);
+                this.setCapabilityValue("cpuused", systemInfo.cpu.percentBusy).catch(this.error);
+              });
+            }
           }, 500);
         },
         isOfflineCallback: () => {
@@ -91,7 +130,8 @@ class UnraidRemoteDevice extends Homey.Device {
         }
       });
       this._unraidRemote.ping();
-      this.#pingPollerStart(pingInterval == 0 ? 30 : pingInterval);
+      this.#pingPollerStart(pingInterval == 0 ? 3 : pingInterval);
+      this.#checkPollerStart(checkInterval == 0 ? 6 : checkInterval);
     } else {
       this.homey.setTimeout(() => {
         this.setCapabilityValue("onoff", false);
@@ -112,7 +152,33 @@ class UnraidRemoteDevice extends Homey.Device {
       this.homey.clearInterval(this._pingPoller);
       this._pingPoller = undefined;
     }
-  } 
+  }
+
+  #checkPollerStart(checkInterval: number) {
+    if(this._unraidRemote){
+      this.#checkPollerStop();
+      this._checkPoller = this.homey.setInterval( () => {
+        if(this._unraidRemote && this._unraidRemote.isOnline){
+          this._unraidRemote.systemStats().then(sysStats => {
+            //TODO
+            //this.log('sysStats: ' + JSON.stringify(sysStats));
+            this.setCapabilityValue("uptime", sysStats.uptime.upSince).catch(this.error);
+            this.setCapabilityValue("cpuused", sysStats.cpuUsage.percentBusy).catch(this.error);
+            this.setCapabilityValue("arrayused", sysStats.arrayUsage.percentUsed).catch(this.error);
+            this.setCapabilityValue("cacheused", sysStats.cacheUsage.percentUsed).catch(this.error);
+            this.setCapabilityValue("ramused", sysStats.ramUsage.percentUsed).catch(this.error);
+          }).catch(this.error);
+        }
+      }, checkInterval * 1000);
+    }
+  }
+
+  #checkPollerStop(){
+    if(this._checkPoller){
+      this.homey.clearInterval(this._checkPoller);
+      this._checkPoller = undefined;
+    }
+  }
 
   #isNonEmpty(str: string): boolean {
     return typeof str === 'string' && str.length > 0;
@@ -123,7 +189,7 @@ class UnraidRemoteDevice extends Homey.Device {
     if(this.#isNonEmpty(settings.macaddress) && this._unraidRemote){
       this._unraidRemote.turnOn(settings.macaddress);
     }
-    this.#initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval);
+    this.#initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
   }
 
   async #turnOff(){

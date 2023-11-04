@@ -49,9 +49,9 @@
         "label": { 
           "en": "Ping Interval"
         },
-        "value": 30,
+        "value": 3,
         "hint": {
-          "en": "The ping interval in seconds to check online status. Default: 30"
+          "en": "The ping interval in seconds to check online status. Default: 3"
         }
     },
     {
@@ -63,6 +63,17 @@
         "value": "",
         "hint": {
           "en": "If set and both Homey and Unraid Server are in the same LAN, you'll be able to send a magic packet to wake up the Unraid."
+        }
+    },
+    {
+        "id": "checkInterval",
+        "type": "number",
+        "label": { 
+          "en": "Check Interval"
+        },
+        "value": 6,
+        "hint": {
+          "en": "The interval in seconds to check unraid server changes. Default: 6"
         }
     }
 ]

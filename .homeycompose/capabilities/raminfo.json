@@ -1,0 +1,10 @@
+{
+    "type": "number",
+    "title": { "en": "RAM Size (Total)" },
+    "uiComponent": null,
+    "getable": true,
+    "setable": false,
+    "insights": false,
+    "units": { "en": "GB" },
+    "icon": "/assets/icon.svg"
+}

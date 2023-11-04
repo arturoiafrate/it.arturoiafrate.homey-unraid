@@ -34,7 +34,14 @@
       },
       "class": "remote",
       "capabilities": [
-        "onoff"
+        "onoff",
+        "cpuused",
+        "raminfo",
+        "ramused",
+        "uptime",
+        "arrayinfo",
+        "arrayused",
+        "cacheused"
       ],
       "platforms": [
         "local",
@@ -111,9 +118,9 @@
           "label": {
             "en": "Ping Interval"
           },
-          "value": 30,
+          "value": 3,
           "hint": {
-            "en": "The ping interval in seconds to check online status. Default: 30"
+            "en": "The ping interval in seconds to check online status. Default: 3"
           }
         },
         {
@@ -126,8 +133,121 @@
           "hint": {
             "en": "If set and both Homey and Unraid Server are in the same LAN, you'll be able to send a magic packet to wake up the Unraid."
           }
+        },
+        {
+          "id": "checkInterval",
+          "type": "number",
+          "label": {
+            "en": "Check Interval"
+          },
+          "value": 6,
+          "hint": {
+            "en": "The interval in seconds to check unraid server changes. Default: 6"
+          }
         }
       ]
     }
-  ]
+  ],
+  "capabilities": {
+    "arrayinfo": {
+      "type": "number",
+      "title": {
+        "en": "Array Size (Total)"
+      },
+      "uiComponent": null,
+      "getable": true,
+      "setable": false,
+      "insights": false,
+      "units": {
+        "en": "GB"
+      },
+      "icon": "/assets/icon.svg"
+    },
+    "arrayused": {
+      "type": "number",
+      "title": {
+        "en": "Array Used"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "%"
+      },
+      "icon": "/assets/icon.svg"
+    },
+    "cacheused": {
+      "type": "number",
+      "title": {
+        "en": "Cache Used"
+      },
+      "uiComponent": null,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "%"
+      },
+      "icon": "/assets/icon.svg"
+    },
+    "cpuused": {
+      "type": "number",
+      "title": {
+        "en": "CPU used"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "%"
+      },
+      "icon": "/assets/icon.svg"
+    },
+    "raminfo": {
+      "type": "number",
+      "title": {
+        "en": "RAM Size (Total)"
+      },
+      "uiComponent": null,
+      "getable": true,
+      "setable": false,
+      "insights": false,
+      "units": {
+        "en": "GB"
+      },
+      "icon": "/assets/icon.svg"
+    },
+    "ramused": {
+      "type": "number",
+      "title": {
+        "en": "RAM Used"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "%"
+      },
+      "decimals": 2,
+      "icon": "/assets/icon.svg"
+    },
+    "uptime": {
+      "type": "number",
+      "title": {
+        "en": "Uptime"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Hours"
+      },
+      "decimals": 2,
+      "icon": "/assets/icon.svg"
+    }
+  }
 }
