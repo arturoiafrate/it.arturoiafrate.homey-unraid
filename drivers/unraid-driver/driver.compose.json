@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Unraid Driver"
+    "en": "Unraid NAS Server"
   },
   "class": "remote",
   "capabilities": [

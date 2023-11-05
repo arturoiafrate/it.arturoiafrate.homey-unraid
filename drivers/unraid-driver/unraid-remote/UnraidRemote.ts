@@ -2,6 +2,8 @@ import { Unraid } from '@ridenui/unraid';
 import { SSHExecutor } from '@ridenui/unraid/dist/executors/SSH';
 import ping from 'ping';
 import { IPingEventSubscriber } from './utils/IPingEventSubscriber';
+import { ICPUUsage, IMemoryUsage, ISystemStats, IUptimeExt } from './utils/ISystemStats';
+import { CPUUsage } from '@ridenui/unraid/dist/modules/system/extensions/cpu';
 
 class UnraidRemote {
     _url: string;
@@ -73,42 +75,22 @@ class UnraidRemote {
         });
     }
 
-    async systemInfo(){
-        const hostname = await this._unraid.system.getHostname();
-        const info = await this._unraid.system.info();
-        const ram = await this._getRamInfo();
-        const cpu = await this._getCpuUsage();
-        const array = await this._getArrayInfo();
-        const cache = await this._getCacheInfo();
-        const uptime = await this._getUptime();
-        return {
-            hostname: hostname,
-            systemInfo: info,
-            cpu: cpu,
-            ram: ram,
-            array: array,
-            cache: cache,
-            uptime: uptime
+    async systemInfo() : Promise<ISystemStats>{
+        const systemInfo : ISystemStats = {
+            cpuUsage: await this._getCpuUsage(),
+            uptime: await this._getUptime(),
+            arrayUsage: await this._getArrayInfo(),
+            cacheUsage: await this._getCacheInfo(),
+            ramUsage: await this._getRamInfo()
         };
+        return systemInfo;
     }
 
-    async systemStats(){
-        const uptime = await this._getUptime();
-        const cpuUsage = await this._getCpuUsage();
-        const memoryUsage = await this._unraid.system.loadAverage();
-        const ramUsage = await this._getRamInfo();
-        const arrayUsage = await this._getArrayInfo();
-        const cacheUsage = await this._getCacheInfo();
-        const diskUsage = await this._unraid.system.diskfree();
-        return {
-            uptime: uptime,
-            cpuUsage: cpuUsage,
-            memoryUsage: memoryUsage,
-            arrayUsage: arrayUsage,
-            diskUsage: diskUsage,
-            cacheUsage: cacheUsage,
-            ramUsage: ramUsage
-        };
+    async systemStats() : Promise<ISystemStats>{
+        let sysStats: ISystemStats = await this.systemInfo();
+        sysStats.memoryUsage = await this._unraid.system.loadAverage();
+        sysStats.diskUsage = await this._unraid.system.diskfree();  
+        return sysStats;
     }
 
     disconnect() {
@@ -127,8 +109,8 @@ class UnraidRemote {
        return ((value == null) || (value == undefined) || (value === ''));
     }
 
-    async _getRamInfo(){
-        let ramInfo = {
+    async _getRamInfo() : Promise<IMemoryUsage>{
+        let ramInfo : IMemoryUsage = {
             total: 0,
             used: 0,
             free: 0,
@@ -151,8 +133,8 @@ class UnraidRemote {
         return ramInfo;
     }
 
-    async _getArrayInfo(){
-        let arrayInfo = {
+    async _getArrayInfo() : Promise<IMemoryUsage>{
+        let arrayInfo : IMemoryUsage = {
             total: 0,
             used: 0,
             free: 0,
@@ -173,14 +155,14 @@ class UnraidRemote {
         return arrayInfo;
     }
 
-    async _getCacheInfo(){
-        let cacheInfo = {
+    async _getCacheInfo() : Promise<IMemoryUsage>{
+        let cacheInfo : IMemoryUsage = {
+            raw: '',
             total: 0,
             used: 0,
             free: 0,
-            percentUsed: 0,
-            raw: ''
-        }
+            percentUsed: 0
+        };
         const { code, stdout } = await this._executor.executeSSH({
             command: 'df /mnt/cache | grep cache'
         });
@@ -195,25 +177,25 @@ class UnraidRemote {
         return cacheInfo;
     }
 
-    async _getUptime(){
+    async _getUptime() : Promise<IUptimeExt>{
         const { code, stdout } = await this._executor.executeSSH({
-            command: `uptime | awk -F ',' ' {print $1} ' | awk ' {print $3} ' | awk -F ':' ' {hrs=$1; min=$2; print hrs"."min} '`
+            command: `awk '{print int($1/3600)"."int(($1%3600)/60)}' /proc/uptime`
         });
-
-        const uptime = {
-            upSince:  (code === 0) && this._isNumber(stdout[0].trim()) ? Number(stdout[0].trim()) : null,
+        const uptime : IUptimeExt = {
+            upSince:  (code === 0) && this._isNumber(stdout[0].trim()) ? Number(stdout[0].trim()) : undefined,
             uptime: await this._unraid.system.uptime()
-        };
+        }
         return uptime;
     }
 
-    async _getCpuUsage(){
-        const usage = await this._unraid.system.usage();
-        return {
+    async _getCpuUsage() : Promise<ICPUUsage>{
+        const usage : CPUUsage = await this._unraid.system.usage();
+        const cpuUsage : ICPUUsage = {
             percentIdle: usage.all.idle,
             percentBusy: (100-usage.all.idle),
             usage: usage
         };
+        return cpuUsage;
     }
 }
 

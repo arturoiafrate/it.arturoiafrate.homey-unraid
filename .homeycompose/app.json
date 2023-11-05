@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
+  "brandColor": "#f05727",
+  "homepage": "https://github.com/arturoiafrate",
   "platforms": [
     "local",
     "cloud"
@@ -11,10 +13,12 @@
     "en": "Unraid"
   },
   "description": {
-    "en": "Adds support for Unraid Servers."
+    "en": "Unleash Your Hardware",
+    "it": "Scatena il tuo hardware"
   },
   "category": [
-    "tools"
+    "tools",
+    "internet"
   ],
   "permissions": [],
   "images": {
@@ -25,5 +29,29 @@
   "author": {
     "name": "Arturo Iafrate",
     "email": "arturo.iafrate@gmail.com"
-  }
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Arturo Iafrate",
+        "email": "arturo.iafrate@gmail.com"
+      }
+    ]
+  },
+  "tags": {
+    "en": [
+      "Internet",
+      "Tools",
+      "Monitoring",
+      "NAS"
+    ],
+    "it": [
+      "Internet",
+      "Tools",
+      "Monitoraggio",
+      "NAS"
+    ]
+  },
+  "source": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid",
+  "support": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues"
 }
