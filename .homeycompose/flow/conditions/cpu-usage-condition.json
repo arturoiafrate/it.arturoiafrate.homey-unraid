@@ -1,0 +1,20 @@
+{
+  "title": {
+    "en": "The cpu usage is !{{over|under}} "
+  },
+  "hint": {
+    "en": "The cpu usage of unraid server is over a threshold"
+  },
+  "args": [
+    {
+      "type": "number",
+      "name": "threshold",
+      "placeholder": {
+        "en": "50.00"
+      },
+      "min": 0.01,
+      "max": 100,
+      "step": 0.01
+    }
+  ]
+}

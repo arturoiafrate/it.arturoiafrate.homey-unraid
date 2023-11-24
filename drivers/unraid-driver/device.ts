@@ -11,6 +11,7 @@ class UnraidRemoteDevice extends Homey.Device {
   _cpuUsageIsChangedTriggerCard? : FlowCardTriggerDevice;
 
 
+
   async onInit() {
     this._addCapabilities();
     this._addFlowTriggerControllers();
@@ -85,7 +86,6 @@ class UnraidRemoteDevice extends Homey.Device {
             this.setAvailable();
             if(!this._isInit && this._unraidRemote){
               this._unraidRemote.systemInfo().then((systemInfo) => {
-                //this.log('systemInfo: ' + JSON.stringify(systemInfo));
                 this._updateDeviceCapabilities(systemInfo, true);
                 this._isInit = true;
               });
@@ -130,7 +130,6 @@ class UnraidRemoteDevice extends Homey.Device {
       this._checkPoller = this.homey.setInterval( () => {
         if(this._unraidRemote && this._unraidRemote.isOnline){
           this._unraidRemote.systemStats().then(sysStats => {
-            //this.log('sysStats: ' + JSON.stringify(sysStats));
             this._updateDeviceCapabilities(sysStats, false);
           }).catch(this.error);
         }
@@ -158,27 +157,6 @@ class UnraidRemoteDevice extends Homey.Device {
     //CPU Used
     this.setCapabilityValue("cpuused", systemStats.cpuUsage.percentBusy).catch(this.error);
     this._cpuUsageIsChangedTriggerCard?.trigger(this, { 'usage-percent': systemStats.cpuUsage.percentBusy }, undefined);
-    /*const cpuUsageOverThresholdTriggerCard = this.homey.flow.getDeviceTriggerCard('cpu-usage-is-over-threshold');
-    cpuUsageOverThresholdTriggerCard.getArgumentValues(this).then((argValues) => {
-      argValues.forEach((argValue: any) => {
-        this.log('current threshold: ' + JSON.stringify(argValue));
-        cpuUsageOverThresholdTriggerCard.trigger(this, { 'usage-percent': systemStats.cpuUsage.percentBusy }, argValue)
-          .then(() => {this.log('triggered');})
-          .catch(this.error);
-      });
-    });*/
-    
-    /*const cpuUsages = this.getStoreValue('cpu-usage');
-    if(cpuUsages && cpuUsages.length > 0){
-      cpuUsages.forEach((cpuUsage: any) => {
-        const threshold : number = cpuUsage.threshold;
-        this.log('current threshold: ' + threshold+', current value: '+systemStats.cpuUsage.percentBusy);
-        if(systemStats.cpuUsage.percentBusy >= threshold){
-          this.log('triggering...');
-          
-        }
-      });
-    }*/
     this.setCapabilityValue("arrayused", systemStats.arrayUsage.percentUsed).catch(this.error);
     this.setCapabilityValue("cacheused", systemStats.cacheUsage.percentUsed).catch(this.error);
     this.setCapabilityValue("ramused", systemStats.ramUsage.percentUsed).catch(this.error);
@@ -230,21 +208,8 @@ class UnraidRemoteDevice extends Homey.Device {
   }
 
   async _addFlowTriggerControllers(): Promise<void> {
-    this._cpuUsageIsChangedTriggerCard = this.homey.flow.getDeviceTriggerCard('cpu-usage-is-over-threshold');
-    this._cpuUsageIsChangedTriggerCard.registerRunListener(async (args, state) => {
-      this.log('args: ' + JSON.stringify(args));
-      this.log('state: ' + JSON.stringify(state));
-      return Promise.resolve(true);
-      //{ 'usage-percent': systemStats.cpuUsage.percentBusy }
-    });
-    /*cpuUsageOverThresholdTriggerCard.on('update', () => {
-      cpuUsageOverThresholdTriggerCard.getArgumentValues(this).then((argValues) => {
-        this.setStoreValue('cpu-usage', argValues);
-      });
-    });
-    cpuUsageOverThresholdTriggerCard.on('remove', () => {
-      this.setStoreValue('cpu-usage', []);
-    });*/
+    //Trigger cards
+    this._cpuUsageIsChangedTriggerCard = this.homey.flow.getDeviceTriggerCard('cpu-usage-is-changed');
   }
 }
 

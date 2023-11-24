@@ -191,8 +191,8 @@ class UnraidRemote {
     async _getCpuUsage() : Promise<ICPUUsage>{
         const usage : CPUUsage = await this._unraid.system.usage();
         const cpuUsage : ICPUUsage = {
-            percentIdle: usage.all.idle,
-            percentBusy: (100-usage.all.idle),
+            percentIdle: Math.round(usage.all.idle * 100) / 100,
+            percentBusy: Math.round((100-usage.all.idle) * 100) / 100,
             usage: usage
         };
         return cpuUsage;

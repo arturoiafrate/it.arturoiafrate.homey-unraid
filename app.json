@@ -55,6 +55,29 @@
   "source": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid",
   "support": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues",
   "flow": {
+    "conditions": [
+      {
+        "title": {
+          "en": "The cpu usage is !{{over|under}} "
+        },
+        "hint": {
+          "en": "The cpu usage of unraid server is over a threshold"
+        },
+        "args": [
+          {
+            "type": "number",
+            "name": "threshold",
+            "placeholder": {
+              "en": "50.00"
+            },
+            "min": 0.01,
+            "max": 100,
+            "step": 0.01
+          }
+        ],
+        "id": "cpu-usage-condition"
+      }
+    ],
     "triggers": [
       {
         "id": "cpu-usage-is-changed",
