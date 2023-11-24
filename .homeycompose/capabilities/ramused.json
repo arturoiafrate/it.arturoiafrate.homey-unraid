@@ -7,5 +7,5 @@
     "insights": true,
     "units": { "en": "%" },
     "decimals": 2,
-    "icon": "/assets/icon.svg"
+    "icon": "/assets/capabilities/ram.svg"
 }

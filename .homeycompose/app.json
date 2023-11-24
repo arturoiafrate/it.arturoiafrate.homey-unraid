@@ -6,8 +6,7 @@
   "brandColor": "#f05727",
   "homepage": "https://github.com/arturoiafrate",
   "platforms": [
-    "local",
-    "cloud"
+    "local"
   ],
   "name": {
     "en": "Unraid"

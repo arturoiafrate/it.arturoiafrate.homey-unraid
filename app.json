@@ -7,8 +7,7 @@
   "brandColor": "#f05727",
   "homepage": "https://github.com/arturoiafrate",
   "platforms": [
-    "local",
-    "cloud"
+    "local"
   ],
   "name": {
     "en": "Unraid"
@@ -55,6 +54,41 @@
   },
   "source": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid",
   "support": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues",
+  "flow": {
+    "triggers": [
+      {
+        "id": "cpu-usage-is-changed",
+        "title": {
+          "en": "CPU usage is changed"
+        },
+        "titleFormatted": {
+          "en": "CPU usage is changed"
+        },
+        "hint": {
+          "en": "This flow is triggered when the CPU usage is changed"
+        },
+        "tokens": [
+          {
+            "name": "usage-percent",
+            "type": "number",
+            "title": {
+              "en": "CPU Usage %"
+            },
+            "example": {
+              "en": "12.5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=unraid-driver"
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
       "name": {
@@ -72,8 +106,7 @@
         "cacheused"
       ],
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "connectivity": [],
       "images": {
@@ -203,7 +236,7 @@
       "units": {
         "en": "%"
       },
-      "icon": "/assets/icon.svg"
+      "icon": "/assets/capabilities/array.svg"
     },
     "cacheused": {
       "type": "number",
@@ -231,7 +264,7 @@
       "units": {
         "en": "%"
       },
-      "icon": "/assets/icon.svg"
+      "icon": "/assets/capabilities/cpu.svg"
     },
     "raminfo": {
       "type": "number",
@@ -260,7 +293,7 @@
         "en": "%"
       },
       "decimals": 2,
-      "icon": "/assets/icon.svg"
+      "icon": "/assets/capabilities/ram.svg"
     },
     "uptime": {
       "type": "number",
@@ -275,7 +308,7 @@
         "en": "Hours"
       },
       "decimals": 2,
-      "icon": "/assets/icon.svg"
+      "icon": "/assets/capabilities/uptime.svg"
     }
   }
 }

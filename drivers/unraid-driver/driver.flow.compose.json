@@ -1,0 +1,25 @@
+{
+  "triggers": [
+    {
+      "id": "cpu-usage-is-changed",
+      "title": {
+        "en": "CPU usage is changed"
+      },
+      "titleFormatted": {
+        "en": "CPU usage is changed"
+      },
+      "hint": {
+        "en": "This flow is triggered when the CPU usage is changed"
+      },
+      "tokens": [
+        {
+          "name": "usage-percent",
+          "type": "number",
+          "title": { "en": "CPU Usage %" },
+          "example": { "en": "12.5" }
+        }
+      ],
+      "args": []
+    }
+  ]
+}

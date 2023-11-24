@@ -6,5 +6,5 @@
     "setable": false,
     "insights": true,
     "units": { "en": "%" },
-    "icon": "/assets/icon.svg"
+    "icon": "/assets/capabilities/cpu.svg"
 }

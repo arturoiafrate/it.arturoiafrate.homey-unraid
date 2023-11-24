@@ -7,5 +7,5 @@
     "insights": false,
     "units": { "en": "Hours" },
     "decimals": 2,
-    "icon": "/assets/icon.svg"
+    "icon": "/assets/capabilities/uptime.svg"
 }

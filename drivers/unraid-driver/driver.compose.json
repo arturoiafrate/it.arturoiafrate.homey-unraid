@@ -14,8 +14,7 @@
     "cacheused"
   ],
   "platforms": [
-    "local",
-    "cloud"
+    "local"
   ],
   "connectivity": [],
   "images": {

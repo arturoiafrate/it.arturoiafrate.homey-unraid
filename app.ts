@@ -1,4 +1,5 @@
 import Homey from 'homey';
+//require("inspector").open(9229, "0.0.0.0", false);
 
 class MyApp extends Homey.App {
 
