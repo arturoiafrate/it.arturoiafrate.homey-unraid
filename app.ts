@@ -1,10 +1,12 @@
 import Homey from 'homey';
 import { convertToUnraidUptime, objStringify } from './utils/utilites';
+import { UnraidRemoteDevice } from './drivers/unraid-driver/device';
 
 class UnraidRemoteApp extends Homey.App {
 
   async onInit() {
     await this._initConditionCards();
+    await this._initActionCards();
   }
 
   async _initConditionCards(): Promise<void> {
@@ -62,6 +64,45 @@ class UnraidRemoteApp extends Homey.App {
         }
       }
       return Promise.resolve(false);
+    });
+  }
+
+  async _initActionCards(): Promise<void> {
+    //SSH Command (simple)
+    const sshExecutorAction = this.homey.flow.getActionCard('execute-ssh-command');
+    sshExecutorAction.registerRunListener(async (args) => {
+      if(!args.command){
+        throw new Error('Command is not set');
+      }
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      unraidDevice.executeShellCommandNoWait(args.command);
+    });
+    //SSH Command (advanced)
+    const sshAdvancedExecutorAction = this.homey.flow.getActionCard('execute-ssh-command-adv');
+    sshAdvancedExecutorAction.registerRunListener(async (args) => {
+      if(!args.command){
+        throw new Error('Command is not set');
+      }
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      try {
+        return await unraidDevice.executeShellCommand(args.command);
+      } catch (error) {
+        return {
+          code: -997,
+          stdout: '',
+          stderr: 'Unknown exception'
+        }
+      }
     });
   }
 }

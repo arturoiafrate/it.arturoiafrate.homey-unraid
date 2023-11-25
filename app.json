@@ -154,6 +154,67 @@
         "id": "uptime-condition"
       }
     ],
+    "actions": [
+      {
+        "title": {
+          "en": "Execute SSH command"
+        },
+        "hint": {
+          "en": "Execute standard SSH command without waiting for the output"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "command",
+            "placeholder": {
+              "en": "command"
+            }
+          }
+        ],
+        "id": "execute-ssh-command"
+      },
+      {
+        "title": {
+          "en": "Execute SSH Command (Advanced)"
+        },
+        "hint": {
+          "en": "Execute standard SSH command and wait for the output"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "command",
+            "placeholder": {
+              "en": "command"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "code",
+            "type": "number",
+            "title": {
+              "en": "Error code"
+            }
+          },
+          {
+            "name": "stdout",
+            "type": "string",
+            "title": {
+              "en": "Standard Output"
+            }
+          },
+          {
+            "name": "stderr",
+            "type": "string",
+            "title": {
+              "en": "Standard Error"
+            }
+          }
+        ],
+        "id": "execute-ssh-command-adv"
+      }
+    ],
     "triggers": [
       {
         "id": "cpu-usage-is-changed",

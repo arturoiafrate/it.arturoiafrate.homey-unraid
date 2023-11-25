@@ -1,6 +1,6 @@
 import Homey, { FlowCardTriggerDevice } from 'homey';
 import { UnraidRemote } from './unraid-remote/UnraidRemote';
-import { ISystemStats } from './unraid-remote/utils/ISystemStats';
+import { ISystemStats, ISSHCommandOutput } from './unraid-remote/utils/ISystemStats';
 import { isNonEmpty, objStringify } from '../../utils/utilites';
 import { UnraidRemoteFlowTrigger } from './unraid-remote/triggers/UnraidRemoteFlowTrigger';
 
@@ -78,6 +78,25 @@ class UnraidRemoteDevice extends Homey.Device {
     }
   }
 
+  executeShellCommandNoWait(command: string): void{
+    if(this._unraidRemote && command){
+      this._unraidRemote.executeShellCommand(command);
+    }
+  }
+  
+  async executeShellCommand(command: string): Promise<ISSHCommandOutput>{
+    if(this._unraidRemote && command){
+      return this._unraidRemote.executeShellCommand(command);
+    } else {
+      let out : ISSHCommandOutput = {
+        code: -998,
+        stdout: undefined,
+        stderr: 'UnraidRemote is not initialized'
+      };
+      return out;
+    }
+  }
+
   async _initUnraidRemote(url: string, username: string, password: string, port: number, pingInterval: number, checkInterval: number) {
     if(this._unraidRemote){
       this._unraidRemote.unsubscribeAll();
@@ -100,8 +119,7 @@ class UnraidRemoteDevice extends Homey.Device {
         },
         isOfflineCallback: () => {
           this.homey.setTimeout(() => {
-            this.setCapabilityValue("onoff", false);
-            this.setUnavailable();
+            this._setOffline();
           }, 500);
         }
       });
@@ -110,10 +128,16 @@ class UnraidRemoteDevice extends Homey.Device {
       this._checkPollerStart(checkInterval == 0 ? 6 : checkInterval);
     } else {
       this.homey.setTimeout(() => {
-        this.setCapabilityValue("onoff", false);
-        this.setUnavailable();
+        this._setOffline();
       }, 500);
     }
+  }
+
+  _setOffline(): void{
+    this.setCapabilityValue("onoff", false);
+    this.setUnavailable();
+    this._resetDeviceCapabilities();
+    this._isInit = false;
   }
 
   _pingPollerStart(pingInterval: number) {
@@ -150,6 +174,15 @@ class UnraidRemoteDevice extends Homey.Device {
     }
   }
 
+  _resetDeviceCapabilities() : void{
+    this.setCapabilityValue("raminfo", 0).catch(this.error);
+    this.setCapabilityValue("arrayinfo", 0).catch(this.error);
+    this._updateUptimeCapability(0);
+    this._updateCpuUsedCapability(0);
+    this._updateArrayUsedCapability(0);
+    this._updateCacheUsedCapability(0);
+    this._updateRamUsedCapability(0);
+  };
 
   _updateDeviceCapabilities(systemStats : ISystemStats, setInfo : boolean) : void{
     if(setInfo){
@@ -167,10 +200,10 @@ class UnraidRemoteDevice extends Homey.Device {
     this.setCapabilityValue("uptime", uptime).catch(this.error);
     let days = 0;
     let hours = 0;
-    let minutes = 0;
+    let minutes = '0';
     if(uptime){
       let integerPart = Math.trunc(uptime);
-      minutes = Math.trunc((Number((uptime-integerPart).toFixed(2)))*100);
+      minutes = Number((uptime-integerPart).toFixed(2)).toString().split('.')[1];
       if(integerPart > 24){
         days = Math.trunc(integerPart / 24);
         hours = Math.trunc(integerPart % 24);
@@ -259,3 +292,4 @@ class UnraidRemoteDevice extends Homey.Device {
 }
 
 module.exports = UnraidRemoteDevice;
+export { UnraidRemoteDevice };

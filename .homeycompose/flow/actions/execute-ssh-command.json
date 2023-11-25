@@ -1,0 +1,17 @@
+{
+  "title": {
+    "en": "Execute SSH command"
+  },
+  "hint": {
+    "en": "Execute standard SSH command without waiting for the output"
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "command",
+      "placeholder": {
+        "en": "command"
+      }
+    }
+  ]
+}

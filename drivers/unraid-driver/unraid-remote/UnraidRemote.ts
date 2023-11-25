@@ -2,8 +2,9 @@ import { Unraid } from '@ridenui/unraid';
 import { SSHExecutor } from '@ridenui/unraid/dist/executors/SSH';
 import ping from 'ping';
 import { IPingEventSubscriber } from './utils/IPingEventSubscriber';
-import { ICPUUsage, IMemoryUsage, ISystemStats, IUptimeExt } from './utils/ISystemStats';
+import { ICPUUsage, IMemoryUsage, ISSHCommandOutput, ISystemStats, IUptimeExt } from './utils/ISystemStats';
 import { CPUUsage } from '@ridenui/unraid/dist/modules/system/extensions/cpu';
+import { IExecuteResult } from '@ridenui/unraid/dist/instance/executor';
 
 class UnraidRemote {
     _url: string;
@@ -61,7 +62,7 @@ class UnraidRemote {
         return this._isOnline;
     }
 
-    turnOn(macAddress: String) {
+    turnOn(macAddress: String): void {
         const wol = require('wol');
         wol.wake(macAddress, function(err: any, res: any){
             //console.log('res:' + res);
@@ -69,10 +70,37 @@ class UnraidRemote {
         });
     }
     
-    turnOff() {
+    turnOff(): void {
         this._executor.executeSSH({
             command: 'shutdown -h now'
         });
+    }
+
+    executeShellCommandNoWait(command: string) {
+        this._executor.executeSSH({
+            command: command
+        });
+    }
+
+    async executeShellCommand(command: string): Promise<ISSHCommandOutput>{
+        let out : ISSHCommandOutput = {
+            code: -999,
+            stdout: '',
+            stderr: ''
+        }
+        try{
+            const result : IExecuteResult = await this._executor.executeSSH({
+                command: command
+            });
+            out.code = result.code;
+            out.stdout = result.stdout ? result.stdout.join(';') : '';
+            out.stderr = result.stderr ? result.stderr.join(';') : ''
+        } catch (error) {
+            out.code = -996;
+            out.stderr = 'Exception occured while executing command';
+        }
+        
+        return out;
     }
 
     async systemInfo() : Promise<ISystemStats>{

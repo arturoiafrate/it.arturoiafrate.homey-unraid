@@ -35,4 +35,10 @@ interface ISystemStats {
     diskUsage?: IDiskFreeReturn[];
 }
 
-export { ICPUUsage, IUptimeExt, IMemoryUsage, ISystemStats };
+interface ISSHCommandOutput {
+    code: number;
+    stdout?: string;
+    stderr?: string;
+}
+
+export { ICPUUsage, IUptimeExt, IMemoryUsage, ISystemStats, ISSHCommandOutput };
