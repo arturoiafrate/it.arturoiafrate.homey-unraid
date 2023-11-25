@@ -341,6 +341,20 @@
       },
       "icon": "/assets/capabilities/cpu.svg"
     },
+    "friendlyUptime": {
+      "type": "string",
+      "title": {
+        "en": "Uptime"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": false,
+      "units": {
+        "en": "dd-hh-ss"
+      },
+      "icon": "/assets/capabilities/uptime.svg"
+    },
     "raminfo": {
       "type": "number",
       "title": {
@@ -375,15 +389,14 @@
       "title": {
         "en": "Uptime"
       },
-      "uiComponent": "sensor",
       "getable": true,
       "setable": false,
-      "insights": false,
+      "insights": true,
       "units": {
         "en": "Hours"
       },
       "decimals": 2,
-      "icon": "/assets/capabilities/uptime.svg"
+      "uiComponent": null
     }
   }
 }

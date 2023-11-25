@@ -1,0 +1,10 @@
+{
+    "type": "string",
+    "title": { "en": "Uptime" },
+    "uiComponent": "sensor",
+    "getable": true,
+    "setable": false,
+    "insights": false,
+    "units": { "en": "dd-hh-ss" },
+    "icon": "/assets/capabilities/uptime.svg"
+}

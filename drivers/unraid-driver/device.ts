@@ -1,7 +1,7 @@
 import Homey, { FlowCardTriggerDevice } from 'homey';
 import { UnraidRemote } from './unraid-remote/UnraidRemote';
 import { ISystemStats } from './unraid-remote/utils/ISystemStats';
-import { isNonEmpty } from '../../utils/utilites';
+import { isNonEmpty, objStringify } from '../../utils/utilites';
 import { UnraidRemoteFlowTrigger } from './unraid-remote/triggers/UnraidRemoteFlowTrigger';
 
 class UnraidRemoteDevice extends Homey.Device {
@@ -154,17 +154,52 @@ class UnraidRemoteDevice extends Homey.Device {
       this.setCapabilityValue("raminfo", systemStats.ramUsage.total).catch(this.error);
       this.setCapabilityValue("arrayinfo", systemStats.arrayUsage.total).catch(this.error);
     }
-    this.setCapabilityValue("uptime", systemStats.uptime.upSince).catch(this.error);
-    //CPU Used
-    const oldCPUUsedValue : number = this.hasCapability('cpuused') ? this.getCapabilityValue("cpuused") : 0;
-    this.setCapabilityValue("cpuused", systemStats.cpuUsage.percentBusy).catch(this.error);
-    if(oldCPUUsedValue != systemStats.cpuUsage.percentBusy) this._flowTriggers?.triggerCpuUsageFlowCard(this, systemStats.cpuUsage.percentBusy);
-    //Array Used
-    const oldArrayUsedValue : number = this.hasCapability('arrayused') ? this.getCapabilityValue("arrayused") : 0;
-    this.setCapabilityValue("arrayused", systemStats.arrayUsage.percentUsed).catch(this.error);
-    if(oldArrayUsedValue != systemStats.arrayUsage.percentUsed) this._flowTriggers?.triggerArrayUsageFlowCard(this, systemStats.arrayUsage.percentUsed);
-    this.setCapabilityValue("cacheused", systemStats.cacheUsage.percentUsed).catch(this.error);
-    this.setCapabilityValue("ramused", systemStats.ramUsage.percentUsed).catch(this.error);
+    this._updateUptimeCapability(systemStats.uptime.upSince);
+    this._updateCpuUsedCapability(systemStats.cpuUsage.percentBusy);
+    this._updateArrayUsedCapability(systemStats.arrayUsage.percentUsed);
+    this._updateCacheUsedCapability(systemStats.cacheUsage.percentUsed);
+    this._updateRamUsedCapability(systemStats.ramUsage.percentUsed);
+  }
+
+  _updateUptimeCapability(uptime : number|undefined) : void{
+    this.setCapabilityValue("uptime", uptime).catch(this.error);
+    let days = 0;
+    let hours = 0;
+    let minutes = 0;
+    if(uptime){
+      let integerPart = Math.trunc(uptime);
+      minutes = Math.trunc((Number((uptime-integerPart).toFixed(2)))*100);
+      if(integerPart > 24){
+        days = Math.trunc(integerPart / 24);
+        hours = Math.trunc(integerPart % 24);
+      }
+    }
+    const uptimeString = days + 'd ' + hours + 'h ' + minutes + 'm';
+    this.setCapabilityValue("friendlyUptime", uptimeString).catch(this.error);
+  }
+
+  _updateCpuUsedCapability(cpuUsed : number) : void{
+    const value = Number(cpuUsed.toFixed(2));
+    const oldCPUUsedValue : number = this.hasCapability('cpuused') ? this.getCapabilityValue('cpuused') : 0;
+    this.setCapabilityValue('cpuused', value).catch(this.error);
+    if(oldCPUUsedValue != value) this._flowTriggers?.triggerCpuUsageFlowCard(this, value);
+  }
+
+  _updateArrayUsedCapability(arrayUsed : number) : void{
+    const value = Number(arrayUsed.toFixed(2));
+    const oldArrayUsedValue : number = this.hasCapability('arrayused') ? this.getCapabilityValue('arrayused') : 0;
+    this.setCapabilityValue('arrayused', value).catch(this.error);
+    if(oldArrayUsedValue != value) this._flowTriggers?.triggerArrayUsageFlowCard(this, value);
+  }
+
+  _updateCacheUsedCapability(cacheUsed : number) : void{
+    const value = Number(cacheUsed.toFixed(2));
+    this.setCapabilityValue("cacheused", value).catch(this.error);
+  }
+
+  _updateRamUsedCapability(ramUsed : number) : void{
+    const value = Number(ramUsed.toFixed(2));
+    this.setCapabilityValue("ramused", value).catch(this.error);
   }
 
   async _turnOn(){
@@ -206,6 +241,9 @@ class UnraidRemoteDevice extends Homey.Device {
     }
     if (this.hasCapability('uptime') === false) {
       await this.addCapability('uptime');
+    }
+    if (this.hasCapability('friendlyUptime') === false) {
+      await this.addCapability('friendlyUptime');
     }
     if (this.hasCapability('cpuused') === false) {
       await this.addCapability('cpuused');
