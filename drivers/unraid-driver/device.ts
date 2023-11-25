@@ -1,7 +1,8 @@
 import Homey, { FlowCardTriggerDevice } from 'homey';
 import { UnraidRemote } from './unraid-remote/UnraidRemote';
 import { ISystemStats } from './unraid-remote/utils/ISystemStats';
-import { objStringify } from '../../utils/utilites';
+import { isNonEmpty } from '../../utils/utilites';
+import { UnraidRemoteFlowTrigger } from './unraid-remote/triggers/UnraidRemoteFlowTrigger';
 
 class UnraidRemoteDevice extends Homey.Device {
 
@@ -9,13 +10,15 @@ class UnraidRemoteDevice extends Homey.Device {
   _pingPoller?: NodeJS.Timeout;
   _checkPoller?: NodeJS.Timeout;
   _isInit: boolean = false;
-  _cpuUsageIsChangedTriggerCard? : FlowCardTriggerDevice;
-  _arrayUsageIsChangedTriggerCard? : FlowCardTriggerDevice;
+  _flowTriggers?: UnraidRemoteFlowTrigger;
 
 
   async onInit() {
     this._addCapabilities();
-    this._addFlowTriggerControllers();
+    this._flowTriggers = new UnraidRemoteFlowTrigger({
+      cpuUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('cpu-usage-is-changed'), 
+      arrayUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('array-usage-is-changed')
+    });
     const settings = await this.getSettings();
     this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
   }
@@ -78,7 +81,7 @@ class UnraidRemoteDevice extends Homey.Device {
       this._unraidRemote.unsubscribeAll();
       this._unraidRemote.disconnect();
     }
-    if(this._isNonEmpty(url) && this._isNonEmpty(username) && this._isNonEmpty(password)){
+    if(isNonEmpty(url) && isNonEmpty(username) && isNonEmpty(password)){
       this._unraidRemote = new UnraidRemote(url, username, password, port);
       this._unraidRemote.subscribeIsUnraidServerOnline({
         isOnlineCallback: () => {
@@ -145,9 +148,6 @@ class UnraidRemoteDevice extends Homey.Device {
     }
   }
 
-  _isNonEmpty(str: string): boolean {
-    return typeof str === 'string' && str.length > 0;
-  }
 
   _updateDeviceCapabilities(systemStats : ISystemStats, setInfo : boolean) : void{
     if(setInfo){
@@ -158,26 +158,18 @@ class UnraidRemoteDevice extends Homey.Device {
     //CPU Used
     const oldCPUUsedValue : number = this.hasCapability('cpuused') ? this.getCapabilityValue("cpuused") : 0;
     this.setCapabilityValue("cpuused", systemStats.cpuUsage.percentBusy).catch(this.error);
-    this.log(objStringify('CPU Used', {
-      'oldCPUUsedValue': oldCPUUsedValue,
-      'cpuused': systemStats.cpuUsage.percentBusy
-    }));
-    if(oldCPUUsedValue != systemStats.cpuUsage.percentBusy) this._cpuUsageIsChangedTriggerCard?.trigger(this, { 'usage-percent': systemStats.cpuUsage.percentBusy }, undefined);
+    if(oldCPUUsedValue != systemStats.cpuUsage.percentBusy) this._flowTriggers?.triggerCpuUsageFlowCard(this, systemStats.cpuUsage.percentBusy);
     //Array Used
     const oldArrayUsedValue : number = this.hasCapability('arrayused') ? this.getCapabilityValue("arrayused") : 0;
     this.setCapabilityValue("arrayused", systemStats.arrayUsage.percentUsed).catch(this.error);
-    this.log(objStringify('Array Used', {
-      'oldArrayUsedValue': oldArrayUsedValue,
-      'arrayused': systemStats.arrayUsage.percentUsed
-    }));
-    if(oldArrayUsedValue != systemStats.arrayUsage.percentUsed) this._arrayUsageIsChangedTriggerCard?.trigger(this, { 'usage-percent': systemStats.arrayUsage.percentUsed }, undefined);
+    if(oldArrayUsedValue != systemStats.arrayUsage.percentUsed) this._flowTriggers?.triggerArrayUsageFlowCard(this, systemStats.arrayUsage.percentUsed);
     this.setCapabilityValue("cacheused", systemStats.cacheUsage.percentUsed).catch(this.error);
     this.setCapabilityValue("ramused", systemStats.ramUsage.percentUsed).catch(this.error);
   }
 
   async _turnOn(){
     const settings = await this.getSettings();
-    if(this._isNonEmpty(settings.macaddress) && this._unraidRemote){
+    if(isNonEmpty(settings.macaddress) && this._unraidRemote){
       this._unraidRemote.turnOn(settings.macaddress);
     }
     this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
@@ -220,10 +212,6 @@ class UnraidRemoteDevice extends Homey.Device {
     }
   }
 
-  async _addFlowTriggerControllers(): Promise<void> {
-    this._cpuUsageIsChangedTriggerCard = this.homey.flow.getDeviceTriggerCard('cpu-usage-is-changed');
-    this._arrayUsageIsChangedTriggerCard = this.homey.flow.getDeviceTriggerCard('array-usage-is-changed');
-  }
 }
 
 module.exports = UnraidRemoteDevice;
