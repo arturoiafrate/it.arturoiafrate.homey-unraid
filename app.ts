@@ -22,10 +22,6 @@ class UnraidRemoteApp extends Homey.App {
           if (!uptime) {
             throw new Error('Uptime is not set');
           }
-          this.log(objStringify('Uptime', {
-            uptime: uptime,
-            argsUptime: argsUptime
-          }));
           if (Number(uptime) > argsUptime) {
             return Promise.resolve(true);
           }

@@ -41,6 +41,48 @@
         }
       ],
       "args": []
+    },
+    {
+      "id": "cache-usage-is-changed",
+      "title": {
+        "en": "Cache usage is changed"
+      },
+      "titleFormatted": {
+        "en": "Cache usage is changed"
+      },
+      "hint": {
+        "en": "This flow is triggered when the Cache usage is changed"
+      },
+      "tokens": [
+        {
+          "name": "usage-percent",
+          "type": "number",
+          "title": { "en": "Cache Usage %" },
+          "example": { "en": "12.5" }
+        }
+      ],
+      "args": []
+    },
+    {
+      "id": "ram-usage-is-changed",
+      "title": {
+        "en": "Ram usage is changed"
+      },
+      "titleFormatted": {
+        "en": "Ram usage is changed"
+      },
+      "hint": {
+        "en": "This flow is triggered when the Ram usage is changed"
+      },
+      "tokens": [
+        {
+          "name": "usage-percent",
+          "type": "number",
+          "title": { "en": "Ram Usage %" },
+          "example": { "en": "12.5" }
+        }
+      ],
+      "args": []
     }
   ]
 }

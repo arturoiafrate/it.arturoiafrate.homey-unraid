@@ -14,7 +14,8 @@
       },
       "min": 0,
       "max": 100,
-      "step": 1
+      "step": 1,
+      "required": false
     },
     {
       "type": "number",
@@ -24,7 +25,8 @@
       },
       "min": 0,
       "max": 364,
-      "step": 1
+      "step": 1,
+      "required": false
     },
     {
       "type": "number",
@@ -34,7 +36,8 @@
       },
       "min": 0,
       "max": 23,
-      "step": 1
+      "step": 1,
+      "required": false
     },
     {
       "type": "number",
@@ -44,7 +47,8 @@
       },
       "min": 0,
       "max": 59,
-      "step": 1
+      "step": 1,
+      "required": false
     }
   ]
 }

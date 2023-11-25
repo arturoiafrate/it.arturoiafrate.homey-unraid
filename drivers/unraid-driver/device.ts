@@ -17,7 +17,9 @@ class UnraidRemoteDevice extends Homey.Device {
     this._addCapabilities();
     this._flowTriggers = new UnraidRemoteFlowTrigger({
       cpuUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('cpu-usage-is-changed'), 
-      arrayUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('array-usage-is-changed')
+      arrayUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('array-usage-is-changed'),
+      cacheUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('cache-usage-is-changed'),
+      ramUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('ram-usage-is-changed')
     });
     const settings = await this.getSettings();
     this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
@@ -193,13 +195,17 @@ class UnraidRemoteDevice extends Homey.Device {
   }
 
   _updateCacheUsedCapability(cacheUsed : number) : void{
-    const value = Number(cacheUsed.toFixed(2));
+    const value = Number(cacheUsed.toFixed(2)); 
+    const oldCacheUsedValue : number = this.hasCapability('cacheused') ? this.getCapabilityValue('cacheused') : 0;
     this.setCapabilityValue("cacheused", value).catch(this.error);
+    if(oldCacheUsedValue != value) this._flowTriggers?.triggerCacheUsageFlowCard(this, value);
   }
 
   _updateRamUsedCapability(ramUsed : number) : void{
     const value = Number(ramUsed.toFixed(2));
+    const oldRamUsedValue : number = this.hasCapability('ramused') ? this.getCapabilityValue('ramused') : 0;
     this.setCapabilityValue("ramused", value).catch(this.error);
+    if(oldRamUsedValue != value) this._flowTriggers?.triggerRamUsageFlowCard(this, value);
   }
 
   async _turnOn(){
