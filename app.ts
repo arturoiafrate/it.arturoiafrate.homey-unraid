@@ -7,6 +7,7 @@ class UnraidRemoteApp extends Homey.App {
   }
 
   async _initConditionCards(): Promise<void> {
+    //CPU Usage
     const cpuUsageCondition = this.homey.flow.getConditionCard('cpu-usage-condition');
     cpuUsageCondition.registerRunListener(async (args) => {
       if(!args.threshold){
@@ -22,7 +23,24 @@ class UnraidRemoteApp extends Homey.App {
         }
       }
       return Promise.resolve(false);
-    })
+    });
+    //Array Usage
+    const arrayUsageCondition = this.homey.flow.getConditionCard('array-usage-condition');
+    arrayUsageCondition.registerRunListener(async (args) => {
+      if(!args.threshold){
+        throw new Error('Threshold is not set');
+      }
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      for(const device of devices){
+        if(device.hasCapability('cpuused')){
+          const arrayUsage = await device.getCapabilityValue('arrayused');
+          if(arrayUsage > args.threshold){
+            return Promise.resolve(true);
+          }
+        }
+      }
+      return Promise.resolve(false);
+    });
   }
 }
 

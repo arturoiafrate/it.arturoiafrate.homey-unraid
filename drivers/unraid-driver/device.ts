@@ -1,6 +1,7 @@
 import Homey, { FlowCardTriggerDevice } from 'homey';
 import { UnraidRemote } from './unraid-remote/UnraidRemote';
 import { ISystemStats } from './unraid-remote/utils/ISystemStats';
+import { objStringify } from '../../utils/utilites';
 
 class UnraidRemoteDevice extends Homey.Device {
 
@@ -9,7 +10,7 @@ class UnraidRemoteDevice extends Homey.Device {
   _checkPoller?: NodeJS.Timeout;
   _isInit: boolean = false;
   _cpuUsageIsChangedTriggerCard? : FlowCardTriggerDevice;
-
+  _arrayUsageIsChangedTriggerCard? : FlowCardTriggerDevice;
 
 
   async onInit() {
@@ -155,9 +156,21 @@ class UnraidRemoteDevice extends Homey.Device {
     }
     this.setCapabilityValue("uptime", systemStats.uptime.upSince).catch(this.error);
     //CPU Used
+    const oldCPUUsedValue : number = this.hasCapability('cpuused') ? this.getCapabilityValue("cpuused") : 0;
     this.setCapabilityValue("cpuused", systemStats.cpuUsage.percentBusy).catch(this.error);
-    this._cpuUsageIsChangedTriggerCard?.trigger(this, { 'usage-percent': systemStats.cpuUsage.percentBusy }, undefined);
+    this.log(objStringify('CPU Used', {
+      'oldCPUUsedValue': oldCPUUsedValue,
+      'cpuused': systemStats.cpuUsage.percentBusy
+    }));
+    if(oldCPUUsedValue != systemStats.cpuUsage.percentBusy) this._cpuUsageIsChangedTriggerCard?.trigger(this, { 'usage-percent': systemStats.cpuUsage.percentBusy }, undefined);
+    //Array Used
+    const oldArrayUsedValue : number = this.hasCapability('arrayused') ? this.getCapabilityValue("arrayused") : 0;
     this.setCapabilityValue("arrayused", systemStats.arrayUsage.percentUsed).catch(this.error);
+    this.log(objStringify('Array Used', {
+      'oldArrayUsedValue': oldArrayUsedValue,
+      'arrayused': systemStats.arrayUsage.percentUsed
+    }));
+    if(oldArrayUsedValue != systemStats.arrayUsage.percentUsed) this._arrayUsageIsChangedTriggerCard?.trigger(this, { 'usage-percent': systemStats.arrayUsage.percentUsed }, undefined);
     this.setCapabilityValue("cacheused", systemStats.cacheUsage.percentUsed).catch(this.error);
     this.setCapabilityValue("ramused", systemStats.ramUsage.percentUsed).catch(this.error);
   }
@@ -208,8 +221,8 @@ class UnraidRemoteDevice extends Homey.Device {
   }
 
   async _addFlowTriggerControllers(): Promise<void> {
-    //Trigger cards
     this._cpuUsageIsChangedTriggerCard = this.homey.flow.getDeviceTriggerCard('cpu-usage-is-changed');
+    this._arrayUsageIsChangedTriggerCard = this.homey.flow.getDeviceTriggerCard('array-usage-is-changed');
   }
 }
 

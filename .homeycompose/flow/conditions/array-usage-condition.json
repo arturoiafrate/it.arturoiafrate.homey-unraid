@@ -1,9 +1,9 @@
 {
   "title": {
-    "en": "The cpu usage is !{{over|under}} "
+    "en": "The array usage is !{{over|under}} "
   },
   "hint": {
-    "en": "The cpu usage of unraid server is over a threshold"
+    "en": "The array usage of unraid server is over a threshold"
   },
   "args": [
     {

@@ -58,6 +58,27 @@
     "conditions": [
       {
         "title": {
+          "en": "The array usage is !{{over|under}} "
+        },
+        "hint": {
+          "en": "The array usage of unraid server is over a threshold"
+        },
+        "args": [
+          {
+            "type": "number",
+            "name": "threshold",
+            "placeholder": {
+              "en": "75.00"
+            },
+            "min": 0.01,
+            "max": 100,
+            "step": 0.01
+          }
+        ],
+        "id": "array-usage-condition"
+      },
+      {
+        "title": {
           "en": "The cpu usage is !{{over|under}} "
         },
         "hint": {
@@ -68,7 +89,7 @@
             "type": "number",
             "name": "threshold",
             "placeholder": {
-              "en": "50.00"
+              "en": "75.00"
             },
             "min": 0.01,
             "max": 100,
@@ -96,6 +117,37 @@
             "type": "number",
             "title": {
               "en": "CPU Usage %"
+            },
+            "example": {
+              "en": "12.5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=unraid-driver"
+          }
+        ]
+      },
+      {
+        "id": "array-usage-is-changed",
+        "title": {
+          "en": "Array usage is changed"
+        },
+        "titleFormatted": {
+          "en": "Array usage is changed"
+        },
+        "hint": {
+          "en": "This flow is triggered when the Array usage is changed"
+        },
+        "tokens": [
+          {
+            "name": "usage-percent",
+            "type": "number",
+            "title": {
+              "en": "Array Usage %"
             },
             "example": {
               "en": "12.5"

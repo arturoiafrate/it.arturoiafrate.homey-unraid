@@ -20,6 +20,27 @@
         }
       ],
       "args": []
+    },
+    {
+      "id": "array-usage-is-changed",
+      "title": {
+        "en": "Array usage is changed"
+      },
+      "titleFormatted": {
+        "en": "Array usage is changed"
+      },
+      "hint": {
+        "en": "This flow is triggered when the Array usage is changed"
+      },
+      "tokens": [
+        {
+          "name": "usage-percent",
+          "type": "number",
+          "title": { "en": "Array Usage %" },
+          "example": { "en": "12.5" }
+        }
+      ],
+      "args": []
     }
   ]
 }
