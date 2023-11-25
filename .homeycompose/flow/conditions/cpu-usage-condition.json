@@ -10,7 +10,7 @@
       "type": "number",
       "name": "threshold",
       "placeholder": {
-        "en": "75.00"
+        "en": "threshold"
       },
       "min": 0.01,
       "max": 100,

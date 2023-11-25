@@ -68,7 +68,7 @@
             "type": "number",
             "name": "threshold",
             "placeholder": {
-              "en": "75.00"
+              "en": "threshold"
             },
             "min": 0.01,
             "max": 100,
@@ -89,7 +89,7 @@
             "type": "number",
             "name": "threshold",
             "placeholder": {
-              "en": "75.00"
+              "en": "threshold"
             },
             "min": 0.01,
             "max": 100,
@@ -97,6 +97,57 @@
           }
         ],
         "id": "cpu-usage-condition"
+      },
+      {
+        "title": {
+          "en": "The system uptime is !{{over|under}}"
+        },
+        "hint": {
+          "en": "The system uptime of unraid server is over a threshold"
+        },
+        "args": [
+          {
+            "type": "number",
+            "name": "years",
+            "placeholder": {
+              "en": "years"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1
+          },
+          {
+            "type": "number",
+            "name": "days",
+            "placeholder": {
+              "en": "days"
+            },
+            "min": 0,
+            "max": 364,
+            "step": 1
+          },
+          {
+            "type": "number",
+            "name": "hours",
+            "placeholder": {
+              "en": "hours"
+            },
+            "min": 0,
+            "max": 23,
+            "step": 1
+          },
+          {
+            "type": "number",
+            "name": "minutes",
+            "placeholder": {
+              "en": "minutes"
+            },
+            "min": 0,
+            "max": 59,
+            "step": 1
+          }
+        ],
+        "id": "uptime-condition"
       }
     ],
     "triggers": [
