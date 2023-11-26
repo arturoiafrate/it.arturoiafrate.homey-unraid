@@ -15,14 +15,14 @@ Install the app and add a new unraid device. Open the device settings and config
 
 ### What you can do?
 1. Actually you can monitor:
-- CPU usage
-- RAM usage
-- Array usage
-- The system uptime
+    - CPU usage
+    - RAM usage
+    - Array usage
+    - The system uptime
 
 2. Actually you can do:
-- Execute a generic SSH command
-- Execute a generic SSH command and wait for the output (Advanced Flow)
+    - Execute a generic SSH command
+    - Execute a generic SSH command and wait for the output (Advanced Flow)
 
 For each one of them you can trigger a flow. For example:
 **_When_ CPU Usage is changed _and_ CPU Usage is over a _threshold_, _execute_ something.**
