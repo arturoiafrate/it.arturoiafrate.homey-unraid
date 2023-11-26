@@ -1,10 +1,13 @@
 import Homey from 'homey';
-import { convertToUnraidUptime, objStringify } from './utils/utilites';
+import { convertToUnraidUptime, logErrorToSentry } from './utils/utilites';
 import { UnraidRemoteDevice } from './drivers/unraid-driver/device';
+const { Log } = require('homey-log');
 
 class UnraidRemoteApp extends Homey.App {
+   homeyLog: any;
 
   async onInit() {
+    this.homeyLog = new Log({ homey: this.homey });
     await this._initConditionCards();
     await this._initActionCards();
   }
@@ -97,6 +100,7 @@ class UnraidRemoteApp extends Homey.App {
       try {
         return await unraidDevice.executeShellCommand(args.command);
       } catch (error) {
+        logErrorToSentry(this, error as Error);
         return {
           code: -997,
           stdout: '',
@@ -108,3 +112,4 @@ class UnraidRemoteApp extends Homey.App {
 }
 
 module.exports = UnraidRemoteApp;
+export default UnraidRemoteApp;
