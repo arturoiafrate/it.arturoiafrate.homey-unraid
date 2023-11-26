@@ -1,6 +1,7 @@
 {
   "name": {
-    "en": "Unraid NAS Server"
+    "en": "Unraid NAS Server",
+    "it": "Unraid NAS Server"
   },
   "class": "remote",
   "capabilities": [

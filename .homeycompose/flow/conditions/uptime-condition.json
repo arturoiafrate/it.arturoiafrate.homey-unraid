@@ -1,16 +1,23 @@
 {
   "title": {
-    "en": "The system uptime is !{{over|under}}"
+    "en": "The system uptime is !{{over|under}}",
+    "it": "Il sistema è attivo da !{{oltre|meno di}} "
+  },
+  "titleFormatted": {
+    "en": "The system uptime is !{{over|under}} [[years]] [[days]] [[hours]] [[minutes]]",
+    "it": "Il sistema è attivo da !{{oltre|meno di}} [[years]] [[days]] [[hours]] [[minutes]]"
   },
   "hint": {
-    "en": "The system uptime of unraid server is over a threshold"
+    "en": "The system uptime of unraid server is over a threshold",
+    "it": "Il sistema è attivo da oltre un certo tempo"
   },
   "args": [
     {
       "type": "number",
       "name": "years",
       "placeholder": {
-        "en": "years"
+        "en": "years",
+        "it": "anni"
       },
       "min": 0,
       "max": 100,
@@ -21,7 +28,8 @@
       "type": "number",
       "name": "days",
       "placeholder": {
-        "en": "days"
+        "en": "days",
+        "it": "giorni"
       },
       "min": 0,
       "max": 364,
@@ -32,7 +40,8 @@
       "type": "number",
       "name": "hours",
       "placeholder": {
-        "en": "hours"
+        "en": "hours",
+        "it": "ore"
       },
       "min": 0,
       "max": 23,
@@ -43,7 +52,8 @@
       "type": "number",
       "name": "minutes",
       "placeholder": {
-        "en": "minutes"
+        "en": "minutes",
+        "it": "minuti"
       },
       "min": 0,
       "max": 59,

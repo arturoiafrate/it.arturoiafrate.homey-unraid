@@ -1,10 +1,10 @@
 {
     "type": "number",
-    "title": { "en": "Array Used" },
+    "title": { "en": "Array Used", "it": "Utilizzo Array" },
     "uiComponent": "sensor",
     "getable": true,
     "setable": false,
     "insights": true,
-    "units": { "en": "%" },
+    "units": { "en": "%", "it": "%" },
     "icon": "/assets/capabilities/array.svg"
 }

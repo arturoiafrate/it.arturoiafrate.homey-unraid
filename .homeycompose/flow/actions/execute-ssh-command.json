@@ -1,16 +1,23 @@
 {
   "title": {
-    "en": "Execute SSH command"
+    "en": "Execute SSH command",
+    "it": "Esegui comando SSH"
+  },
+  "titleFormatted": {
+    "en": "Execute SSH [[command]]",
+    "it": "Esegui [[command]] SSH"
   },
   "hint": {
-    "en": "Execute standard SSH command without waiting for the output"
+    "en": "Execute standard SSH command without waiting for the output",
+    "it": "Esegui un comando SSH standard senza attendere l'output"
   },
   "args": [
     {
       "type": "text",
       "name": "command",
       "placeholder": {
-        "en": "command"
+        "en": "command",
+        "it": "comando"
       }
     }
   ]

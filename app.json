@@ -10,7 +10,8 @@
     "local"
   ],
   "name": {
-    "en": "Unraid"
+    "en": "Unraid",
+    "it": "Unraid"
   },
   "description": {
     "en": "Unleash Your Hardware",
@@ -54,21 +55,31 @@
   },
   "source": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid",
   "support": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues",
+  "bugs": {
+    "url": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues"
+  },
   "flow": {
     "conditions": [
       {
         "title": {
-          "en": "The array usage is !{{over|under}} "
+          "en": "The array usage is !{{over|under}} ",
+          "it": "L'uso dell'array è !{{oltre|sotto}} "
+        },
+        "titleFormatted": {
+          "en": "The array usage is !{{over|under}} [[threshold]]",
+          "it": "L'uso dell'array è !{{oltre|sotto}} la [[threshold]]"
         },
         "hint": {
-          "en": "The array usage of unraid server is over a threshold"
+          "en": "The array usage of unraid server is over a threshold",
+          "it": "L'utilizzo dell'array del server unraid è oltre una soglia"
         },
         "args": [
           {
             "type": "number",
             "name": "threshold",
             "placeholder": {
-              "en": "threshold"
+              "en": "threshold",
+              "it": "soglia"
             },
             "min": 0.01,
             "max": 100,
@@ -79,17 +90,24 @@
       },
       {
         "title": {
-          "en": "The cpu usage is !{{over|under}} "
+          "en": "The cpu usage is !{{over|under}} ",
+          "it": "L'uso della cpu è !{{oltre|sotto}} "
+        },
+        "titleFormatted": {
+          "en": "The cpu usage is !{{over|under}} [[threshold]]",
+          "it": "L'uso della cpu è !{{oltre|sotto}} la [[threshold]]"
         },
         "hint": {
-          "en": "The cpu usage of unraid server is over a threshold"
+          "en": "The cpu usage of unraid server is over a threshold",
+          "it": "L'uso della cpu del server unraid è oltre una soglia"
         },
         "args": [
           {
             "type": "number",
             "name": "threshold",
             "placeholder": {
-              "en": "threshold"
+              "en": "threshold",
+              "it": "soglia"
             },
             "min": 0.01,
             "max": 100,
@@ -100,17 +118,24 @@
       },
       {
         "title": {
-          "en": "The system uptime is !{{over|under}}"
+          "en": "The system uptime is !{{over|under}}",
+          "it": "Il sistema è attivo da !{{oltre|meno di}} "
+        },
+        "titleFormatted": {
+          "en": "The system uptime is !{{over|under}} [[years]] [[days]] [[hours]] [[minutes]]",
+          "it": "Il sistema è attivo da !{{oltre|meno di}} [[years]] [[days]] [[hours]] [[minutes]]"
         },
         "hint": {
-          "en": "The system uptime of unraid server is over a threshold"
+          "en": "The system uptime of unraid server is over a threshold",
+          "it": "Il sistema è attivo da oltre un certo tempo"
         },
         "args": [
           {
             "type": "number",
             "name": "years",
             "placeholder": {
-              "en": "years"
+              "en": "years",
+              "it": "anni"
             },
             "min": 0,
             "max": 100,
@@ -121,7 +146,8 @@
             "type": "number",
             "name": "days",
             "placeholder": {
-              "en": "days"
+              "en": "days",
+              "it": "giorni"
             },
             "min": 0,
             "max": 364,
@@ -132,7 +158,8 @@
             "type": "number",
             "name": "hours",
             "placeholder": {
-              "en": "hours"
+              "en": "hours",
+              "it": "ore"
             },
             "min": 0,
             "max": 23,
@@ -143,7 +170,8 @@
             "type": "number",
             "name": "minutes",
             "placeholder": {
-              "en": "minutes"
+              "en": "minutes",
+              "it": "minuti"
             },
             "min": 0,
             "max": 59,
@@ -157,17 +185,24 @@
     "actions": [
       {
         "title": {
-          "en": "Execute SSH command"
+          "en": "Execute SSH command",
+          "it": "Esegui comando SSH"
+        },
+        "titleFormatted": {
+          "en": "Execute SSH [[command]]",
+          "it": "Esegui [[command]] SSH"
         },
         "hint": {
-          "en": "Execute standard SSH command without waiting for the output"
+          "en": "Execute standard SSH command without waiting for the output",
+          "it": "Esegui un comando SSH standard senza attendere l'output"
         },
         "args": [
           {
             "type": "text",
             "name": "command",
             "placeholder": {
-              "en": "command"
+              "en": "command",
+              "it": "comando"
             }
           }
         ],
@@ -175,17 +210,24 @@
       },
       {
         "title": {
-          "en": "Execute SSH Command (Advanced)"
+          "en": "Execute SSH Command (Advanced)",
+          "it": "Esegui Comando SSH (Avanzato)"
+        },
+        "titleFormatted": {
+          "en": "Execute SSH [[command]] (Advanced)",
+          "it": "Esegui [[command]] SSH (Avanzato)"
         },
         "hint": {
-          "en": "Execute standard SSH command and wait for the output"
+          "en": "Execute standard SSH command and wait for the output",
+          "it": "Esegui un comando SSH standard e attendi l'output"
         },
         "args": [
           {
             "type": "text",
             "name": "command",
             "placeholder": {
-              "en": "command"
+              "en": "command",
+              "it": "comando"
             }
           }
         ],
@@ -194,21 +236,24 @@
             "name": "code",
             "type": "number",
             "title": {
-              "en": "Error code"
+              "en": "Error code",
+              "it": "Codice di errore"
             }
           },
           {
             "name": "stdout",
             "type": "string",
             "title": {
-              "en": "Standard Output"
+              "en": "Standard Output",
+              "it": "Standard Output"
             }
           },
           {
             "name": "stderr",
             "type": "string",
             "title": {
-              "en": "Standard Error"
+              "en": "Standard Error",
+              "it": "Standard Error"
             }
           }
         ],
@@ -219,23 +264,28 @@
       {
         "id": "cpu-usage-is-changed",
         "title": {
-          "en": "CPU usage is changed"
+          "en": "CPU usage is changed",
+          "it": "L'uso della CPU è cambiato"
         },
         "titleFormatted": {
-          "en": "CPU usage is changed"
+          "en": "CPU usage is changed",
+          "it": "L'uso della CPU è cambiato"
         },
         "hint": {
-          "en": "This flow is triggered when the CPU usage is changed"
+          "en": "This flow is triggered when the CPU usage is changed",
+          "it": "Questo flusso viene attivato quando l'utilizzo della CPU cambia"
         },
         "tokens": [
           {
             "name": "usage-percent",
             "type": "number",
             "title": {
-              "en": "CPU Usage %"
+              "en": "CPU Usage %",
+              "it": "Utilizzo CPU %"
             },
             "example": {
-              "en": "12.5"
+              "en": "12.5",
+              "it": "12.5"
             }
           }
         ],
@@ -250,23 +300,28 @@
       {
         "id": "array-usage-is-changed",
         "title": {
-          "en": "Array usage is changed"
+          "en": "Array usage is changed",
+          "it": "L'utilizzo dell'array è cambiato"
         },
         "titleFormatted": {
-          "en": "Array usage is changed"
+          "en": "Array usage is changed",
+          "it": "L'utilizzo dell'array è cambiato"
         },
         "hint": {
-          "en": "This flow is triggered when the Array usage is changed"
+          "en": "This flow is triggered when the Array usage is changed",
+          "it": "Questo flusso viene attivato quando l'utilizzo dell'array cambia"
         },
         "tokens": [
           {
             "name": "usage-percent",
             "type": "number",
             "title": {
-              "en": "Array Usage %"
+              "en": "Array Usage %",
+              "it": "Utilizzo array %"
             },
             "example": {
-              "en": "12.5"
+              "en": "12.5",
+              "it": "12.5"
             }
           }
         ],
@@ -281,23 +336,28 @@
       {
         "id": "cache-usage-is-changed",
         "title": {
-          "en": "Cache usage is changed"
+          "en": "Cache usage is changed",
+          "it": "L'utilizzo della cache è cambiato"
         },
         "titleFormatted": {
-          "en": "Cache usage is changed"
+          "en": "Cache usage is changed",
+          "it": "L'utilizzo della cache è cambiato"
         },
         "hint": {
-          "en": "This flow is triggered when the Cache usage is changed"
+          "en": "This flow is triggered when the Cache usage is changed",
+          "it": "Questo flusso viene attivato quando l'utilizzo della cache cambia"
         },
         "tokens": [
           {
             "name": "usage-percent",
             "type": "number",
             "title": {
-              "en": "Cache Usage %"
+              "en": "Cache Usage %",
+              "it": "Utilizzo cache %"
             },
             "example": {
-              "en": "12.5"
+              "en": "12.5",
+              "it": "12.5"
             }
           }
         ],
@@ -312,23 +372,28 @@
       {
         "id": "ram-usage-is-changed",
         "title": {
-          "en": "Ram usage is changed"
+          "en": "Ram usage is changed",
+          "it": "L'utilizzo della Ram è cambiato"
         },
         "titleFormatted": {
-          "en": "Ram usage is changed"
+          "en": "Ram usage is changed",
+          "it": "L'utilizzo della Ram è cambiato"
         },
         "hint": {
-          "en": "This flow is triggered when the Ram usage is changed"
+          "en": "This flow is triggered when the Ram usage is changed",
+          "it": "Questo flusso viene attivato quando l'utilizzo della Ram cambia"
         },
         "tokens": [
           {
             "name": "usage-percent",
             "type": "number",
             "title": {
-              "en": "Ram Usage %"
+              "en": "Ram Usage %",
+              "it": "Utilizzo Ram %"
             },
             "example": {
-              "en": "12.5"
+              "en": "12.5",
+              "it": "12.5"
             }
           }
         ],
@@ -345,7 +410,8 @@
   "drivers": [
     {
       "name": {
-        "en": "Unraid NAS Server"
+        "en": "Unraid NAS Server",
+        "it": "Unraid NAS Server"
       },
       "class": "remote",
       "capabilities": [
@@ -386,77 +452,91 @@
           "id": "host",
           "type": "text",
           "label": {
-            "en": "Host"
+            "en": "Host",
+            "it": "Host"
           },
           "value": "",
           "hint": {
-            "en": "The hostname/ip addess of Unraid Server"
+            "en": "The hostname/ip addess of Unraid Server",
+            "it": "L'hostname/indirizzo ip del server Unraid"
           }
         },
         {
           "id": "username",
           "type": "text",
           "label": {
-            "en": "Username"
+            "en": "Username",
+            "it": "Nome utente"
           },
           "value": "",
           "hint": {
-            "en": "The username to login to Unraid Server"
+            "en": "The username to login to Unraid Server",
+            "it": "Il nome utente per accedere al server Unraid"
           }
         },
         {
           "id": "password",
           "type": "password",
           "label": {
-            "en": "Password"
+            "en": "Password",
+            "it": "Password"
           },
           "value": "",
           "hint": {
-            "en": "The password to login to Unraid Server"
+            "en": "The password to login to Unraid Server",
+            "it": "La password per accedere al server Unraid"
           }
         },
         {
           "id": "port",
           "type": "number",
           "label": {
-            "en": "Port"
+            "en": "Port",
+            "it": "Porta"
           },
           "value": 22,
           "hint": {
-            "en": "The ssh port of Unraid Server. Default: 22"
+            "en": "The ssh port of Unraid Server. Default: 22",
+            "it": "La porta ssh del server Unraid. Default: 22"
           }
         },
         {
           "id": "pingInterval",
           "type": "number",
           "label": {
-            "en": "Ping Interval"
+            "en": "Ping Interval",
+            "it": "Intervallo di ping"
           },
           "value": 3,
           "hint": {
-            "en": "The ping interval in seconds to check online status. Default: 3"
+            "en": "The ping interval in seconds to check online status. Default: 3",
+            "it": "L'intervallo di ping in secondi per controllare lo stato online. Default: 3"
           }
         },
         {
           "id": "macaddress",
           "type": "text",
           "label": {
-            "en": "MAC Address"
+            "en": "MAC Address",
+            "it": "Indirizzo MAC"
           },
           "value": "",
           "hint": {
-            "en": "If set and both Homey and Unraid Server are in the same LAN, you'll be able to send a magic packet to wake up the Unraid."
+            "en": "If set and both Homey and Unraid Server are in the same LAN, you'll be able to send a magic packet to wake up the Unraid.",
+            "it": "Se impostato e sia Homey che Unraid Server si trovano nella stessa LAN, sarà possibile inviare un magic packet per avviare Unraid."
           }
         },
         {
           "id": "checkInterval",
           "type": "number",
           "label": {
-            "en": "Check Interval"
+            "en": "Check Interval",
+            "it": "Intervallo di controllo"
           },
           "value": 6,
           "hint": {
-            "en": "The interval in seconds to check unraid server changes. Default: 6"
+            "en": "The interval in seconds to check unraid server changes. Default: 6",
+            "it": "L'intervallo in secondi per verificare le modifiche al server unraid. Default: 6"
           }
         }
       ]
@@ -466,98 +546,112 @@
     "arrayinfo": {
       "type": "number",
       "title": {
-        "en": "Array Size (Total)"
+        "en": "Array Size (Total)",
+        "it": "Dimensione Array (Totale)"
       },
       "uiComponent": null,
       "getable": true,
       "setable": false,
       "insights": false,
       "units": {
-        "en": "GB"
+        "en": "GB",
+        "it": "GB"
       },
       "icon": "/assets/icon.svg"
     },
     "arrayused": {
       "type": "number",
       "title": {
-        "en": "Array Used"
+        "en": "Array Used",
+        "it": "Utilizzo Array"
       },
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
       "insights": true,
       "units": {
-        "en": "%"
+        "en": "%",
+        "it": "%"
       },
       "icon": "/assets/capabilities/array.svg"
     },
     "cacheused": {
       "type": "number",
       "title": {
-        "en": "Cache Used"
+        "en": "Cache Used",
+        "it": "Utilizzo Cache"
       },
       "uiComponent": null,
       "getable": true,
       "setable": false,
       "insights": true,
       "units": {
-        "en": "%"
+        "en": "%",
+        "it": "%"
       },
       "icon": "/assets/icon.svg"
     },
     "cpuused": {
       "type": "number",
       "title": {
-        "en": "CPU used"
+        "en": "CPU used",
+        "it": "Utilizzo CPU"
       },
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
       "insights": true,
       "units": {
-        "en": "%"
+        "en": "%",
+        "it": "%"
       },
       "icon": "/assets/capabilities/cpu.svg"
     },
     "friendlyUptime": {
       "type": "string",
       "title": {
-        "en": "Uptime"
+        "en": "Uptime",
+        "it": "Uptime"
       },
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
       "insights": false,
       "units": {
-        "en": "dd-hh-ss"
+        "en": "dd-hh-ss",
+        "it": "gg-hh-ss"
       },
       "icon": "/assets/capabilities/uptime.svg"
     },
     "raminfo": {
       "type": "number",
       "title": {
-        "en": "RAM Size (Total)"
+        "en": "RAM Size (Total)",
+        "it": "Dimensione RAM (Totale)"
       },
       "uiComponent": null,
       "getable": true,
       "setable": false,
       "insights": false,
       "units": {
-        "en": "GB"
+        "en": "GB",
+        "it": "GB"
       },
       "icon": "/assets/icon.svg"
     },
     "ramused": {
       "type": "number",
       "title": {
-        "en": "RAM Used"
+        "en": "RAM Used",
+        "it": "RAM Utilizata"
       },
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
       "insights": true,
       "units": {
-        "en": "%"
+        "en": "%",
+        "it": "%"
       },
       "decimals": 2,
       "icon": "/assets/capabilities/ram.svg"
@@ -565,13 +659,15 @@
     "uptime": {
       "type": "number",
       "title": {
-        "en": "Uptime"
+        "en": "Uptime",
+        "it": "Uptime"
       },
       "getable": true,
       "setable": false,
       "insights": true,
       "units": {
-        "en": "Hours"
+        "en": "Hours",
+        "it": "Ore"
       },
       "decimals": 2,
       "uiComponent": null

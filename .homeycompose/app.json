@@ -9,7 +9,8 @@
     "local"
   ],
   "name": {
-    "en": "Unraid"
+    "en": "Unraid",
+    "it": "Unraid"
   },
   "description": {
     "en": "Unleash Your Hardware",
@@ -52,5 +53,8 @@
     ]
   },
   "source": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid",
-  "support": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues"
+  "support": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues",
+  "bugs": {
+    "url": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues"
+  }
 }

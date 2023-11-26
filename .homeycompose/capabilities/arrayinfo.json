@@ -1,10 +1,10 @@
 {
     "type": "number",
-    "title": { "en": "Array Size (Total)" },
+    "title": { "en": "Array Size (Total)", "it": "Dimensione Array (Totale)" },
     "uiComponent": null,
     "getable": true,
     "setable": false,
     "insights": false,
-    "units": { "en": "GB" },
+    "units": { "en": "GB", "it": "GB" },
     "icon": "/assets/icon.svg"
 }

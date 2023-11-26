@@ -1,10 +1,10 @@
 {
     "type": "number",
-    "title": { "en": "CPU used" },
+    "title": { "en": "CPU used", "it": "Utilizzo CPU" },
     "uiComponent": "sensor",
     "getable": true,
     "setable": false,
     "insights": true,
-    "units": { "en": "%" },
+    "units": { "en": "%", "it": "%" },
     "icon": "/assets/capabilities/cpu.svg"
 }

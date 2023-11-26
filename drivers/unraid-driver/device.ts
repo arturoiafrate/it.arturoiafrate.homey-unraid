@@ -22,7 +22,7 @@ class UnraidRemoteDevice extends Homey.Device {
       cacheUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('cache-usage-is-changed'),
       ramUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('ram-usage-is-changed')
     });
-    const settings = await this.getSettings();
+    let settings = await this.getSettings();
     this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
   }
 
@@ -208,7 +208,6 @@ class UnraidRemoteDevice extends Homey.Device {
     let hours = 0;
     let minutes = '0';
     if(uptime){
-      this.log('Uptime: ' + uptime);
       let integerPart = Math.trunc(uptime);
       minutes = Number((uptime-integerPart).toFixed(2)).toString().split('.')[1];
       if(integerPart > 24){

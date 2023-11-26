@@ -1,11 +1,11 @@
 {
     "type": "number",
-    "title": { "en": "RAM Used" },
+    "title": { "en": "RAM Used", "it": "RAM Utilizata" },
     "uiComponent": "sensor",
     "getable": true,
     "setable": false,
     "insights": true,
-    "units": { "en": "%" },
+    "units": { "en": "%", "it": "%" },
     "decimals": 2,
     "icon": "/assets/capabilities/ram.svg"
 }

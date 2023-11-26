@@ -3,20 +3,23 @@
     {
       "id": "cpu-usage-is-changed",
       "title": {
-        "en": "CPU usage is changed"
+        "en": "CPU usage is changed",
+        "it": "L'uso della CPU è cambiato"
       },
       "titleFormatted": {
-        "en": "CPU usage is changed"
+        "en": "CPU usage is changed",
+        "it": "L'uso della CPU è cambiato"
       },
       "hint": {
-        "en": "This flow is triggered when the CPU usage is changed"
+        "en": "This flow is triggered when the CPU usage is changed",
+        "it": "Questo flusso viene attivato quando l'utilizzo della CPU cambia"
       },
       "tokens": [
         {
           "name": "usage-percent",
           "type": "number",
-          "title": { "en": "CPU Usage %" },
-          "example": { "en": "12.5" }
+          "title": { "en": "CPU Usage %", "it": "Utilizzo CPU %" },
+          "example": { "en": "12.5", "it": "12.5" }
         }
       ],
       "args": []
@@ -24,20 +27,23 @@
     {
       "id": "array-usage-is-changed",
       "title": {
-        "en": "Array usage is changed"
+        "en": "Array usage is changed",
+        "it": "L'utilizzo dell'array è cambiato"
       },
       "titleFormatted": {
-        "en": "Array usage is changed"
+        "en": "Array usage is changed",
+        "it": "L'utilizzo dell'array è cambiato"
       },
       "hint": {
-        "en": "This flow is triggered when the Array usage is changed"
+        "en": "This flow is triggered when the Array usage is changed",
+        "it": "Questo flusso viene attivato quando l'utilizzo dell'array cambia"
       },
       "tokens": [
         {
           "name": "usage-percent",
           "type": "number",
-          "title": { "en": "Array Usage %" },
-          "example": { "en": "12.5" }
+          "title": { "en": "Array Usage %", "it": "Utilizzo array %" },
+          "example": { "en": "12.5", "it": "12.5" }
         }
       ],
       "args": []
@@ -45,20 +51,23 @@
     {
       "id": "cache-usage-is-changed",
       "title": {
-        "en": "Cache usage is changed"
+        "en": "Cache usage is changed",
+        "it": "L'utilizzo della cache è cambiato"
       },
       "titleFormatted": {
-        "en": "Cache usage is changed"
+        "en": "Cache usage is changed",
+        "it": "L'utilizzo della cache è cambiato"
       },
       "hint": {
-        "en": "This flow is triggered when the Cache usage is changed"
+        "en": "This flow is triggered when the Cache usage is changed",
+        "it": "Questo flusso viene attivato quando l'utilizzo della cache cambia"
       },
       "tokens": [
         {
           "name": "usage-percent",
           "type": "number",
-          "title": { "en": "Cache Usage %" },
-          "example": { "en": "12.5" }
+          "title": { "en": "Cache Usage %", "it": "Utilizzo cache %" },
+          "example": { "en": "12.5", "it": "12.5" }
         }
       ],
       "args": []
@@ -66,20 +75,23 @@
     {
       "id": "ram-usage-is-changed",
       "title": {
-        "en": "Ram usage is changed"
+        "en": "Ram usage is changed",
+        "it": "L'utilizzo della Ram è cambiato"
       },
       "titleFormatted": {
-        "en": "Ram usage is changed"
+        "en": "Ram usage is changed",
+        "it": "L'utilizzo della Ram è cambiato"
       },
       "hint": {
-        "en": "This flow is triggered when the Ram usage is changed"
+        "en": "This flow is triggered when the Ram usage is changed",
+        "it": "Questo flusso viene attivato quando l'utilizzo della Ram cambia"
       },
       "tokens": [
         {
           "name": "usage-percent",
           "type": "number",
-          "title": { "en": "Ram Usage %" },
-          "example": { "en": "12.5" }
+          "title": { "en": "Ram Usage %", "it": "Utilizzo Ram %" },
+          "example": { "en": "12.5", "it": "12.5" }
         }
       ],
       "args": []

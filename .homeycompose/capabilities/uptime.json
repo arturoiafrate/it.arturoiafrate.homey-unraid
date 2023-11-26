@@ -1,10 +1,10 @@
 {
     "type": "number",
-    "title": { "en": "Uptime" },
+    "title": { "en": "Uptime", "it": "Uptime" },
     "getable": true,
     "setable": false,
     "insights": true,
-    "units": { "en": "Hours" },
+    "units": { "en": "Hours", "it": "Ore" },
     "decimals": 2,
     "uiComponent": null
 }

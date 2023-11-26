@@ -1,16 +1,23 @@
 {
   "title": {
-    "en": "The cpu usage is !{{over|under}} "
+    "en": "The cpu usage is !{{over|under}} ",
+    "it": "L'uso della cpu è !{{oltre|sotto}} "
+  },
+  "titleFormatted": {
+    "en": "The cpu usage is !{{over|under}} [[threshold]]",
+    "it": "L'uso della cpu è !{{oltre|sotto}} la [[threshold]]"
   },
   "hint": {
-    "en": "The cpu usage of unraid server is over a threshold"
+    "en": "The cpu usage of unraid server is over a threshold",
+    "it": "L'uso della cpu del server unraid è oltre una soglia"
   },
   "args": [
     {
       "type": "number",
       "name": "threshold",
       "placeholder": {
-        "en": "threshold"
+        "en": "threshold",
+        "it": "soglia"
       },
       "min": 0.01,
       "max": 100,
