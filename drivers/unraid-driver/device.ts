@@ -1,8 +1,9 @@
-import Homey, { FlowCardTriggerDevice } from 'homey';
+import Homey from 'homey';
 import { UnraidRemote } from './unraid-remote/UnraidRemote';
 import { ISystemStats, ISSHCommandOutput } from './unraid-remote/utils/ISystemStats';
-import { isNonEmpty, objStringify } from '../../utils/utilites';
+import { LogLevel, isNonEmpty, logMessageToSentry, objStringify } from '../../utils/utilites';
 import { UnraidRemoteFlowTrigger } from './unraid-remote/triggers/UnraidRemoteFlowTrigger';
+import { UnraidRemoteApp } from '../../app';
 
 class UnraidRemoteDevice extends Homey.Device {
 
@@ -103,10 +104,12 @@ class UnraidRemoteDevice extends Homey.Device {
       this._unraidRemote.disconnect();
     }
     if(isNonEmpty(url) && isNonEmpty(username) && isNonEmpty(password)){
+      logMessageToSentry(this.homey.app as UnraidRemoteApp, 'UnraidRemote is initializing..', LogLevel.INFO);
       this._unraidRemote = new UnraidRemote(url, username, password, port);
       this._unraidRemote.subscribeIsUnraidServerOnline({
         isOnlineCallback: () => {
           this.homey.setTimeout(() => {
+            logMessageToSentry(this.homey.app as UnraidRemoteApp, 'Unraid Server is online.', LogLevel.INFO);
             this.setCapabilityValue("onoff", true); 
             this.setAvailable();
             if(!this._isInit && this._unraidRemote){
@@ -119,6 +122,7 @@ class UnraidRemoteDevice extends Homey.Device {
         },
         isOfflineCallback: () => {
           this.homey.setTimeout(() => {
+            logMessageToSentry(this.homey.app as UnraidRemoteApp, 'Unraid Server is offline.', LogLevel.INFO);
             this._setOffline();
           }, 500);
         }
@@ -127,6 +131,7 @@ class UnraidRemoteDevice extends Homey.Device {
       this._pingPollerStart(pingInterval == 0 ? 3 : pingInterval);
       this._checkPollerStart(checkInterval == 0 ? 6 : checkInterval);
     } else {
+      logMessageToSentry(this.homey.app as UnraidRemoteApp, 'UnraidRemote is not initialized', LogLevel.INFO);
       this.homey.setTimeout(() => {
         this._setOffline();
       }, 500);
@@ -182,9 +187,10 @@ class UnraidRemoteDevice extends Homey.Device {
     this._updateArrayUsedCapability(0);
     this._updateCacheUsedCapability(0);
     this._updateRamUsedCapability(0);
-  };
+  }
 
   _updateDeviceCapabilities(systemStats : ISystemStats, setInfo : boolean) : void{
+    logMessageToSentry(this.homey.app as UnraidRemoteApp, objStringify('Updating device capabilities with stats: ', systemStats), LogLevel.INFO);
     if(setInfo){
       this.setCapabilityValue("raminfo", systemStats.ramUsage.total).catch(this.error);
       this.setCapabilityValue("arrayinfo", systemStats.arrayUsage.total).catch(this.error);
@@ -202,11 +208,14 @@ class UnraidRemoteDevice extends Homey.Device {
     let hours = 0;
     let minutes = '0';
     if(uptime){
+      this.log('Uptime: ' + uptime);
       let integerPart = Math.trunc(uptime);
       minutes = Number((uptime-integerPart).toFixed(2)).toString().split('.')[1];
       if(integerPart > 24){
         days = Math.trunc(integerPart / 24);
         hours = Math.trunc(integerPart % 24);
+      } else {
+        hours = integerPart;
       }
     }
     const uptimeString = days + 'd ' + hours + 'h ' + minutes + 'm';

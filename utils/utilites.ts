@@ -1,4 +1,4 @@
-import UnraidRemoteApp from "../app";
+import { UnraidRemoteApp }  from "../app";
 import Homey from 'homey';
 
 export enum LogLevel {

@@ -11,7 +11,7 @@ The copyrighted materials on this app may be used for informational purposes onl
 ### Attributions
 [RidenUI Unraid API Client](https://unraid.ridenui.org/)
 [Wake On Lan](https://github.com/song940/wake-on-lan)
-[Ping](https://github.com/danielzzz/node-ping)
+[Ping](https://github.com/justintaddei/tcp-ping)
 [CPU Usage Capability Icon](https://www.svgrepo.com/svg/454733/chip-computer-cpu)
 [Array Usage Capability Icon](https://www.svgrepo.com/svg/454742/computer-device-digital-6)
 [RAM Usage Capability Icon](https://www.svgrepo.com/svg/454734/computer-device-digital-3)

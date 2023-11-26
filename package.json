@@ -16,9 +16,9 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@network-utils/tcp-ping": "^1.2.3",
     "@ridenui/unraid": "^0.17.0",
     "homey-log": "^2.1.0",
-    "ping": "^0.4.4",
     "ssh2": "^1.14.0",
     "wol": "^1.0.7"
   }

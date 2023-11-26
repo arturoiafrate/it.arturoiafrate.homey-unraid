@@ -112,4 +112,4 @@ class UnraidRemoteApp extends Homey.App {
 }
 
 module.exports = UnraidRemoteApp;
-export default UnraidRemoteApp;
+export { UnraidRemoteApp };
