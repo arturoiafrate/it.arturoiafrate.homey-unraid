@@ -1,5 +1,5 @@
 {
-  "name": "it.arturoiafrate.homey-unraid",
+  "name": "it.arturoiafrate.h-unraid-integration",
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {

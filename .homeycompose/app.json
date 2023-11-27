@@ -1,5 +1,5 @@
 {
-  "id": "it.arturoiafrate.homey-unraid",
+  "id": "it.arturoiafrate.h-unraid-integration",
   "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
@@ -52,9 +52,9 @@
       "NAS"
     ]
   },
-  "source": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid",
-  "support": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues",
+  "source": "https://github.com/arturoiafrate/it.arturoiafrate.h-unraid-integration",
+  "support": "https://github.com/arturoiafrate/it.arturoiafrate.h-unraid-integration/issues",
   "bugs": {
-    "url": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues"
+    "url": "https://github.com/arturoiafrate/it.arturoiafrate.h-unraid-integration/issues"
   }
 }
