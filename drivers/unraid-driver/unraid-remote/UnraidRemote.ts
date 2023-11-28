@@ -45,9 +45,34 @@ class UnraidRemote {
         this._isOnlineSubscribers = [];
     }
 
+    static async testConnection(url: string, port: number): Promise<boolean>{
+        try{
+            const isOnline = await probe(port, url, 3000);
+            return isOnline;
+        } catch(error){
+            return false;
+        }
+    }
+
+    static async testSSHConnection(url: string, port: number, username: string, password: string): Promise<boolean>{
+        const executor = new SSHExecutor({
+            host: url,
+            username: username,
+            password: password,
+            port: port
+        });
+        try{
+            const { code } = await executor.execute({
+                command: 'echo "Hello World"'
+            });
+            executor.disconnect();
+            return code === 0;
+        } catch(error){
+            return false;
+        }
+    }
+
     async ping(): Promise<boolean> {
-        //let res = await ping.promise.probe(this._url);
-        //this._isOnline = (res && res.alive);
         this._isOnline = await probe(this._port, this._url, 3000);
         this._isOnlineSubscribers.forEach(subscriber => {
             if(this._isOnline){

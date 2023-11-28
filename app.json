@@ -53,11 +53,12 @@
       "NAS"
     ]
   },
-  "source": "https://github.com/arturoiafrate/it.arturoiafrate.h-unraid-integration",
-  "support": "https://github.com/arturoiafrate/it.arturoiafrate.h-unraid-integration/issues",
+  "source": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid",
+  "support": "https://community.homey.app/t/app-pro-unraid/96005",
   "bugs": {
-    "url": "https://github.com/arturoiafrate/it.arturoiafrate.h-unraid-integration/issues"
+    "url": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues"
   },
+  "homeyCommunityTopicId": 96005,
   "flow": {
     "conditions": [
       {

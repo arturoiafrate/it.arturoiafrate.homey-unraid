@@ -1,3 +1,5 @@
 {
-    "settings_saved_ok": "Impostazioni salvate correttamente"
+    "settings_saved_ok": "Impostazioni salvate correttamente e server unRAID online.",
+    "settings_saved_ok_but_unraid_offline": "Impostazioni salvate correttamente, ma unRAID è offline. Verifica le impostazioni di rete.",
+    "settings_saved_ok_but_can_not_connect_to_unraid": "Impostazioni salvate correttamente e server unRAID online, ma non riesco a collegarmi tramite SSH. Verifica le credenziali inserite."
 }

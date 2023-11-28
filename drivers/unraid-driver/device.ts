@@ -4,6 +4,7 @@ import { ISystemStats, ISSHCommandOutput } from './unraid-remote/utils/ISystemSt
 import { LogLevel, isNonEmpty, logMessageToSentry, objStringify } from '../../utils/utilites';
 import { UnraidRemoteFlowTrigger } from './unraid-remote/triggers/UnraidRemoteFlowTrigger';
 import { UnraidRemoteApp } from '../../app';
+import { isNumber } from 'util';
 
 class UnraidRemoteDevice extends Homey.Device {
 
@@ -41,32 +42,21 @@ class UnraidRemoteDevice extends Homey.Device {
     newSettings: { [key: string]: boolean | string | number | undefined | null };
     changedKeys: string[];
   }): Promise<string | void> {
-    let settings = await this.getSettings();
-    changedKeys.forEach((settingKey) => {//Reading new settings
-      if(settingKey === 'host') {
-        settings.host = newSettings[settingKey];
+    let checkConnection = await UnraidRemote.testConnection(newSettings.host as string, newSettings.port as number);
+    let checkSSHConnection : boolean = false;
+    if(checkConnection){
+      checkSSHConnection = await UnraidRemote.testSSHConnection(newSettings.host as string, newSettings.port as number, newSettings.username as string, newSettings.password as string);
+    }
+    this._initUnraidRemote(newSettings.host as string, newSettings.username as string, newSettings.password as string, newSettings.port as number, newSettings.pingInterval as number, newSettings.checkInterval as number);
+    if(checkConnection && checkSSHConnection){
+      return this.homey.__("settings_saved_ok");
+    } else {
+      if(!checkConnection){
+        return this.homey.__("settings_saved_ok_but_unraid_offline");
+      } else {
+        return this.homey.__("settings_saved_ok_but_can_not_connect_to_unraid");
       }
-      if(settingKey === 'username') {
-        settings.username = newSettings[settingKey];
-      }
-      if(settingKey === 'password') {
-        settings.password = newSettings[settingKey];
-      }
-      if(settingKey === 'port') {
-        settings.port = newSettings[settingKey];
-      }
-      if(settingKey === 'pingInterval'){
-        settings.pingInterval = newSettings[settingKey];
-      }
-      if(settingKey === 'macaddress'){
-        settings.macaddress = newSettings[settingKey];
-      }
-      if(settingKey === 'checkInterval'){
-        settings.checkInterval = newSettings[settingKey];
-      }
-    });
-    this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
-    return this.homey.__("settings_saved_ok");
+    }
   }
 
   async onDeleted() {
@@ -207,7 +197,7 @@ class UnraidRemoteDevice extends Homey.Device {
     let days = 0;
     let hours = 0;
     let minutes = '0';
-    if(uptime){
+    if(uptime && typeof uptime === 'number'){
       let integerPart = Math.trunc(uptime);
       minutes = Number((uptime-integerPart).toFixed(2)).toString().split('.')[1];
       if(integerPart > 24){

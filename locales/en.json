@@ -1,3 +1,5 @@
 {
-    "settings_saved_ok": "Settings saved successfully"
+    "settings_saved_ok": "Settings saved successfully and your unRAID is online.",
+    "settings_saved_ok_but_unraid_offline": "Settings saved successfully, but unRAID is offline.  Please check your network settings.",
+    "settings_saved_ok_but_can_not_connect_to_unraid": "Settings saved successfully and your unRAID is online, but can not connect through SSH. Please check your credentials."
 }
