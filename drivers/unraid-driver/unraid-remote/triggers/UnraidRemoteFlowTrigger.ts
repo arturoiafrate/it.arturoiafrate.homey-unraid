@@ -1,10 +1,12 @@
 import Homey, { FlowCardTriggerDevice } from 'homey';
+import { Container, DockerMonitor } from '../utils/IDockerContainer';
 
 interface DeviceTriggerCards {
     cpuUsageTriggerCard: FlowCardTriggerDevice,
     arrayUsageTriggerCard: FlowCardTriggerDevice
     cacheUsageTriggerCard: FlowCardTriggerDevice
     ramUsageTriggerCard: FlowCardTriggerDevice
+    dockerContainerStatusChangedTriggerCard : FlowCardTriggerDevice
 }
 
 class UnraidRemoteFlowTrigger {
@@ -12,12 +14,16 @@ class UnraidRemoteFlowTrigger {
     _arrayUsageIsChangedTriggerCard : FlowCardTriggerDevice;
     _cacheUsageIsChangedTriggerCard : FlowCardTriggerDevice;
     _ramUsageIsChangedTriggerCard : FlowCardTriggerDevice;
+    _dockerContainerStatusChangedTriggerCard : FlowCardTriggerDevice;
+    _dockerMonitor : DockerMonitor;
 
     constructor(triggers : DeviceTriggerCards){
         this._cpuUsageIsChangedTriggerCard = triggers.cpuUsageTriggerCard;
         this._arrayUsageIsChangedTriggerCard = triggers.arrayUsageTriggerCard;
         this._cacheUsageIsChangedTriggerCard = triggers.cacheUsageTriggerCard;
         this._ramUsageIsChangedTriggerCard = triggers.ramUsageTriggerCard;
+        this._dockerContainerStatusChangedTriggerCard = triggers.dockerContainerStatusChangedTriggerCard;
+        this._dockerMonitor = new DockerMonitor();
     }
 
     triggerCpuUsageFlowCard(device: Homey.Device,cpuUsage: number){
@@ -34,6 +40,23 @@ class UnraidRemoteFlowTrigger {
 
     triggerRamUsageFlowCard(device: Homey.Device,ramUsage: number){
         this._ramUsageIsChangedTriggerCard?.trigger(device, { 'usage-percent': ramUsage }, undefined);
+    }
+    
+    async triggerDockerContainerStatusChangedFlowCard(device: Homey.Device, containers: Container[]){
+        let args: any[] = await this._dockerContainerStatusChangedTriggerCard.getArgumentValues(device);
+        for(const arg of args){
+            let container = arg.container as Container;
+            if(this._dockerMonitor.isStatusChanged(container.id, containers)){
+                const containerUpdate = containers.find((cont) => cont.id === container.id);
+                const isOnline : boolean = this._dockerMonitor.isOnline(container.id);
+                const tokens = {
+                    'online-status':  isOnline,
+                    'status': containerUpdate?.status
+                };
+                this._dockerContainerStatusChangedTriggerCard?.trigger(device, tokens, undefined);
+            }
+        }
+        
     }
 };
 

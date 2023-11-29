@@ -1,0 +1,24 @@
+{
+  "title": {
+    "en": "The container !{{is|isn't}} running",
+    "it": "Il container !{{è|non è}} avviato"
+  },
+  "titleFormatted": {
+    "en": "[[container]] !{{is|isn't}} running",
+    "it": "[[container]] !{{è|non è}} avviato"
+  },
+  "hint": {
+    "en": "Check if the cointainer is running or not",
+    "it": "Verifica se il container è avviato o meno"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "container",
+      "placeholder": {
+        "en": "container",
+        "it": "container"
+      }
+    }
+  ]
+}

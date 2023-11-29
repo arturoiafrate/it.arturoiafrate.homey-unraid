@@ -91,6 +91,31 @@
       },
       {
         "title": {
+          "en": "The container !{{is|isn't}} running",
+          "it": "Il container !{{è|non è}} avviato"
+        },
+        "titleFormatted": {
+          "en": "[[container]] !{{is|isn't}} running",
+          "it": "[[container]] !{{è|non è}} avviato"
+        },
+        "hint": {
+          "en": "Check if the cointainer is running or not",
+          "it": "Verifica se il container è avviato o meno"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "container",
+            "placeholder": {
+              "en": "container",
+              "it": "container"
+            }
+          }
+        ],
+        "id": "container-is-running-condition"
+      },
+      {
+        "title": {
           "en": "The cpu usage is !{{over|under}} ",
           "it": "L'uso della cpu è !{{oltre|sotto}} "
         },
@@ -116,6 +141,33 @@
           }
         ],
         "id": "cpu-usage-condition"
+      },
+      {
+        "title": {
+          "en": "The RAM usage is !{{over|under}}",
+          "it": "L'uso della RAM è !{{oltre|sotto}}"
+        },
+        "titleFormatted": {
+          "en": "The RAM usage is !{{over|under}} [[threshold]] %",
+          "it": "L'uso della RAM è !{{oltre|sotto}} [[threshold]] %"
+        },
+        "hint": {
+          "en": "The RAM usage of unraid server is over a threshold",
+          "it": "L'utilizzo della RAM del server unraid è oltre una soglia"
+        },
+        "args": [
+          {
+            "type": "number",
+            "name": "threshold",
+            "placeholder": {
+              "en": "threshold"
+            },
+            "min": 0.01,
+            "max": 100,
+            "step": 0.01
+          }
+        ],
+        "id": "ram-usage-condition"
       },
       {
         "title": {
@@ -184,6 +236,81 @@
       }
     ],
     "actions": [
+      {
+        "title": {
+          "en": "Start the container",
+          "it": "Avvia il container"
+        },
+        "titleFormatted": {
+          "en": "Start [[container]]",
+          "it": "Avvia [[container]]"
+        },
+        "hint": {
+          "en": "Start the selected container",
+          "it": "Avvia il container selezionato"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "container",
+            "placeholder": {
+              "en": "container",
+              "it": "container"
+            }
+          }
+        ],
+        "id": "container-start"
+      },
+      {
+        "title": {
+          "en": "Stop the container",
+          "it": "Ferma il container"
+        },
+        "titleFormatted": {
+          "en": "Stop [[container]]",
+          "it": "Ferma [[container]]"
+        },
+        "hint": {
+          "en": "Stop the selected container",
+          "it": "Ferma il container selezionato"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "container",
+            "placeholder": {
+              "en": "container",
+              "it": "container"
+            }
+          }
+        ],
+        "id": "container-stop"
+      },
+      {
+        "title": {
+          "en": "Start/Stop the container",
+          "it": "Avvia/Arresta il container"
+        },
+        "titleFormatted": {
+          "en": "Start/Stop [[container]]",
+          "it": "Avvia/Arresta [[container]]"
+        },
+        "hint": {
+          "en": "Start or stop the selected container",
+          "it": "Avvia o arresta il container selezionato"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "container",
+            "placeholder": {
+              "en": "container",
+              "it": "container"
+            }
+          }
+        ],
+        "id": "container-toggle"
+      },
       {
         "title": {
           "en": "Execute SSH command",
@@ -405,6 +532,54 @@
             "filter": "driver_id=unraid-driver"
           }
         ]
+      },
+      {
+        "id": "docker-container-status-changed",
+        "title": {
+          "en": "Docker container online status changed",
+          "it": "Il container docker cambia stato online"
+        },
+        "titleFormatted": {
+          "en": "[[container]] online status changed",
+          "it": "[[container]] cambia stato online"
+        },
+        "hint": {
+          "en": "This flow is triggered when a docker container online status is changed",
+          "it": "Questo flusso viene attivato quando lo stato online di un container docker cambia"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=unraid-driver"
+          },
+          {
+            "type": "autocomplete",
+            "name": "container",
+            "placeholder": {
+              "en": "container",
+              "it": "container"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "online-status",
+            "type": "boolean",
+            "title": {
+              "en": "Online",
+              "it": "Online"
+            }
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "it": "Stato"
+            }
+          }
+        ]
       }
     ]
   },
@@ -538,6 +713,19 @@
           "hint": {
             "en": "The interval in seconds to check unraid server changes. Default: 6",
             "it": "L'intervallo in secondi per verificare le modifiche al server unraid. Default: 6"
+          }
+        },
+        {
+          "id": "enableDockerMonitoring",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Docker monitoring",
+            "it": "Monitoraggio Docker"
+          },
+          "hint": {
+            "en": "Enable docker monitoring",
+            "it": "Abilita il monitoraggio di docker"
           }
         }
       ]

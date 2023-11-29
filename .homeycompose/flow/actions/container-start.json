@@ -1,0 +1,24 @@
+{
+  "title": {
+    "en": "Start the container",
+    "it": "Avvia il container"
+  },
+  "titleFormatted": {
+    "en": "Start [[container]]",
+    "it": "Avvia [[container]]"
+  },
+  "hint": {
+    "en": "Start the selected container",
+    "it": "Avvia il container selezionato"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "container",
+      "placeholder": {
+        "en": "container",
+        "it": "container"
+      }
+    }
+  ]
+}

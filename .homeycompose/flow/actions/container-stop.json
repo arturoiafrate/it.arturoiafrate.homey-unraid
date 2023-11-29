@@ -1,0 +1,24 @@
+{
+  "title": {
+    "en": "Stop the container",
+    "it": "Ferma il container"
+  },
+  "titleFormatted": {
+    "en": "Stop [[container]]",
+    "it": "Ferma [[container]]"
+  },
+  "hint": {
+    "en": "Stop the selected container",
+    "it": "Ferma il container selezionato"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "container",
+      "placeholder": {
+        "en": "container",
+        "it": "container"
+      }
+    }
+  ]
+}

@@ -19,17 +19,26 @@ Install the app and add a new unraid device. Open the device settings and config
     - RAM usage
     - Array usage
     - The system uptime
+    - Containers online status changes
 
-2. Actually you can do:
+2. Actually you can check:
+    - If the CPU usage is over/under a threshold
+    - If the Array usage is over/under a threshold
+    - If the RAM usage is over/under a threshold
+    - If the system uptime is over/under a threshold
+    - If a specific container is running
+
+3. Actually you can do:
     - Execute a generic SSH command
     - Execute a generic SSH command and wait for the output (Advanced Flow)
+    - Start/Stop/Toggle existing docker containers
 
 For each one of them you can trigger a flow. For example:
 **_When_ CPU Usage is changed _and_ CPU Usage is over a _threshold_, _execute_ something.**
 
 ### Roadmap
 - [ ] Manage user scripts.
-- [ ] Monitor and manage docker containers.
+- [x] Monitor and manage docker containers.
 - [ ] Monitor and manage VMs. 
 
 ### Disclaimer

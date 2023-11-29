@@ -1,0 +1,24 @@
+{
+  "title": {
+    "en": "Start/Stop the container",
+    "it": "Avvia/Arresta il container"
+  },
+  "titleFormatted": {
+    "en": "Start/Stop [[container]]",
+    "it": "Avvia/Arresta [[container]]"
+  },
+  "hint": {
+    "en": "Start or stop the selected container",
+    "it": "Avvia o arresta il container selezionato"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "container",
+      "placeholder": {
+        "en": "container",
+        "it": "container"
+      }
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import { ISystemStats, ISSHCommandOutput } from './unraid-remote/utils/ISystemSt
 import { LogLevel, isNonEmpty, logMessageToSentry, objStringify } from '../../utils/utilites';
 import { UnraidRemoteFlowTrigger } from './unraid-remote/triggers/UnraidRemoteFlowTrigger';
 import { UnraidRemoteApp } from '../../app';
-import { isNumber } from 'util';
+import { Container } from './unraid-remote/utils/IDockerContainer';
 
 class UnraidRemoteDevice extends Homey.Device {
 
@@ -13,17 +13,26 @@ class UnraidRemoteDevice extends Homey.Device {
   _checkPoller?: NodeJS.Timeout;
   _isInit: boolean = false;
   _flowTriggers?: UnraidRemoteFlowTrigger;
+  _enableDockerMonitoring: boolean = false;
 
 
   async onInit() {
     this._addCapabilities();
+    this.homey.flow.getDeviceTriggerCard('docker-container-status-changed').registerArgumentAutocompleteListener('container', async (query, args) => {
+      const containers = await this.containerList();
+      return containers.filter((container) => {
+        return container.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
     this._flowTriggers = new UnraidRemoteFlowTrigger({
       cpuUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('cpu-usage-is-changed'), 
       arrayUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('array-usage-is-changed'),
       cacheUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('cache-usage-is-changed'),
-      ramUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('ram-usage-is-changed')
+      ramUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('ram-usage-is-changed'),
+      dockerContainerStatusChangedTriggerCard: this.homey.flow.getDeviceTriggerCard('docker-container-status-changed')
     });
     let settings = await this.getSettings();
+    this._enableDockerMonitoring = settings.enableDockerMonitoring as boolean;
     this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
   }
 
@@ -47,6 +56,7 @@ class UnraidRemoteDevice extends Homey.Device {
     if(checkConnection){
       checkSSHConnection = await UnraidRemote.testSSHConnection(newSettings.host as string, newSettings.port as number, newSettings.username as string, newSettings.password as string);
     }
+    this._enableDockerMonitoring = newSettings.enableDockerMonitoring as boolean;
     this._initUnraidRemote(newSettings.host as string, newSettings.username as string, newSettings.password as string, newSettings.port as number, newSettings.pingInterval as number, newSettings.checkInterval as number);
     if(checkConnection && checkSSHConnection){
       return this.homey.__("settings_saved_ok");
@@ -128,6 +138,26 @@ class UnraidRemoteDevice extends Homey.Device {
     }
   }
 
+  async containerList(): Promise<Container[]>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.containerList();
+  }
+
+  async isContainerRunning(containerId: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.isContainerRunning(containerId);
+  }
+
+  async startContainer(containerId: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.startContainer(containerId);
+  }
+
+  async stopContainer(containerId: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.stopContainer(containerId);
+  }
+
   _setOffline(): void{
     this.setCapabilityValue("onoff", false);
     this.setUnavailable();
@@ -179,7 +209,7 @@ class UnraidRemoteDevice extends Homey.Device {
     this._updateRamUsedCapability(0);
   }
 
-  _updateDeviceCapabilities(systemStats : ISystemStats, setInfo : boolean) : void{
+  async _updateDeviceCapabilities(systemStats : ISystemStats, setInfo : boolean) : Promise<void>{
     logMessageToSentry(this.homey.app as UnraidRemoteApp, objStringify('Updating device capabilities with stats: ', systemStats), LogLevel.INFO);
     if(setInfo){
       this.setCapabilityValue("raminfo", systemStats.ramUsage.total).catch(this.error);
@@ -190,6 +220,9 @@ class UnraidRemoteDevice extends Homey.Device {
     this._updateArrayUsedCapability(systemStats.arrayUsage.percentUsed);
     this._updateCacheUsedCapability(systemStats.cacheUsage.percentUsed);
     this._updateRamUsedCapability(systemStats.ramUsage.percentUsed);
+    if(this._enableDockerMonitoring){
+      this._flowTriggers?.triggerDockerContainerStatusChangedFlowCard(this, await this.containerList());
+    }
   }
 
   _updateUptimeCapability(uptime : number|undefined) : void{
@@ -244,6 +277,7 @@ class UnraidRemoteDevice extends Homey.Device {
     if(isNonEmpty(settings.macaddress) && this._unraidRemote){
       this._unraidRemote.turnOn(settings.macaddress);
     }
+    this._enableDockerMonitoring = settings.enableDockerMonitoring as boolean;
     this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
   }
 

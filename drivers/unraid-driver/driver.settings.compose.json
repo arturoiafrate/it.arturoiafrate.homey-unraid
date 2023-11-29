@@ -89,5 +89,18 @@
           "en": "The interval in seconds to check unraid server changes. Default: 6",
           "it": "L'intervallo in secondi per verificare le modifiche al server unraid. Default: 6"
         }
+    },
+    {
+      "id": "enableDockerMonitoring",
+      "type": "checkbox",
+      "value": false,
+      "label": {
+        "en": "Docker monitoring",
+        "it": "Monitoraggio Docker"
+      },
+      "hint": {
+        "en": "Enable docker monitoring",
+        "it": "Abilita il monitoraggio di docker"
+      }
     }
 ]

@@ -5,6 +5,7 @@ import { IPingEventSubscriber } from './utils/IPingEventSubscriber';
 import { ICPUUsage, IMemoryUsage, ISSHCommandOutput, ISystemStats, IUptimeExt } from './utils/ISystemStats';
 import { CPUUsage } from '@ridenui/unraid/dist/modules/system/extensions/cpu';
 import { IExecuteResult } from '@ridenui/unraid/dist/instance/executor';
+import { Container } from './utils/IDockerContainer';
 
 class UnraidRemote {
     _url: string;
@@ -143,6 +144,52 @@ class UnraidRemote {
         sysStats.diskUsage = await this._unraid.system.diskfree();  
         return sysStats;
     }
+
+    async containerList() : Promise<Container[]>{
+        let containers : Container[] = [];
+        const { code, stdout, stderr } = await this._executor.executeSSH({
+            command: `docker ps -a --no-trunc --format '{{.ID}};{{.Names}};{{.Status}};'`
+        });
+        if(code === 0 && stdout && stdout.length > 0){
+            for(let i = 0; i < stdout.length; i++){
+                let infos = stdout[i].trim().split(';');
+                let container : Container = {
+                    id: infos[0],
+                    name: infos[1],
+                    status: infos[2]
+                }
+                containers.push(container);
+            }
+        }
+        return containers;
+    }
+
+    async isContainerRunning(containerId: string) : Promise<boolean>{
+        const { code, stdout, stderr } = await this._executor.executeSSH({
+            command: `docker ps --no-trunc --quiet | grep ${containerId}`
+        });
+        if(code === 0 && stdout && stdout.length > 0){
+            if(stdout[0].trim() === containerId){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    async startContainer(containerId: string) : Promise<boolean>{
+        const { code, stdout, stderr } = await this._executor.executeSSH({
+            command: `docker start ${containerId}`
+        });
+        return code === 0;
+    }
+
+    async stopContainer(containerId: string) : Promise<boolean>{
+        const { code, stdout, stderr } = await this._executor.executeSSH({
+            command: `docker stop ${containerId}`
+        });
+        return code === 0;
+    }
+
 
     disconnect() {
         this._executor.disconnect();

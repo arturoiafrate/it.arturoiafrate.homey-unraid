@@ -18,8 +18,14 @@
         {
           "name": "usage-percent",
           "type": "number",
-          "title": { "en": "CPU Usage %", "it": "Utilizzo CPU %" },
-          "example": { "en": "12.5", "it": "12.5" }
+          "title": {
+            "en": "CPU Usage %",
+            "it": "Utilizzo CPU %"
+          },
+          "example": {
+            "en": "12.5",
+            "it": "12.5"
+          }
         }
       ],
       "args": []
@@ -42,8 +48,14 @@
         {
           "name": "usage-percent",
           "type": "number",
-          "title": { "en": "Array Usage %", "it": "Utilizzo array %" },
-          "example": { "en": "12.5", "it": "12.5" }
+          "title": {
+            "en": "Array Usage %",
+            "it": "Utilizzo array %"
+          },
+          "example": {
+            "en": "12.5",
+            "it": "12.5"
+          }
         }
       ],
       "args": []
@@ -66,8 +78,14 @@
         {
           "name": "usage-percent",
           "type": "number",
-          "title": { "en": "Cache Usage %", "it": "Utilizzo cache %" },
-          "example": { "en": "12.5", "it": "12.5" }
+          "title": {
+            "en": "Cache Usage %",
+            "it": "Utilizzo cache %"
+          },
+          "example": {
+            "en": "12.5",
+            "it": "12.5"
+          }
         }
       ],
       "args": []
@@ -90,11 +108,60 @@
         {
           "name": "usage-percent",
           "type": "number",
-          "title": { "en": "Ram Usage %", "it": "Utilizzo Ram %" },
-          "example": { "en": "12.5", "it": "12.5" }
+          "title": {
+            "en": "Ram Usage %",
+            "it": "Utilizzo Ram %"
+          },
+          "example": {
+            "en": "12.5",
+            "it": "12.5"
+          }
         }
       ],
       "args": []
+    },
+    {
+      "id": "docker-container-status-changed",
+      "title": {
+        "en": "Docker container online status changed",
+        "it": "Il container docker cambia stato online"
+      },
+      "titleFormatted": {
+        "en": "[[container]] online status changed",
+        "it": "[[container]] cambia stato online"
+      },
+      "hint": {
+        "en": "This flow is triggered when a docker container online status is changed",
+        "it": "Questo flusso viene attivato quando lo stato online di un container docker cambia"
+      },
+      "args": [
+        {
+          "type": "autocomplete",
+          "name": "container",
+          "placeholder": {
+            "en": "container",
+            "it": "container"
+          }
+        }
+      ],
+      "tokens": [
+        {
+          "name": "online-status",
+          "type": "boolean",
+          "title": {
+            "en": "Online",
+            "it": "Online"
+          }
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "title": {
+            "en": "Status",
+            "it": "Stato"
+          }
+        }
+      ]
     }
   ]
 }
