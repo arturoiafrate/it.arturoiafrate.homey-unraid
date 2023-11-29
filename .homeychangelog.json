@@ -4,5 +4,8 @@
   },
   "1.0.1": {
     "en": "Bugfixes and setup optimizations."
+  },
+  "1.1.0": {
+    "en": "Added RAM usage condition flow. Initial Docker Container Management system: added 'Container online status change' when card; added 'a specific container is running' and card; added 'start/stop/toggle container' then card. "
   }
 }
