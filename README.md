@@ -53,3 +53,7 @@ The copyrighted materials on this app may be used for informational purposes onl
 - [Array Usage Capability Icon](https://www.svgrepo.com/svg/454742/computer-device-digital-6)
 - [RAM Usage Capability Icon](https://www.svgrepo.com/svg/454734/computer-device-digital-3)
 - [Uptime Capability Icon](https://www.svgrepo.com/svg/415299/timer-clock-alarm-time-watch)
+
+### Download
+- [Public version](https://homey.app/a/it.arturoiafrate.h-unraid-integration/)
+- [Test version](https://homey.app/a/it.arturoiafrate.h-unraid-integration/test/)
