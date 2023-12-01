@@ -8,15 +8,15 @@ import { IExecuteResult } from '@ridenui/unraid/dist/instance/executor';
 import { Container } from './utils/IDockerContainer';
 
 class UnraidRemote {
-    _url: string;
-    _username: string;
-    _password: string;
-    _port: number;
-    _unraid: Unraid;
-    _executor: SSHExecutor;
+    private _url: string;
+    private _username: string;
+    private _password: string;
+    private _port: number;
+    private _unraid: Unraid;
+    private _executor: SSHExecutor;
 
-    _isOnline: boolean = false;
-    _isOnlineSubscribers: IPingEventSubscriber[] = [];
+    private _isOnline: boolean = false;
+    private _isOnlineSubscribers: IPingEventSubscriber[] = [];
 
     constructor(url: string, username: string, password: string, port: number) {
         this._url = url;
@@ -47,6 +47,7 @@ class UnraidRemote {
     }
 
     static async testConnection(url: string, port: number): Promise<boolean>{
+
         try{
             const isOnline = await probe(port, url, 3000);
             return isOnline;
@@ -74,14 +75,18 @@ class UnraidRemote {
     }
 
     async ping(): Promise<boolean> {
-        this._isOnline = await probe(this._port, this._url, 3000);
-        this._isOnlineSubscribers.forEach(subscriber => {
-            if(this._isOnline){
-                subscriber.isOnlineCallback();
-            } else {
-                subscriber.isOfflineCallback();
-            }
-        });
+        try{
+            this._isOnline = await probe(this._port, this._url, 3000);
+            this._isOnlineSubscribers.forEach(subscriber => {
+                if(this._isOnline){
+                    subscriber.isOnlineCallback();
+                } else {
+                    subscriber.isOfflineCallback();
+                }
+            });
+        } catch(error){
+            this._isOnline = false
+        }
         return this._isOnline;
     }
 
@@ -89,21 +94,39 @@ class UnraidRemote {
         return this._isOnline;
     }
 
-    turnOn(macAddress: String): void {
+    turnOn(macAddress: String): boolean {
         const wol = require('wol');
-        wol.wake(macAddress, function(err: any, res: any){});
+        try{
+            return wol.wake(macAddress, function(err: any, res: any){
+                if(err) Promise.resolve (false);
+                return Promise.resolve(true);
+            });
+        } catch(error){
+            return false;
+        }
     }
     
-    turnOff(): void {
-        this._executor.executeSSH({
-            command: 'shutdown -h now'
-        });
+    turnOff(): boolean {
+        try{
+            this._executor.executeSSH({
+                command: 'shutdown -h now'
+            });
+            return true;
+        } catch(error){
+            return false;
+        }
+        
     }
 
-    executeShellCommandNoWait(command: string) {
-        this._executor.executeSSH({
-            command: command
-        });
+    executeShellCommandNoWait(command: string) : boolean {
+        try{
+            this._executor.executeSSH({
+                command: command
+            });
+            return true;
+        } catch(error){
+            return false;
+        }
     }
 
     async executeShellCommand(command: string): Promise<ISSHCommandOutput>{

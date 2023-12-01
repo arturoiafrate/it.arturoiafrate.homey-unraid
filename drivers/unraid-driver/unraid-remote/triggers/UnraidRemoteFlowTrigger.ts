@@ -10,12 +10,12 @@ interface DeviceTriggerCards {
 }
 
 class UnraidRemoteFlowTrigger {
-    _cpuUsageIsChangedTriggerCard : FlowCardTriggerDevice;
-    _arrayUsageIsChangedTriggerCard : FlowCardTriggerDevice;
-    _cacheUsageIsChangedTriggerCard : FlowCardTriggerDevice;
-    _ramUsageIsChangedTriggerCard : FlowCardTriggerDevice;
-    _dockerContainerStatusChangedTriggerCard : FlowCardTriggerDevice;
-    _dockerMonitor : DockerMonitor;
+    private _cpuUsageIsChangedTriggerCard : FlowCardTriggerDevice;
+    private _arrayUsageIsChangedTriggerCard : FlowCardTriggerDevice;
+    private _cacheUsageIsChangedTriggerCard : FlowCardTriggerDevice;
+    private _ramUsageIsChangedTriggerCard : FlowCardTriggerDevice;
+    private _dockerContainerStatusChangedTriggerCard : FlowCardTriggerDevice;
+    private _dockerMonitor : DockerMonitor;
 
     constructor(triggers : DeviceTriggerCards){
         this._cpuUsageIsChangedTriggerCard = triggers.cpuUsageTriggerCard;

@@ -1,19 +1,19 @@
 import Homey from 'homey';
 import { UnraidRemote } from './unraid-remote/UnraidRemote';
 import { ISystemStats, ISSHCommandOutput } from './unraid-remote/utils/ISystemStats';
-import { LogLevel, isNonEmpty, logMessageToSentry, objStringify } from '../../utils/utilites';
+import { LogLevel, isNonEmpty, logMessageToSentry, logErrorToSentry, objStringify } from '../../utils/utilites';
 import { UnraidRemoteFlowTrigger } from './unraid-remote/triggers/UnraidRemoteFlowTrigger';
 import { UnraidRemoteApp } from '../../app';
 import { Container } from './unraid-remote/utils/IDockerContainer';
 
 class UnraidRemoteDevice extends Homey.Device {
 
-  _unraidRemote?: UnraidRemote;
-  _pingPoller?: NodeJS.Timeout;
-  _checkPoller?: NodeJS.Timeout;
-  _isInit: boolean = false;
-  _flowTriggers?: UnraidRemoteFlowTrigger;
-  _enableDockerMonitoring: boolean = false;
+  private _unraidRemote?: UnraidRemote;
+  private _pingPoller?: NodeJS.Timeout;
+  private _checkPoller?: NodeJS.Timeout;
+  private _isInit: boolean = false;
+  private _flowTriggers?: UnraidRemoteFlowTrigger;
+  private _enableDockerMonitoring: boolean = false;
 
 
   async onInit() {
@@ -73,21 +73,41 @@ class UnraidRemoteDevice extends Homey.Device {
     this._pingPollerStop();
     this._checkPollerStop();
     if(this._unraidRemote){
-      this._unraidRemote.unsubscribeAll();
-      this._unraidRemote.disconnect();
+      try{
+        this._unraidRemote.unsubscribeAll();
+        this._unraidRemote.disconnect();
+      } catch(error){
+        //logErrorToSentry(this.homey.app as UnraidRemoteApp, error as Error);
+      }
       await this.setUnavailable();
     }
   }
 
   executeShellCommandNoWait(command: string): void{
     if(this._unraidRemote && command){
-      this._unraidRemote.executeShellCommand(command);
+      try{
+        this._unraidRemote.executeShellCommand(command);
+      } catch(error){
+        //logErrorToSentry(this.homey.app as UnraidRemoteApp, error as Error);
+      }
     }
   }
   
   async executeShellCommand(command: string): Promise<ISSHCommandOutput>{
     if(this._unraidRemote && command){
-      return this._unraidRemote.executeShellCommand(command);
+      try{
+        return this._unraidRemote.executeShellCommand(command);
+      } catch(error){
+        //logErrorToSentry(this.homey.app as UnraidRemoteApp, error as Error);
+        const err = error as Error;
+        let out : ISSHCommandOutput = {
+          code: -990,
+          stdout: undefined,
+          stderr: err.message
+        };
+        return out;
+      }
+      
     } else {
       let out : ISSHCommandOutput = {
         code: -998,
@@ -113,10 +133,14 @@ class UnraidRemoteDevice extends Homey.Device {
             this.setCapabilityValue("onoff", true); 
             this.setAvailable();
             if(!this._isInit && this._unraidRemote){
-              this._unraidRemote.systemInfo().then((systemInfo) => {
-                this._updateDeviceCapabilities(systemInfo, true);
-                this._isInit = true;
-              });
+              try{
+                this._unraidRemote.systemInfo().then((systemInfo) => {
+                  this._updateDeviceCapabilities(systemInfo, true);
+                  this._isInit = true;
+                });
+              } catch(error){
+                //logErrorToSentry(this.homey.app as UnraidRemoteApp, error as Error);
+              }
             }
           }, 500);
         },
@@ -184,9 +208,13 @@ class UnraidRemoteDevice extends Homey.Device {
       this._checkPollerStop();
       this._checkPoller = this.homey.setInterval( () => {
         if(this._unraidRemote && this._unraidRemote.isOnline){
-          this._unraidRemote.systemStats().then(sysStats => {
-            this._updateDeviceCapabilities(sysStats, false);
-          }).catch(this.error);
+          try{
+            this._unraidRemote.systemStats().then(sysStats => {
+              this._updateDeviceCapabilities(sysStats, false);
+            });//.catch(this.error);
+          }catch(error){
+            //logErrorToSentry(this.homey.app as UnraidRemoteApp, error as Error);
+          }
         }
       }, checkInterval * 1000);
     }
@@ -200,8 +228,8 @@ class UnraidRemoteDevice extends Homey.Device {
   }
 
   _resetDeviceCapabilities() : void{
-    this.setCapabilityValue("raminfo", 0).catch(this.error);
-    this.setCapabilityValue("arrayinfo", 0).catch(this.error);
+    this.setCapabilityValue("raminfo", 0);//.catch(this.error);
+    this.setCapabilityValue("arrayinfo", 0);//.catch(this.error);
     this._updateUptimeCapability(0);
     this._updateCpuUsedCapability(0);
     this._updateArrayUsedCapability(0);
@@ -212,8 +240,8 @@ class UnraidRemoteDevice extends Homey.Device {
   async _updateDeviceCapabilities(systemStats : ISystemStats, setInfo : boolean) : Promise<void>{
     logMessageToSentry(this.homey.app as UnraidRemoteApp, objStringify('Updating device capabilities with stats: ', systemStats), LogLevel.INFO);
     if(setInfo){
-      this.setCapabilityValue("raminfo", systemStats.ramUsage.total).catch(this.error);
-      this.setCapabilityValue("arrayinfo", systemStats.arrayUsage.total).catch(this.error);
+      this.setCapabilityValue("raminfo", systemStats.ramUsage.total)//.catch(this.error);
+      this.setCapabilityValue("arrayinfo", systemStats.arrayUsage.total)//.catch(this.error);
     }
     this._updateUptimeCapability(systemStats.uptime.upSince);
     this._updateCpuUsedCapability(systemStats.cpuUsage.percentBusy);
@@ -226,7 +254,7 @@ class UnraidRemoteDevice extends Homey.Device {
   }
 
   _updateUptimeCapability(uptime : number|undefined) : void{
-    this.setCapabilityValue("uptime", uptime).catch(this.error);
+    this.setCapabilityValue("uptime", uptime);//.catch(this.error);
     let days = 0;
     let hours = 0;
     let minutes = '0';
@@ -241,41 +269,45 @@ class UnraidRemoteDevice extends Homey.Device {
       }
     }
     const uptimeString = days + 'd ' + hours + 'h ' + minutes + 'm';
-    this.setCapabilityValue("friendlyUptime", uptimeString).catch(this.error);
+    this.setCapabilityValue("friendlyUptime", uptimeString)//.catch(this.error);
   }
 
   _updateCpuUsedCapability(cpuUsed : number) : void{
     const value = Number(cpuUsed.toFixed(2));
     const oldCPUUsedValue : number = this.hasCapability('cpuused') ? this.getCapabilityValue('cpuused') : 0;
-    this.setCapabilityValue('cpuused', value).catch(this.error);
+    this.setCapabilityValue('cpuused', value);//.catch(this.error);
     if(oldCPUUsedValue != value) this._flowTriggers?.triggerCpuUsageFlowCard(this, value);
   }
 
   _updateArrayUsedCapability(arrayUsed : number) : void{
     const value = Number(arrayUsed.toFixed(2));
     const oldArrayUsedValue : number = this.hasCapability('arrayused') ? this.getCapabilityValue('arrayused') : 0;
-    this.setCapabilityValue('arrayused', value).catch(this.error);
+    this.setCapabilityValue('arrayused', value);//.catch(this.error);
     if(oldArrayUsedValue != value) this._flowTriggers?.triggerArrayUsageFlowCard(this, value);
   }
 
   _updateCacheUsedCapability(cacheUsed : number) : void{
     const value = Number(cacheUsed.toFixed(2)); 
     const oldCacheUsedValue : number = this.hasCapability('cacheused') ? this.getCapabilityValue('cacheused') : 0;
-    this.setCapabilityValue("cacheused", value).catch(this.error);
+    this.setCapabilityValue("cacheused", value);//.catch(this.error);
     if(oldCacheUsedValue != value) this._flowTriggers?.triggerCacheUsageFlowCard(this, value);
   }
 
   _updateRamUsedCapability(ramUsed : number) : void{
     const value = Number(ramUsed.toFixed(2));
     const oldRamUsedValue : number = this.hasCapability('ramused') ? this.getCapabilityValue('ramused') : 0;
-    this.setCapabilityValue("ramused", value).catch(this.error);
+    this.setCapabilityValue("ramused", value);//.catch(this.error);
     if(oldRamUsedValue != value) this._flowTriggers?.triggerRamUsageFlowCard(this, value);
   }
 
   async _turnOn(){
     const settings = await this.getSettings();
     if(isNonEmpty(settings.macaddress) && this._unraidRemote){
-      this._unraidRemote.turnOn(settings.macaddress);
+      try{
+        this._unraidRemote.turnOn(settings.macaddress);
+      } catch(error){
+        //logErrorToSentry(this.homey.app as UnraidRemoteApp, error as Error);
+      }
     }
     this._enableDockerMonitoring = settings.enableDockerMonitoring as boolean;
     this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
@@ -283,7 +315,11 @@ class UnraidRemoteDevice extends Homey.Device {
 
   async _turnOff(){
     if(this._unraidRemote){
-      this._unraidRemote.turnOff();
+      try{
+        this._unraidRemote.turnOff();
+      } catch(error){
+        //logErrorToSentry(this.homey.app as UnraidRemoteApp, error as Error);
+      }
     }
   }
   
