@@ -1,15 +1,18 @@
 {
   "title": {
     "en": "The container !{{is|isn't}} running",
-    "it": "Il container !{{è|non è}} avviato"
+    "it": "Il container !{{è|non è}} avviato",
+    "fr": "Le conteneur !{{is|isn't}} fonctionne"
   },
   "titleFormatted": {
     "en": "[[container]] !{{is|isn't}} running",
-    "it": "[[container]] !{{è|non è}} avviato"
+    "it": "[[container]] !{{è|non è}} avviato",
+    "fr": "[[container]] !{{is|isn't}} fonctionne"
   },
   "hint": {
     "en": "Check if the cointainer is running or not",
-    "it": "Verifica se il container è avviato o meno"
+    "it": "Verifica se il container è avviato o meno",
+    "fr": "Vérifier si le conteneur fonctionne ou pas"
   },
   "args": [
     {
@@ -17,7 +20,8 @@
       "name": "container",
       "placeholder": {
         "en": "container",
-        "it": "container"
+        "it": "container",
+        "fr": "conteneur"
       }
     }
   ]

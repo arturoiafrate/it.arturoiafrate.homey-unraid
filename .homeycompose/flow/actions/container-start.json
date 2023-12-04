@@ -1,15 +1,18 @@
 {
   "title": {
     "en": "Start the container",
-    "it": "Avvia il container"
+    "it": "Avvia il container",
+    "fr": "Démarrage du conteneur"
   },
   "titleFormatted": {
     "en": "Start [[container]]",
-    "it": "Avvia [[container]]"
+    "it": "Avvia [[container]]",
+    "fr": "Démarrage [[container]]"
   },
   "hint": {
     "en": "Start the selected container",
-    "it": "Avvia il container selezionato"
+    "it": "Avvia il container selezionato",
+    "fr": "Démarrage du conteneur sélectionné"
   },
   "args": [
     {
@@ -17,7 +20,8 @@
       "name": "container",
       "placeholder": {
         "en": "container",
-        "it": "container"
+        "it": "container",
+        "fr": "conteneur"
       }
     }
   ]

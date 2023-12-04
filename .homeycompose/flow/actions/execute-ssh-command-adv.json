@@ -1,15 +1,18 @@
 {
   "title": {
     "en": "Execute SSH Command (Advanced)",
-    "it": "Esegui Comando SSH (Avanzato)"
+    "it": "Esegui Comando SSH (Avanzato)",
+    "fr": "Exécuter une commande SSH (Avancé)"
   },
   "titleFormatted": {
     "en": "Execute SSH [[command]] (Advanced)",
-    "it": "Esegui [[command]] SSH (Avanzato)"
+    "it": "Esegui [[command]] SSH (Avanzato)",
+    "fr": "Exécuter SSH [[command]] (Avancé)"
   },
   "hint": {
     "en": "Execute standard SSH command and wait for the output",
-    "it": "Esegui un comando SSH standard e attendi l'output"
+    "it": "Esegui un comando SSH standard e attendi l'output",
+    "fr": "Exécuter une commande SSH standard et attendre le résultat"
   },
   "args": [
     {
@@ -17,7 +20,8 @@
       "name": "command",
       "placeholder": {
         "en": "command",
-        "it": "comando"
+        "it": "comando",
+        "fr": "commande"
       }
     }
   ],
@@ -25,16 +29,28 @@
     {
       "name": "code",
       "type": "number",
-      "title": { "en": "Error code", "it": "Codice di errore" }
+      "title": {
+        "en": "Error code",
+        "it": "Codice di errore",
+        "fr": "Code d'erreur"
+      }
     },
     {
       "name": "stdout",
       "type": "string",
-      "title": { "en": "Standard Output", "it": "Standard Output" }
+      "title": {
+        "en": "Standard Output",
+        "it": "Standard Output",
+        "fr": "Sortie standard"
+      }
     },{
       "name": "stderr",
       "type": "string",
-      "title": { "en": "Standard Error", "it": "Standard Error" }
+      "title": {
+        "en": "Standard Error",
+        "it": "Standard Error",
+        "fr": "Erreur standard"
+      }
     }
   ]
 }

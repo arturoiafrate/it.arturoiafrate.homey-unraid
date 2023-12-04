@@ -10,11 +10,13 @@
   ],
   "name": {
     "en": "Unraid",
-    "it": "Unraid"
+    "it": "Unraid",
+    "fr": "Unraid"
   },
   "description": {
     "en": "Unleash Your Hardware",
-    "it": "Scatena il tuo hardware"
+    "it": "Scatena il tuo hardware",
+    "fr": "Libérez votre matériel"
   },
   "category": [
     "tools",
@@ -36,6 +38,11 @@
         "name": "Arturo Iafrate",
         "email": "arturo.iafrate@gmail.com"
       }
+    ],
+    "translators": [
+      {
+        "name": "hot22shot"
+      }
     ]
   },
   "tags": {
@@ -49,6 +56,12 @@
       "Internet",
       "Tools",
       "Monitoraggio",
+      "NAS"
+    ],
+    "fr": [
+      "Internet",
+      "Tools",
+      "Monitoring",
       "NAS"
     ]
   },

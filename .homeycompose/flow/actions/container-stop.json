@@ -1,15 +1,18 @@
 {
   "title": {
     "en": "Stop the container",
-    "it": "Ferma il container"
+    "it": "Ferma il container",
+    "fr": "Arrêt du conteneur"
   },
   "titleFormatted": {
     "en": "Stop [[container]]",
-    "it": "Ferma [[container]]"
+    "it": "Ferma [[container]]",
+    "fr": "Arrêt [[container]]"
   },
   "hint": {
     "en": "Stop the selected container",
-    "it": "Ferma il container selezionato"
+    "it": "Ferma il container selezionato",
+    "fr": "Arrêt du conteneur sélectionné"
   },
   "args": [
     {
@@ -17,7 +20,8 @@
       "name": "container",
       "placeholder": {
         "en": "container",
-        "it": "container"
+        "it": "container",
+        "fr": "conteneur"
       }
     }
   ]

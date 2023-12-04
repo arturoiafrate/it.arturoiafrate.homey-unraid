@@ -1,22 +1,27 @@
 {
   "title": {
-    "en": "The RAM usage is !{{over|under}}",
-    "it": "L'uso della RAM è !{{oltre|sotto}}"
+    "en": "The RAM usage is !{{over|under}} ",
+    "it": "L'uso della RAM è !{{oltre|sotto}} ",
+    "fr": "L'usage de la RAM est !{{over|under}} "
   },
   "titleFormatted": {
     "en": "The RAM usage is !{{over|under}} [[threshold]] %",
-    "it": "L'uso della RAM è !{{oltre|sotto}} [[threshold]] %"
+    "it": "L'uso della RAM è !{{oltre|sotto}} [[threshold]] %",
+    "fr": "L'usage de la RAM est !{{over|under}} [[threshold]] %"
   },
   "hint": {
     "en": "The RAM usage of unraid server is over a threshold",
-    "it": "L'utilizzo della RAM del server unraid è oltre una soglia"
+    "it": "L'utilizzo della RAM del server unraid è oltre una soglia",
+    "fr": "L'usage de la RAM du serveur unRAID a dépassé un seuil"
   },
   "args": [
     {
       "type": "number",
       "name": "threshold",
       "placeholder": {
-        "en": "threshold"
+        "en": "threshold",
+        "it": "soglia",
+        "fr": "seuil"
       },
       "min": 0.01,
       "max": 100,

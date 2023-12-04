@@ -4,15 +4,18 @@
       "id": "cpu-usage-is-changed",
       "title": {
         "en": "CPU usage is changed",
-        "it": "L'uso della CPU è cambiato"
+        "it": "L'uso della CPU è cambiato",
+        "fr": "L'usage du CPU a changé"
       },
       "titleFormatted": {
         "en": "CPU usage is changed",
-        "it": "L'uso della CPU è cambiato"
+        "it": "L'uso della CPU è cambiato",
+        "fr": "L'usage du CPU a changé"
       },
       "hint": {
         "en": "This flow is triggered when the CPU usage is changed",
-        "it": "Questo flusso viene attivato quando l'utilizzo della CPU cambia"
+        "it": "Questo flusso viene attivato quando l'utilizzo della CPU cambia",
+        "fr": "Ce flow se déclenche lors du changement d'usage du CPU"
       },
       "tokens": [
         {
@@ -20,11 +23,13 @@
           "type": "number",
           "title": {
             "en": "CPU Usage %",
-            "it": "Utilizzo CPU %"
+            "it": "Utilizzo CPU %",
+            "fr": "Usage du CPU %"
           },
           "example": {
             "en": "12.5",
-            "it": "12.5"
+            "it": "12.5",
+            "fr": "12.5"
           }
         }
       ],
@@ -34,15 +39,18 @@
       "id": "array-usage-is-changed",
       "title": {
         "en": "Array usage is changed",
-        "it": "L'utilizzo dell'array è cambiato"
+        "it": "L'utilizzo dell'array è cambiato",
+        "fr": "L'usage de la baie a changé"
       },
       "titleFormatted": {
         "en": "Array usage is changed",
-        "it": "L'utilizzo dell'array è cambiato"
+        "it": "L'utilizzo dell'array è cambiato",
+        "fr": "L'usage de la baie a changé"
       },
       "hint": {
         "en": "This flow is triggered when the Array usage is changed",
-        "it": "Questo flusso viene attivato quando l'utilizzo dell'array cambia"
+        "it": "Questo flusso viene attivato quando l'utilizzo dell'array cambia",
+        "fr": "Ce flow se déclenche lors du changement d'usage de la baie"
       },
       "tokens": [
         {
@@ -50,11 +58,13 @@
           "type": "number",
           "title": {
             "en": "Array Usage %",
-            "it": "Utilizzo array %"
+            "it": "Utilizzo array %",
+            "fr": "Usage de la baie %"
           },
           "example": {
             "en": "12.5",
-            "it": "12.5"
+            "it": "12.5",
+            "fr": "12.5"
           }
         }
       ],
@@ -64,15 +74,18 @@
       "id": "cache-usage-is-changed",
       "title": {
         "en": "Cache usage is changed",
-        "it": "L'utilizzo della cache è cambiato"
+        "it": "L'utilizzo della cache è cambiato",
+        "fr": "L'usage du Cache a changé"
       },
       "titleFormatted": {
         "en": "Cache usage is changed",
-        "it": "L'utilizzo della cache è cambiato"
+        "it": "L'utilizzo della cache è cambiato",
+        "fr": "L'usage du Cache a changé"
       },
       "hint": {
         "en": "This flow is triggered when the Cache usage is changed",
-        "it": "Questo flusso viene attivato quando l'utilizzo della cache cambia"
+        "it": "Questo flusso viene attivato quando l'utilizzo della cache cambia",
+        "fr": "Ce flow se déclenche lors du changement d'usage du Cache"
       },
       "tokens": [
         {
@@ -80,11 +93,13 @@
           "type": "number",
           "title": {
             "en": "Cache Usage %",
-            "it": "Utilizzo cache %"
+            "it": "Utilizzo cache %",
+            "fr": "Usage du Cache %"
           },
           "example": {
             "en": "12.5",
-            "it": "12.5"
+            "it": "12.5",
+            "fr": "12.5"
           }
         }
       ],
@@ -94,15 +109,18 @@
       "id": "ram-usage-is-changed",
       "title": {
         "en": "Ram usage is changed",
-        "it": "L'utilizzo della Ram è cambiato"
+        "it": "L'utilizzo della Ram è cambiato",
+        "fr": "L'usage de la RAM a changé"
       },
       "titleFormatted": {
         "en": "Ram usage is changed",
-        "it": "L'utilizzo della Ram è cambiato"
+        "it": "L'utilizzo della Ram è cambiato",
+        "fr": "L'usage de la RAM a changé"
       },
       "hint": {
         "en": "This flow is triggered when the Ram usage is changed",
-        "it": "Questo flusso viene attivato quando l'utilizzo della Ram cambia"
+        "it": "Questo flusso viene attivato quando l'utilizzo della Ram cambia",
+        "fr": "Ce flow se déclenche lors du changement d'usage de la RAM"
       },
       "tokens": [
         {
@@ -110,11 +128,13 @@
           "type": "number",
           "title": {
             "en": "Ram Usage %",
-            "it": "Utilizzo Ram %"
+            "it": "Utilizzo Ram %",
+            "fr": "Usage de la RAM %"
           },
           "example": {
             "en": "12.5",
-            "it": "12.5"
+            "it": "12.5",
+            "fr": "12.5"
           }
         }
       ],
@@ -124,15 +144,18 @@
       "id": "docker-container-status-changed",
       "title": {
         "en": "Docker container online status changed",
-        "it": "Il container docker cambia stato online"
+        "it": "Il container docker cambia stato online",
+        "fr": "Le statut d'un conteneur en ligne a changé"
       },
       "titleFormatted": {
         "en": "[[container]] online status changed",
-        "it": "[[container]] cambia stato online"
+        "it": "[[container]] cambia stato online",
+        "fr": "[[container]] statut en ligne a changé"
       },
       "hint": {
         "en": "This flow is triggered when a docker container online status is changed",
-        "it": "Questo flusso viene attivato quando lo stato online di un container docker cambia"
+        "it": "Questo flusso viene attivato quando lo stato online di un container docker cambia",
+        "fr": "Ce flow se déclenche lors du changement de statut d'un conteneur en ligne"
       },
       "args": [
         {
@@ -140,7 +163,8 @@
           "name": "container",
           "placeholder": {
             "en": "container",
-            "it": "container"
+            "it": "container",
+            "fr": "conteneur"
           }
         }
       ],
@@ -150,7 +174,8 @@
           "type": "boolean",
           "title": {
             "en": "Online",
-            "it": "Online"
+            "it": "Online",
+            "fr": "En ligne"
           }
         },
         {
@@ -158,7 +183,8 @@
           "type": "string",
           "title": {
             "en": "Status",
-            "it": "Stato"
+            "it": "Stato",
+            "fr": "Statut"
           }
         }
       ]

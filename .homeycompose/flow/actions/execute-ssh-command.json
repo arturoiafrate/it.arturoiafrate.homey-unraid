@@ -1,15 +1,18 @@
 {
   "title": {
     "en": "Execute SSH command",
-    "it": "Esegui comando SSH"
+    "it": "Esegui comando SSH",
+    "fr": "Exécuter une commande SSH"
   },
   "titleFormatted": {
     "en": "Execute SSH [[command]]",
-    "it": "Esegui [[command]] SSH"
+    "it": "Esegui [[command]] SSH",
+    "fr": "Exécuter [[command]] SSH"
   },
   "hint": {
     "en": "Execute standard SSH command without waiting for the output",
-    "it": "Esegui un comando SSH standard senza attendere l'output"
+    "it": "Esegui un comando SSH standard senza attendere l'output",
+    "fr": "Exécuter une commande SSH standard sans attendre le résultat"
   },
   "args": [
     {
@@ -17,7 +20,8 @@
       "name": "command",
       "placeholder": {
         "en": "command",
-        "it": "comando"
+        "it": "comando",
+        "fr": "commande"
       }
     }
   ]

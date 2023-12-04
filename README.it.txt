@@ -4,6 +4,7 @@ Questa integrazione permette di monitorare e gestire il tuo server NAS Unraid.
 Lingue supportate:
 English
 Italiano
+Francese
 
 Come funziona?
 Installa l'app e aggiungi un nuovo dispositivo unraid. Nelle impostazioni configura:

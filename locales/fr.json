@@ -1,0 +1,5 @@
+{
+    "settings_saved_ok": "Paramètres sauvegardés avec succès et votre serveur unRAID est en ligne.",
+    "settings_saved_ok_but_unraid_offline": "Paramètres sauvegardés avec succès, mais votre serveur unRAID est déconnecté. Vérifiez vos paramètres réseaux.",
+    "settings_saved_ok_but_can_not_connect_to_unraid": "Paramètres sauvegardés avec succès et votre serveur unRAID est en ligne, mais il n'est pas joignable par SSH. Vérifiez vos identifiants."
+}

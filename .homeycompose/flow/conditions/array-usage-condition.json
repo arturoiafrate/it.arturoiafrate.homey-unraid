@@ -1,15 +1,18 @@
 {
   "title": {
     "en": "The array usage is !{{over|under}} ",
-    "it": "L'uso dell'array è !{{oltre|sotto}} "
+    "it": "L'uso dell'array è !{{oltre|sotto}} ",
+    "fr": "L'usage de la baie est !{{over|under}} "
   },
   "titleFormatted": {
     "en": "The array usage is !{{over|under}} [[threshold]]",
-    "it": "L'uso dell'array è !{{oltre|sotto}} la [[threshold]]"
+    "it": "L'uso dell'array è !{{oltre|sotto}} la [[threshold]]",
+    "fr": "L'usage de la baie est !{{over|under}} [[threshold]]"
   },
   "hint": {
     "en": "The array usage of unraid server is over a threshold",
-    "it": "L'utilizzo dell'array del server unraid è oltre una soglia"
+    "it": "L'utilizzo dell'array del server unraid è oltre una soglia",
+    "fr": "L'usage de la baie du serveur unRAID a dépassé un seuil"
   },
   "args": [
     {
@@ -17,7 +20,8 @@
       "name": "threshold",
       "placeholder": {
         "en": "threshold",
-        "it": "soglia"
+        "it": "soglia",
+        "fr": "seuil"
       },
       "min": 0.01,
       "max": 100,

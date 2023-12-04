@@ -1,15 +1,18 @@
 {
   "title": {
     "en": "Start/Stop the container",
-    "it": "Avvia/Arresta il container"
+    "it": "Avvia/Arresta il container",
+    "fr": "Démarrage/Arrêt du conteneur"
   },
   "titleFormatted": {
     "en": "Start/Stop [[container]]",
-    "it": "Avvia/Arresta [[container]]"
+    "it": "Avvia/Arresta [[container]]",
+    "fr": "Démarrage/Arrêt [[container]]"
   },
   "hint": {
     "en": "Start or stop the selected container",
-    "it": "Avvia o arresta il container selezionato"
+    "it": "Avvia o arresta il container selezionato",
+    "fr": "Démarrage ou arrêt du conteneur sélectionné"
   },
   "args": [
     {
@@ -17,7 +20,8 @@
       "name": "container",
       "placeholder": {
         "en": "container",
-        "it": "container"
+        "it": "container",
+        "fr": "conteneur"
       }
     }
   ]
