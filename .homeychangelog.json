@@ -10,5 +10,8 @@
   },
   "1.1.1": {
     "en": "Improved stability"
+  },
+  "1.1.2": {
+    "en": "Added the FR translation. Thanks @hot22shot"
   }
 }
