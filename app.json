@@ -11,11 +11,13 @@
   ],
   "name": {
     "en": "Unraid",
-    "it": "Unraid"
+    "it": "Unraid",
+    "fr": "Unraid"
   },
   "description": {
     "en": "Unleash Your Hardware",
-    "it": "Scatena il tuo hardware"
+    "it": "Scatena il tuo hardware",
+    "fr": "Libérez votre matériel"
   },
   "category": [
     "tools",
@@ -37,6 +39,11 @@
         "name": "Arturo Iafrate",
         "email": "arturo.iafrate@gmail.com"
       }
+    ],
+    "translators": [
+      {
+        "name": "hot22shot"
+      }
     ]
   },
   "tags": {
@@ -51,6 +58,12 @@
       "Tools",
       "Monitoraggio",
       "NAS"
+    ],
+    "fr": [
+      "Internet",
+      "Tools",
+      "Monitoring",
+      "NAS"
     ]
   },
   "source": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid",
@@ -64,15 +77,18 @@
       {
         "title": {
           "en": "The array usage is !{{over|under}} ",
-          "it": "L'uso dell'array è !{{oltre|sotto}} "
+          "it": "L'uso dell'array è !{{oltre|sotto}} ",
+          "fr": "L'usage de la baie est !{{over|under}} "
         },
         "titleFormatted": {
           "en": "The array usage is !{{over|under}} [[threshold]]",
-          "it": "L'uso dell'array è !{{oltre|sotto}} la [[threshold]]"
+          "it": "L'uso dell'array è !{{oltre|sotto}} la [[threshold]]",
+          "fr": "L'usage de la baie est !{{over|under}} [[threshold]]"
         },
         "hint": {
           "en": "The array usage of unraid server is over a threshold",
-          "it": "L'utilizzo dell'array del server unraid è oltre una soglia"
+          "it": "L'utilizzo dell'array del server unraid è oltre una soglia",
+          "fr": "L'usage de la baie du serveur unRAID a dépassé un seuil"
         },
         "args": [
           {
@@ -80,7 +96,8 @@
             "name": "threshold",
             "placeholder": {
               "en": "threshold",
-              "it": "soglia"
+              "it": "soglia",
+              "fr": "seuil"
             },
             "min": 0.01,
             "max": 100,
@@ -92,15 +109,18 @@
       {
         "title": {
           "en": "The container !{{is|isn't}} running",
-          "it": "Il container !{{è|non è}} avviato"
+          "it": "Il container !{{è|non è}} avviato",
+          "fr": "Le conteneur !{{is|isn't}} fonctionne"
         },
         "titleFormatted": {
           "en": "[[container]] !{{is|isn't}} running",
-          "it": "[[container]] !{{è|non è}} avviato"
+          "it": "[[container]] !{{è|non è}} avviato",
+          "fr": "[[container]] !{{is|isn't}} fonctionne"
         },
         "hint": {
           "en": "Check if the cointainer is running or not",
-          "it": "Verifica se il container è avviato o meno"
+          "it": "Verifica se il container è avviato o meno",
+          "fr": "Vérifier si le conteneur fonctionne ou pas"
         },
         "args": [
           {
@@ -108,7 +128,8 @@
             "name": "container",
             "placeholder": {
               "en": "container",
-              "it": "container"
+              "it": "container",
+              "fr": "conteneur"
             }
           }
         ],
@@ -117,15 +138,18 @@
       {
         "title": {
           "en": "The cpu usage is !{{over|under}} ",
-          "it": "L'uso della cpu è !{{oltre|sotto}} "
+          "it": "L'uso della cpu è !{{oltre|sotto}} ",
+          "fr": "L'usage du CPU est !{{over|under}} "
         },
         "titleFormatted": {
           "en": "The cpu usage is !{{over|under}} [[threshold]]",
-          "it": "L'uso della cpu è !{{oltre|sotto}} la [[threshold]]"
+          "it": "L'uso della cpu è !{{oltre|sotto}} la [[threshold]]",
+          "fr": "L'usage du CPU est !{{over|under}} [[threshold]]"
         },
         "hint": {
           "en": "The cpu usage of unraid server is over a threshold",
-          "it": "L'uso della cpu del server unraid è oltre una soglia"
+          "it": "L'uso della cpu del server unraid è oltre una soglia",
+          "fr": "L'usage du CPU du serveur unRAID a dépassé un seuil"
         },
         "args": [
           {
@@ -133,7 +157,8 @@
             "name": "threshold",
             "placeholder": {
               "en": "threshold",
-              "it": "soglia"
+              "it": "soglia",
+              "fr": "seuil"
             },
             "min": 0.01,
             "max": 100,
@@ -144,23 +169,28 @@
       },
       {
         "title": {
-          "en": "The RAM usage is !{{over|under}}",
-          "it": "L'uso della RAM è !{{oltre|sotto}}"
+          "en": "The RAM usage is !{{over|under}} ",
+          "it": "L'uso della RAM è !{{oltre|sotto}} ",
+          "fr": "L'usage de la RAM est !{{over|under}} "
         },
         "titleFormatted": {
           "en": "The RAM usage is !{{over|under}} [[threshold]] %",
-          "it": "L'uso della RAM è !{{oltre|sotto}} [[threshold]] %"
+          "it": "L'uso della RAM è !{{oltre|sotto}} [[threshold]] %",
+          "fr": "L'usage de la RAM est !{{over|under}} [[threshold]] %"
         },
         "hint": {
           "en": "The RAM usage of unraid server is over a threshold",
-          "it": "L'utilizzo della RAM del server unraid è oltre una soglia"
+          "it": "L'utilizzo della RAM del server unraid è oltre una soglia",
+          "fr": "L'usage de la RAM du serveur unRAID a dépassé un seuil"
         },
         "args": [
           {
             "type": "number",
             "name": "threshold",
             "placeholder": {
-              "en": "threshold"
+              "en": "threshold",
+              "it": "soglia",
+              "fr": "seuil"
             },
             "min": 0.01,
             "max": 100,
@@ -172,15 +202,18 @@
       {
         "title": {
           "en": "The system uptime is !{{over|under}}",
-          "it": "Il sistema è attivo da !{{oltre|meno di}} "
+          "it": "Il sistema è attivo da !{{oltre|meno di}} ",
+          "fr": "La durée de fonctionnement est !{{over|under}} "
         },
         "titleFormatted": {
           "en": "The system uptime is !{{over|under}} [[years]] [[days]] [[hours]] [[minutes]]",
-          "it": "Il sistema è attivo da !{{oltre|meno di}} [[years]] [[days]] [[hours]] [[minutes]]"
+          "it": "Il sistema è attivo da !{{oltre|meno di}} [[years]] [[days]] [[hours]] [[minutes]]",
+          "fr": "La durée de fonctionnement est !{{over|under}} [[years]] [[days]] [[hours]] [[minutes]]"
         },
         "hint": {
           "en": "The system uptime of unraid server is over a threshold",
-          "it": "Il sistema è attivo da oltre un certo tempo"
+          "it": "Il sistema è attivo da oltre un certo tempo",
+          "fr": "La durée de fonctionnement est du serveur unRAID a dépassé un seuil"
         },
         "args": [
           {
@@ -188,7 +221,8 @@
             "name": "years",
             "placeholder": {
               "en": "years",
-              "it": "anni"
+              "it": "anni",
+              "fr": "années"
             },
             "min": 0,
             "max": 100,
@@ -200,7 +234,8 @@
             "name": "days",
             "placeholder": {
               "en": "days",
-              "it": "giorni"
+              "it": "giorni",
+              "fr": "jours"
             },
             "min": 0,
             "max": 364,
@@ -212,7 +247,8 @@
             "name": "hours",
             "placeholder": {
               "en": "hours",
-              "it": "ore"
+              "it": "ore",
+              "fr": "heures"
             },
             "min": 0,
             "max": 23,
@@ -224,7 +260,8 @@
             "name": "minutes",
             "placeholder": {
               "en": "minutes",
-              "it": "minuti"
+              "it": "minuti",
+              "fr": "minutes"
             },
             "min": 0,
             "max": 59,
@@ -239,15 +276,18 @@
       {
         "title": {
           "en": "Start the container",
-          "it": "Avvia il container"
+          "it": "Avvia il container",
+          "fr": "Démarrage du conteneur"
         },
         "titleFormatted": {
           "en": "Start [[container]]",
-          "it": "Avvia [[container]]"
+          "it": "Avvia [[container]]",
+          "fr": "Démarrage [[container]]"
         },
         "hint": {
           "en": "Start the selected container",
-          "it": "Avvia il container selezionato"
+          "it": "Avvia il container selezionato",
+          "fr": "Démarrage du conteneur sélectionné"
         },
         "args": [
           {
@@ -255,7 +295,8 @@
             "name": "container",
             "placeholder": {
               "en": "container",
-              "it": "container"
+              "it": "container",
+              "fr": "conteneur"
             }
           }
         ],
@@ -264,15 +305,18 @@
       {
         "title": {
           "en": "Stop the container",
-          "it": "Ferma il container"
+          "it": "Ferma il container",
+          "fr": "Arrêt du conteneur"
         },
         "titleFormatted": {
           "en": "Stop [[container]]",
-          "it": "Ferma [[container]]"
+          "it": "Ferma [[container]]",
+          "fr": "Arrêt [[container]]"
         },
         "hint": {
           "en": "Stop the selected container",
-          "it": "Ferma il container selezionato"
+          "it": "Ferma il container selezionato",
+          "fr": "Arrêt du conteneur sélectionné"
         },
         "args": [
           {
@@ -280,7 +324,8 @@
             "name": "container",
             "placeholder": {
               "en": "container",
-              "it": "container"
+              "it": "container",
+              "fr": "conteneur"
             }
           }
         ],
@@ -289,15 +334,18 @@
       {
         "title": {
           "en": "Start/Stop the container",
-          "it": "Avvia/Arresta il container"
+          "it": "Avvia/Arresta il container",
+          "fr": "Démarrage/Arrêt du conteneur"
         },
         "titleFormatted": {
           "en": "Start/Stop [[container]]",
-          "it": "Avvia/Arresta [[container]]"
+          "it": "Avvia/Arresta [[container]]",
+          "fr": "Démarrage/Arrêt [[container]]"
         },
         "hint": {
           "en": "Start or stop the selected container",
-          "it": "Avvia o arresta il container selezionato"
+          "it": "Avvia o arresta il container selezionato",
+          "fr": "Démarrage ou arrêt du conteneur sélectionné"
         },
         "args": [
           {
@@ -305,7 +353,8 @@
             "name": "container",
             "placeholder": {
               "en": "container",
-              "it": "container"
+              "it": "container",
+              "fr": "conteneur"
             }
           }
         ],
@@ -314,15 +363,18 @@
       {
         "title": {
           "en": "Execute SSH command",
-          "it": "Esegui comando SSH"
+          "it": "Esegui comando SSH",
+          "fr": "Exécuter une commande SSH"
         },
         "titleFormatted": {
           "en": "Execute SSH [[command]]",
-          "it": "Esegui [[command]] SSH"
+          "it": "Esegui [[command]] SSH",
+          "fr": "Exécuter [[command]] SSH"
         },
         "hint": {
           "en": "Execute standard SSH command without waiting for the output",
-          "it": "Esegui un comando SSH standard senza attendere l'output"
+          "it": "Esegui un comando SSH standard senza attendere l'output",
+          "fr": "Exécuter une commande SSH standard sans attendre le résultat"
         },
         "args": [
           {
@@ -330,7 +382,8 @@
             "name": "command",
             "placeholder": {
               "en": "command",
-              "it": "comando"
+              "it": "comando",
+              "fr": "commande"
             }
           }
         ],
@@ -339,15 +392,18 @@
       {
         "title": {
           "en": "Execute SSH Command (Advanced)",
-          "it": "Esegui Comando SSH (Avanzato)"
+          "it": "Esegui Comando SSH (Avanzato)",
+          "fr": "Exécuter une commande SSH (Avancé)"
         },
         "titleFormatted": {
           "en": "Execute SSH [[command]] (Advanced)",
-          "it": "Esegui [[command]] SSH (Avanzato)"
+          "it": "Esegui [[command]] SSH (Avanzato)",
+          "fr": "Exécuter SSH [[command]] (Avancé)"
         },
         "hint": {
           "en": "Execute standard SSH command and wait for the output",
-          "it": "Esegui un comando SSH standard e attendi l'output"
+          "it": "Esegui un comando SSH standard e attendi l'output",
+          "fr": "Exécuter une commande SSH standard et attendre le résultat"
         },
         "args": [
           {
@@ -355,7 +411,8 @@
             "name": "command",
             "placeholder": {
               "en": "command",
-              "it": "comando"
+              "it": "comando",
+              "fr": "commande"
             }
           }
         ],
@@ -365,7 +422,8 @@
             "type": "number",
             "title": {
               "en": "Error code",
-              "it": "Codice di errore"
+              "it": "Codice di errore",
+              "fr": "Code d'erreur"
             }
           },
           {
@@ -373,7 +431,8 @@
             "type": "string",
             "title": {
               "en": "Standard Output",
-              "it": "Standard Output"
+              "it": "Standard Output",
+              "fr": "Sortie standard"
             }
           },
           {
@@ -381,7 +440,8 @@
             "type": "string",
             "title": {
               "en": "Standard Error",
-              "it": "Standard Error"
+              "it": "Standard Error",
+              "fr": "Erreur standard"
             }
           }
         ],
@@ -393,15 +453,18 @@
         "id": "cpu-usage-is-changed",
         "title": {
           "en": "CPU usage is changed",
-          "it": "L'uso della CPU è cambiato"
+          "it": "L'uso della CPU è cambiato",
+          "fr": "L'usage du CPU a changé"
         },
         "titleFormatted": {
           "en": "CPU usage is changed",
-          "it": "L'uso della CPU è cambiato"
+          "it": "L'uso della CPU è cambiato",
+          "fr": "L'usage du CPU a changé"
         },
         "hint": {
           "en": "This flow is triggered when the CPU usage is changed",
-          "it": "Questo flusso viene attivato quando l'utilizzo della CPU cambia"
+          "it": "Questo flusso viene attivato quando l'utilizzo della CPU cambia",
+          "fr": "Ce flow se déclenche lors du changement d'usage du CPU"
         },
         "tokens": [
           {
@@ -409,11 +472,13 @@
             "type": "number",
             "title": {
               "en": "CPU Usage %",
-              "it": "Utilizzo CPU %"
+              "it": "Utilizzo CPU %",
+              "fr": "Usage du CPU %"
             },
             "example": {
               "en": "12.5",
-              "it": "12.5"
+              "it": "12.5",
+              "fr": "12.5"
             }
           }
         ],
@@ -429,15 +494,18 @@
         "id": "array-usage-is-changed",
         "title": {
           "en": "Array usage is changed",
-          "it": "L'utilizzo dell'array è cambiato"
+          "it": "L'utilizzo dell'array è cambiato",
+          "fr": "L'usage de la baie a changé"
         },
         "titleFormatted": {
           "en": "Array usage is changed",
-          "it": "L'utilizzo dell'array è cambiato"
+          "it": "L'utilizzo dell'array è cambiato",
+          "fr": "L'usage de la baie a changé"
         },
         "hint": {
           "en": "This flow is triggered when the Array usage is changed",
-          "it": "Questo flusso viene attivato quando l'utilizzo dell'array cambia"
+          "it": "Questo flusso viene attivato quando l'utilizzo dell'array cambia",
+          "fr": "Ce flow se déclenche lors du changement d'usage de la baie"
         },
         "tokens": [
           {
@@ -445,11 +513,13 @@
             "type": "number",
             "title": {
               "en": "Array Usage %",
-              "it": "Utilizzo array %"
+              "it": "Utilizzo array %",
+              "fr": "Usage de la baie %"
             },
             "example": {
               "en": "12.5",
-              "it": "12.5"
+              "it": "12.5",
+              "fr": "12.5"
             }
           }
         ],
@@ -465,15 +535,18 @@
         "id": "cache-usage-is-changed",
         "title": {
           "en": "Cache usage is changed",
-          "it": "L'utilizzo della cache è cambiato"
+          "it": "L'utilizzo della cache è cambiato",
+          "fr": "L'usage du Cache a changé"
         },
         "titleFormatted": {
           "en": "Cache usage is changed",
-          "it": "L'utilizzo della cache è cambiato"
+          "it": "L'utilizzo della cache è cambiato",
+          "fr": "L'usage du Cache a changé"
         },
         "hint": {
           "en": "This flow is triggered when the Cache usage is changed",
-          "it": "Questo flusso viene attivato quando l'utilizzo della cache cambia"
+          "it": "Questo flusso viene attivato quando l'utilizzo della cache cambia",
+          "fr": "Ce flow se déclenche lors du changement d'usage du Cache"
         },
         "tokens": [
           {
@@ -481,11 +554,13 @@
             "type": "number",
             "title": {
               "en": "Cache Usage %",
-              "it": "Utilizzo cache %"
+              "it": "Utilizzo cache %",
+              "fr": "Usage du Cache %"
             },
             "example": {
               "en": "12.5",
-              "it": "12.5"
+              "it": "12.5",
+              "fr": "12.5"
             }
           }
         ],
@@ -501,15 +576,18 @@
         "id": "ram-usage-is-changed",
         "title": {
           "en": "Ram usage is changed",
-          "it": "L'utilizzo della Ram è cambiato"
+          "it": "L'utilizzo della Ram è cambiato",
+          "fr": "L'usage de la RAM a changé"
         },
         "titleFormatted": {
           "en": "Ram usage is changed",
-          "it": "L'utilizzo della Ram è cambiato"
+          "it": "L'utilizzo della Ram è cambiato",
+          "fr": "L'usage de la RAM a changé"
         },
         "hint": {
           "en": "This flow is triggered when the Ram usage is changed",
-          "it": "Questo flusso viene attivato quando l'utilizzo della Ram cambia"
+          "it": "Questo flusso viene attivato quando l'utilizzo della Ram cambia",
+          "fr": "Ce flow se déclenche lors du changement d'usage de la RAM"
         },
         "tokens": [
           {
@@ -517,11 +595,13 @@
             "type": "number",
             "title": {
               "en": "Ram Usage %",
-              "it": "Utilizzo Ram %"
+              "it": "Utilizzo Ram %",
+              "fr": "Usage de la RAM %"
             },
             "example": {
               "en": "12.5",
-              "it": "12.5"
+              "it": "12.5",
+              "fr": "12.5"
             }
           }
         ],
@@ -537,15 +617,18 @@
         "id": "docker-container-status-changed",
         "title": {
           "en": "Docker container online status changed",
-          "it": "Il container docker cambia stato online"
+          "it": "Il container docker cambia stato online",
+          "fr": "Le statut d'un conteneur en ligne a changé"
         },
         "titleFormatted": {
           "en": "[[container]] online status changed",
-          "it": "[[container]] cambia stato online"
+          "it": "[[container]] cambia stato online",
+          "fr": "[[container]] statut en ligne a changé"
         },
         "hint": {
           "en": "This flow is triggered when a docker container online status is changed",
-          "it": "Questo flusso viene attivato quando lo stato online di un container docker cambia"
+          "it": "Questo flusso viene attivato quando lo stato online di un container docker cambia",
+          "fr": "Ce flow se déclenche lors du changement de statut d'un conteneur en ligne"
         },
         "args": [
           {
@@ -558,7 +641,8 @@
             "name": "container",
             "placeholder": {
               "en": "container",
-              "it": "container"
+              "it": "container",
+              "fr": "conteneur"
             }
           }
         ],
@@ -568,7 +652,8 @@
             "type": "boolean",
             "title": {
               "en": "Online",
-              "it": "Online"
+              "it": "Online",
+              "fr": "En ligne"
             }
           },
           {
@@ -576,7 +661,8 @@
             "type": "string",
             "title": {
               "en": "Status",
-              "it": "Stato"
+              "it": "Stato",
+              "fr": "Statut"
             }
           }
         ]
