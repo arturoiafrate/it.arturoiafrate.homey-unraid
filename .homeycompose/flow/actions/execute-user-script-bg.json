@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "Execute User Script in Background",
+    "it": "Esegui uno UserScript in Background",
+    "fr": "Exécuter un Script utilisateur en arrière-plan"
+  },
+  "titleFormatted": {
+    "en": "Execute [[userscript]] in Background",
+    "it": "Esegui [[userscript]] in Background",
+    "fr": "Exécuter [[userscript]] en arrière-plan"
+  },
+  "hint": {
+    "en": "Execute a User Script in background",
+    "it": "Esegui uno User Script in background",
+    "fr": "Exécuter un Script utilisateur en arrière-plan"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "userscript",
+      "placeholder": {
+        "en": "UserScript",
+        "it": "UserScript",
+        "fr": "Script utilisateur"
+      }
+    }
+  ]
+}

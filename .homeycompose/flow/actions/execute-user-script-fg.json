@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "Execute User Script in Foreground",
+    "it": "Esegui uno User Script in Foreground",
+    "fr": "Exécuter un script utilisateur en premier plan"
+  },
+  "titleFormatted": {
+    "en": "Execute [[userscript]] in Foreground",
+    "it": "Esegui [[userscript]] in Foreground",
+    "fr": "Exécuter [[userscript]] en premier plan"
+  },
+  "hint": {
+    "en": "Execute a User Script in foreground",
+    "it": "Esegui uno User Script in foreground",
+    "fr": "Exécuter un script utilisateur en premier plan"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "userscript",
+      "placeholder": {
+        "en": "UserScript",
+        "it": "UserScript",
+        "fr": "Script utilisateur"
+      }
+    }
+  ]
+}

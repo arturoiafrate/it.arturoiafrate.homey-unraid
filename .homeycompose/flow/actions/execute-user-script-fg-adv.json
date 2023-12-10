@@ -1,0 +1,39 @@
+{
+  "title": {
+    "en": "Execute User Script in Foreground (Advanced)",
+    "it": "Esegui uno User Script in Foreground (Avanzato)",
+    "fr": "Exécuter un script utilisateur en premier plan (avancé)"
+  },
+  "titleFormatted": {
+    "en": "Execute [[userscript]] in Foreground (Advanced)",
+    "it": "Esegui [[userscript]] in Foreground (Avanzato)",
+    "fr": "Exécuter [[userscript]] en premier plan (avancé)"
+  },
+  "hint": {
+    "en": "Execute a User Script and get the return code",
+    "it": "Esegui uno User Script e ottieni il codice di ritorno",
+    "fr": "Exécuter un script utilisateur et obtenir le code de retour"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "userscript",
+      "placeholder": {
+        "en": "UserScript",
+        "it": "UserScript",
+        "fr": "Script utilisateur"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "code",
+      "type": "number",
+      "title": {
+        "en": "Return Code",
+        "it": "Codice di Ritorno",
+        "fr": "Code de Retour"
+      }
+    }
+  ]
+}

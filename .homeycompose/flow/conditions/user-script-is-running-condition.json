@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "The User Script !{{is|isn't}} running",
+    "it": "Lo User Script !{{è|non è}} avviato",
+    "fr": "Le User Script !{{est|n'est pas}} en cours d'exécution"
+  },
+  "titleFormatted": {
+    "en": " [[userscript]] !{{is|isn't}} running",
+    "it": " [[userscript]] !{{è|non è}} avviato",
+    "fr": " [[userscript]] !{{est|n'est pas}} en cours d'exécution"
+  },
+  "hint": {
+    "en": "Check if a specific User Script is running or not",
+    "it": "Controlla se uno specifico User Script è avviato o meno",
+    "fr": "Vérifiez si un script utilisateur spécifique est en cours d'exécution ou non"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "userscript",
+      "placeholder": {
+        "en": "UserScript",
+        "it": "UserScript",
+        "fr": "UserScript"
+      }
+    }
+  ]
+}

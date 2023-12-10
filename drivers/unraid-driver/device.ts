@@ -5,6 +5,7 @@ import { LogLevel, isNonEmpty, logMessageToSentry, logErrorToSentry, objStringif
 import { UnraidRemoteFlowTrigger } from './unraid-remote/triggers/UnraidRemoteFlowTrigger';
 import { UnraidRemoteApp } from '../../app';
 import { Container } from './unraid-remote/utils/IDockerContainer';
+import { UserScript } from './unraid-remote/utils/IUserScript';
 
 class UnraidRemoteDevice extends Homey.Device {
 
@@ -182,6 +183,31 @@ class UnraidRemoteDevice extends Homey.Device {
     return await this._unraidRemote.stopContainer(containerId);
   }
 
+  async userScriptList(): Promise<UserScript[]>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.getAllUserScripts();
+  }
+
+  async isUserScriptRunning(userScriptName: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.isUserScriptRunning(userScriptName);
+  }
+
+  async startBackgroundUserScript(userScriptName: string): Promise<void>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    await this._unraidRemote.runUserScriptBgMode(userScriptName);
+  }
+
+  async startForegroundUserScript(userScriptName: string): Promise<number>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.runUserScriptFgMode(userScriptName);
+  }
+
+  async stopUserScriptExecution(userScriptName: string): Promise<void>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    await this._unraidRemote.stopUserScript(userScriptName);
+  }
+
   _setOffline(): void{
     this.setCapabilityValue("onoff", false);
     this.setUnavailable();
@@ -240,14 +266,14 @@ class UnraidRemoteDevice extends Homey.Device {
   async _updateDeviceCapabilities(systemStats : ISystemStats, setInfo : boolean) : Promise<void>{
     logMessageToSentry(this.homey.app as UnraidRemoteApp, objStringify('Updating device capabilities with stats: ', systemStats), LogLevel.INFO);
     if(setInfo){
-      this.setCapabilityValue("raminfo", systemStats.ramUsage.total)//.catch(this.error);
-      this.setCapabilityValue("arrayinfo", systemStats.arrayUsage.total)//.catch(this.error);
+      if(systemStats.ramUsage) this.setCapabilityValue("raminfo", systemStats.ramUsage.total)//.catch(this.error);
+      if(systemStats.arrayUsage) this.setCapabilityValue("arrayinfo", systemStats.arrayUsage.total)//.catch(this.error);
     }
-    this._updateUptimeCapability(systemStats.uptime.upSince);
-    this._updateCpuUsedCapability(systemStats.cpuUsage.percentBusy);
-    this._updateArrayUsedCapability(systemStats.arrayUsage.percentUsed);
-    this._updateCacheUsedCapability(systemStats.cacheUsage.percentUsed);
-    this._updateRamUsedCapability(systemStats.ramUsage.percentUsed);
+    if(systemStats.uptime) this._updateUptimeCapability(systemStats.uptime.upSince);
+    if(systemStats.cpuUsage) this._updateCpuUsedCapability(systemStats.cpuUsage.percentBusy);
+    if(systemStats.arrayUsage) this._updateArrayUsedCapability(systemStats.arrayUsage.percentUsed);
+    if(systemStats.cacheUsage) this._updateCacheUsedCapability(systemStats.cacheUsage.percentUsed);
+    if(systemStats.ramUsage) this._updateRamUsedCapability(systemStats.ramUsage.percentUsed);
     if(this._enableDockerMonitoring){
       this._flowTriggers?.triggerDockerContainerStatusChangedFlowCard(this, await this.containerList());
     }

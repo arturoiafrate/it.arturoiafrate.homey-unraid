@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "Stop the UserScript",
+    "it": "Ferma uno UserScript",
+    "fr": "Arrêter un UserScript"
+  },
+  "titleFormatted": {
+    "en": "Stop [[userscript]]",
+    "it": "Ferma [[userscript]]",
+    "fr": "Arrêter [[userscript]]"
+  },
+  "hint": {
+    "en": "Stop the UserScript if it's running",
+    "it": "Ferma uno UserScript se è in esecuzione",
+    "fr": "Arrêter un Script utilisateur si il est en cours d'exécution"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "userscript",
+      "placeholder": {
+        "en": "UserScript",
+        "it": "UserScript",
+        "fr": "Script utilisateur"
+      }
+    }
+  ]
+}

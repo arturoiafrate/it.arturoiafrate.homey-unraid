@@ -26,13 +26,13 @@ interface IMemoryUsage {
 }
 
 interface ISystemStats {
-    cpuUsage: ICPUUsage;
-    uptime: IUptimeExt;
-    arrayUsage: IMemoryUsage;
-    cacheUsage: IMemoryUsage;
-    ramUsage: IMemoryUsage;
-    memoryUsage?: ILoadAverage;
-    diskUsage?: IDiskFreeReturn[];
+    cpuUsage: ICPUUsage | undefined;
+    uptime: IUptimeExt | undefined;
+    arrayUsage: IMemoryUsage | undefined;
+    cacheUsage: IMemoryUsage | undefined;
+    ramUsage: IMemoryUsage | undefined;
+    memoryUsage?: ILoadAverage | undefined;
+    diskUsage?: IDiskFreeReturn[] | undefined;
 }
 
 interface ISSHCommandOutput {

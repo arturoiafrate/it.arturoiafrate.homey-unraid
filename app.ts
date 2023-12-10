@@ -2,6 +2,7 @@ import Homey from 'homey';
 import { convertToUnraidUptime, logErrorToSentry } from './utils/utilites';
 import { UnraidRemoteDevice } from './drivers/unraid-driver/device';
 import { Container } from './drivers/unraid-driver/unraid-remote/utils/IDockerContainer';
+import { UserScript } from './drivers/unraid-driver/unraid-remote/utils/IUserScript';
 const { Log } = require('homey-log');
 
 class UnraidRemoteApp extends Homey.App {
@@ -88,7 +89,7 @@ class UnraidRemoteApp extends Homey.App {
     });
     //Container is running
     const containerRunningCondition = this.homey.flow.getConditionCard('container-is-running-condition');
-    containerRunningCondition.registerArgumentAutocompleteListener('container', async (query, args) => {
+    containerRunningCondition.registerArgumentAutocompleteListener('container', async (query, _args) => {
       const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
       if(devices.length === 0){
         throw new Error('No devices found');
@@ -112,6 +113,33 @@ class UnraidRemoteApp extends Homey.App {
       //at moment only one device is supported
       const unraidDevice = devices[0] as UnraidRemoteDevice;
       return Promise.resolve(await unraidDevice.isContainerRunning(container.id));
+    });
+    //UserScript is running
+    const userScriptRunningCondition = this.homey.flow.getConditionCard('user-script-is-running-condition');
+    userScriptRunningCondition.registerArgumentAutocompleteListener('userscript', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const userScripts = await unraidDevice.userScriptList();
+      return userScripts.filter((userScript) => {
+        return userScript.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    userScriptRunningCondition.registerRunListener(async (args) => {
+      if(!args.userscript){
+        throw new Error('UserScript is not set');
+      }
+      const userScript = args.userscript as UserScript;
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      return Promise.resolve(await unraidDevice.isUserScriptRunning(userScript.name));
     });
   }
 
@@ -155,7 +183,7 @@ class UnraidRemoteApp extends Homey.App {
     });
     //Start Container
     const startContainerAction = this.homey.flow.getActionCard('container-start');
-    startContainerAction.registerArgumentAutocompleteListener('container', async (query, args) => {
+    startContainerAction.registerArgumentAutocompleteListener('container', async (query, _args) => {
       const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
       if(devices.length === 0){
         throw new Error('No devices found');
@@ -182,7 +210,7 @@ class UnraidRemoteApp extends Homey.App {
     });
     //Stop Container
     const stopContainerAction = this.homey.flow.getActionCard('container-stop');
-    stopContainerAction.registerArgumentAutocompleteListener('container', async (query, args) => {
+    stopContainerAction.registerArgumentAutocompleteListener('container', async (query, _args) => {
       const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
       if(devices.length === 0){
         throw new Error('No devices found');
@@ -209,7 +237,7 @@ class UnraidRemoteApp extends Homey.App {
     });
     //Toggle Container
     const toggleContainerAction = this.homey.flow.getActionCard('container-toggle');
-    toggleContainerAction.registerArgumentAutocompleteListener('container', async (query, args) => {
+    toggleContainerAction.registerArgumentAutocompleteListener('container', async (query, _args) => {
       const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
       if(devices.length === 0){
         throw new Error('No devices found');
@@ -234,6 +262,113 @@ class UnraidRemoteApp extends Homey.App {
       const unraidDevice = devices[0] as UnraidRemoteDevice;
       const isOnline : boolean = await unraidDevice.isContainerRunning(container.id);
       isOnline ? unraidDevice.stopContainer(container.id) : unraidDevice.startContainer(container.id);
+    });
+    //Execute UserScript in background
+    const execUserScriptBGAction = this.homey.flow.getActionCard('execute-user-script-bg');
+    execUserScriptBGAction.registerArgumentAutocompleteListener('userscript', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const userScripts = await unraidDevice.userScriptList();
+      return userScripts.filter((userScript) => {
+        return userScript.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    execUserScriptBGAction.registerRunListener(async (args) => {
+      if(!args.userscript){
+        throw new Error('Container is not set');
+      }
+      const userScript = args.userscript as UserScript;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      unraidDevice.startBackgroundUserScript(userScript.name)
+    });
+    //Execute UserScript in foreground
+    const execUserScriptFGAction = this.homey.flow.getActionCard('execute-user-script-fg');
+    execUserScriptFGAction.registerArgumentAutocompleteListener('userscript', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const userScripts = await unraidDevice.userScriptList();
+      return userScripts.filter((userScript) => {
+        return userScript.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    execUserScriptFGAction.registerRunListener(async (args) => {
+      if(!args.userscript){
+        throw new Error('Container is not set');
+      }
+      const userScript = args.userscript as UserScript;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      await unraidDevice.startForegroundUserScript(userScript.name)
+    });
+    //Execute UserScript in foreground and wait for the error code
+    const execUserScriptFGActionAdv = this.homey.flow.getActionCard('execute-user-script-fg-adv');
+    execUserScriptFGActionAdv.registerArgumentAutocompleteListener('userscript', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const userScripts = await unraidDevice.userScriptList();
+      return userScripts.filter((userScript) => {
+        return userScript.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    execUserScriptFGActionAdv.registerRunListener(async (args) => {
+      if(!args.userscript){
+        throw new Error('Container is not set');
+      }
+      const userScript = args.userscript as UserScript;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const outCode = await unraidDevice.startForegroundUserScript(userScript.name)
+      return { code : outCode }
+    });
+    //Stop UserScript
+    const stopUserScriptAction = this.homey.flow.getActionCard('user-script-stop');
+    stopUserScriptAction.registerArgumentAutocompleteListener('userscript', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const userScripts = await unraidDevice.userScriptList();
+      return userScripts.filter((userScript) => {
+        return userScript.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    stopUserScriptAction.registerRunListener(async (args) => {
+      if(!args.userscript){
+        throw new Error('UserScript is not set');
+      }
+      const userScript = args.userscript as UserScript;
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      await unraidDevice.stopUserScriptExecution(userScript.name);
     });
   }
 }
