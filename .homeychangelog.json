@@ -13,5 +13,8 @@
   },
   "1.1.2": {
     "en": "Added the FR translation. Thanks @hot22shot"
+  },
+  "1.2.0": {
+    "en": "Adding UserScript Management support"
   }
 }
