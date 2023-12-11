@@ -1,0 +1,37 @@
+{
+  "title": {
+    "en": "The VM is in a certain state",
+    "it" : "La VM è in uno stato specifico",
+    "fr": "La VM est dans un certain état"
+  },
+  "titleFormatted":{
+    "en": "[[vm]] !{{is|isn't}} [[state]]",
+    "it" : "[[vm]] !{{è|non è}} [[state]]",
+    "fr": "[[vm]] !{{est|n'est pas}} [[state]]"
+  },
+  "hint": {
+    "en": "Check if a VM is in a specific state",
+    "it" : "Controlla se una VM è in uno stato specifico",
+    "fr": "Vérifiez si une VM est dans un état spécifique"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "vm",
+      "placeholder": {
+        "en": "Virtual Machine",
+        "it" : "Macchina Virtuale",
+        "fr": "Machine Virtuelle"
+      }
+    },
+    {
+      "type": "autocomplete",
+      "name": "state",
+      "placeholder": {
+        "en": "State",
+        "it" : "Stato",
+        "fr": "État"
+      }
+    }
+  ]
+}

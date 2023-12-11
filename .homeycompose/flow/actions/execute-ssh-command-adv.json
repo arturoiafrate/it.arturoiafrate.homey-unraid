@@ -1,13 +1,13 @@
 {
   "title": {
-    "en": "Execute SSH Command (Advanced)",
-    "it": "Esegui Comando SSH (Avanzato)",
-    "fr": "Exécuter une commande SSH (Avancé)"
+    "en": "Execute SSH Command and get the output (Advanced)",
+    "it": "Esegui Comando SSH e attendi l'output (Avanzato)",
+    "fr": "Exécuter une commande SSH et attendre le résultat (Avancé)"
   },
   "titleFormatted": {
-    "en": "Execute SSH [[command]] (Advanced)",
-    "it": "Esegui [[command]] SSH (Avanzato)",
-    "fr": "Exécuter SSH [[command]] (Avancé)"
+    "en": "Execute SSH [[command]] and get the output (Advanced)",
+    "it": "Esegui [[command]] SSH e attendi l'output (Avanzato)",
+    "fr": "Exécuter SSH [[command]] et attendre le résultat (Avancé)"
   },
   "hint": {
     "en": "Execute standard SSH command and wait for the output",

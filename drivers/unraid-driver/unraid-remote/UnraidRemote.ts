@@ -8,6 +8,8 @@ import { IExecuteResult } from '@ridenui/unraid/dist/instance/executor';
 import { Container } from './utils/IDockerContainer';
 import { UserScript as US } from '@ridenui/unraid/dist/modules/unraid/extensions/userscripts/user-script';
 import { UserScript } from './utils/IUserScript';
+import { VirtualMachine } from './utils/IVirtualMachine';
+import { VMState } from '@ridenui/unraid/dist/modules/vms/vm';
 
 class UnraidRemote {
     private _url: string;
@@ -246,6 +248,40 @@ class UnraidRemote {
         }
     }
 
+    async getAllVMs(): Promise<VirtualMachine[]> {
+        let vms : VirtualMachine[] = [];
+        try{
+            let vmList = await this._unraid.vm.list();
+            if(vmList && vmList.length > 0){
+                vmList.map(vm => {
+                    let virtualMachine : VirtualMachine = {
+                        name: vm.name,
+                        id: vm.id,
+                        state: vm.state
+                    }
+                    vms.push(virtualMachine);
+                });
+            }
+        }catch(error){
+            //nothing
+        }
+        return vms;
+    }
+
+    async getVMStatus(vmId: string): Promise<VMState | undefined >{
+        try{
+            let vmList = await this._unraid.vm.list();
+            if(vmList && vmList.length > 0){
+                let vm = vmList.find(vm => vm.id === vmId);
+                if(vm){
+                    return vm.state;
+                }
+            }
+        }catch(error){
+            //nothing
+        }
+    }
+
     async getAllUserScripts():Promise<UserScript[]> {
         let userScripts : UserScript[] = [];
         const isAvailable : boolean = await this.isUserScriptsAvailable();
@@ -268,6 +304,8 @@ class UnraidRemote {
         }
         return userScripts;
     }
+
+    
 
     async runUserScriptBgMode(scriptName: string): Promise<boolean>{
         if(await this.isUserScriptsAvailable()){

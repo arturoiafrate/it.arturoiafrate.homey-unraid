@@ -3,6 +3,8 @@ import { convertToUnraidUptime, logErrorToSentry } from './utils/utilites';
 import { UnraidRemoteDevice } from './drivers/unraid-driver/device';
 import { Container } from './drivers/unraid-driver/unraid-remote/utils/IDockerContainer';
 import { UserScript } from './drivers/unraid-driver/unraid-remote/utils/IUserScript';
+import { VM, VMState } from '@ridenui/unraid/dist/modules/vms/vm';
+import { State } from './drivers/unraid-driver/unraid-remote/utils/IVirtualMachine';
 const { Log } = require('homey-log');
 
 class UnraidRemoteApp extends Homey.App {
@@ -15,6 +17,19 @@ class UnraidRemoteApp extends Homey.App {
   }
 
   async _initConditionCards(): Promise<void> {
+    await this._systemConditionCards();
+    await this._containerConditionCards();
+    await this._userScriptConditionCards();
+    await this._vmConditionCards();
+  }
+
+  async _initActionCards(): Promise<void> {
+    await this._systemActionCards();
+    await this._containerActionCards();
+    await this._userScriptActionCards();
+  }
+
+  async _systemConditionCards(): Promise<void> {
     //System Uptime
     const systemUptimeCondition = this.homey.flow.getConditionCard('uptime-condition');
     systemUptimeCondition.registerRunListener(async (args) => {
@@ -87,6 +102,9 @@ class UnraidRemoteApp extends Homey.App {
       }
       return Promise.resolve(false);
     });
+  }
+
+  async _containerConditionCards(): Promise<void> {
     //Container is running
     const containerRunningCondition = this.homey.flow.getConditionCard('container-is-running-condition');
     containerRunningCondition.registerArgumentAutocompleteListener('container', async (query, _args) => {
@@ -114,6 +132,9 @@ class UnraidRemoteApp extends Homey.App {
       const unraidDevice = devices[0] as UnraidRemoteDevice;
       return Promise.resolve(await unraidDevice.isContainerRunning(container.id));
     });
+  }
+
+  async _userScriptConditionCards(): Promise<void> {
     //UserScript is running
     const userScriptRunningCondition = this.homey.flow.getConditionCard('user-script-is-running-condition');
     userScriptRunningCondition.registerArgumentAutocompleteListener('userscript', async (query, _args) => {
@@ -143,7 +164,53 @@ class UnraidRemoteApp extends Homey.App {
     });
   }
 
-  async _initActionCards(): Promise<void> {
+  async _vmConditionCards(): Promise<void> {
+    //VM is in a certain state
+    const vmStateCondition = this.homey.flow.getConditionCard('vm-state-condition');
+    vmStateCondition.registerArgumentAutocompleteListener('vm', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const vms = await unraidDevice.vmList();
+      return vms.filter((vm) => {
+        return vm.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    vmStateCondition.registerArgumentAutocompleteListener('state', async (query, _args) => {
+      const states : State[] = Object.keys(VMState).map((key) => ({
+        name: key,
+        description: VMState[key as keyof typeof VMState]
+      }));
+      return states.filter((state) => {
+        return state.description.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    vmStateCondition.registerRunListener(async (args) => {
+      if(!args.vm){
+        throw new Error('VM is not set');
+      }
+      if(!args.state){
+        throw new Error('State is not set');
+      }
+      const vm = args.vm as VM;
+      const state = args.state as State;
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      if(vm.id){
+        const vmState = await unraidDevice.getVMStatus(vm.id);
+        return Promise.resolve(vmState === VMState[state.name as keyof typeof VMState]);
+      }
+      return Promise.resolve(false);
+    });
+  }
+
+  async _systemActionCards(): Promise<void> {
     //SSH Command (simple)
     const sshExecutorAction = this.homey.flow.getActionCard('execute-ssh-command');
     sshExecutorAction.registerRunListener(async (args) => {
@@ -181,6 +248,9 @@ class UnraidRemoteApp extends Homey.App {
         }
       }
     });
+  }
+
+  async _containerActionCards(): Promise<void> {
     //Start Container
     const startContainerAction = this.homey.flow.getActionCard('container-start');
     startContainerAction.registerArgumentAutocompleteListener('container', async (query, _args) => {
@@ -263,6 +333,9 @@ class UnraidRemoteApp extends Homey.App {
       const isOnline : boolean = await unraidDevice.isContainerRunning(container.id);
       isOnline ? unraidDevice.stopContainer(container.id) : unraidDevice.startContainer(container.id);
     });
+  }
+
+  async _userScriptActionCards(): Promise<void> {
     //Execute UserScript in background
     const execUserScriptBGAction = this.homey.flow.getActionCard('execute-user-script-bg');
     execUserScriptBGAction.registerArgumentAutocompleteListener('userscript', async (query, _args) => {

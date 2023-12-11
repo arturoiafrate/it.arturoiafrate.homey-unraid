@@ -299,6 +299,34 @@
           }
         ],
         "id": "user-script-is-running-condition"
+      },
+      {
+        "title": {
+          "en": "The VM is in a certain state"
+        },
+        "titleFormatted": {
+          "en": "[[vm]] !{{is|isn't}} [[state]]"
+        },
+        "hint": {
+          "en": "Check if a VM is in a specific state"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "vm",
+            "placeholder": {
+              "en": "Virtual Machine"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "state",
+            "placeholder": {
+              "en": "State"
+            }
+          }
+        ],
+        "id": "vm-state-condition"
       }
     ],
     "actions": [
@@ -420,14 +448,14 @@
       },
       {
         "title": {
-          "en": "Execute SSH Command (Advanced)",
-          "it": "Esegui Comando SSH (Avanzato)",
-          "fr": "Exécuter une commande SSH (Avancé)"
+          "en": "Execute SSH Command and get the output (Advanced)",
+          "it": "Esegui Comando SSH e attendi l'output (Avanzato)",
+          "fr": "Exécuter une commande SSH et attendre le résultat (Avancé)"
         },
         "titleFormatted": {
-          "en": "Execute SSH [[command]] (Advanced)",
-          "it": "Esegui [[command]] SSH (Avanzato)",
-          "fr": "Exécuter SSH [[command]] (Avancé)"
+          "en": "Execute SSH [[command]] and get the output (Advanced)",
+          "it": "Esegui [[command]] SSH e attendi l'output (Avanzato)",
+          "fr": "Exécuter SSH [[command]] et attendre le résultat (Avancé)"
         },
         "hint": {
           "en": "Execute standard SSH command and wait for the output",
@@ -536,14 +564,14 @@
       },
       {
         "title": {
-          "en": "Execute User Script in Foreground (Advanced)",
-          "it": "Esegui uno User Script in Foreground (Avanzato)",
-          "fr": "Exécuter un script utilisateur en premier plan (avancé)"
+          "en": "Execute User Script in Foreground and get the return code (Advanced)",
+          "it": "Esegui uno User Script in Foreground e ottieni il codice di ritorno (Avanzato)",
+          "fr": "Exécuter un script utilisateur en premier plan et obtenir le code de retour (avancé)"
         },
         "titleFormatted": {
-          "en": "Execute [[userscript]] in Foreground (Advanced)",
-          "it": "Esegui [[userscript]] in Foreground (Avanzato)",
-          "fr": "Exécuter [[userscript]] en premier plan (avancé)"
+          "en": "Execute [[userscript]] in Foreground and get the return code (Advanced)",
+          "it": "Esegui [[userscript]] in Foreground e ottieni il codice di ritorno (Avanzato)",
+          "fr": "Exécuter [[userscript]] en premier plan et obtenir le code de retour (avancé)"
         },
         "hint": {
           "en": "Execute a User Script and get the return code",

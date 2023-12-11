@@ -6,6 +6,8 @@ import { UnraidRemoteFlowTrigger } from './unraid-remote/triggers/UnraidRemoteFl
 import { UnraidRemoteApp } from '../../app';
 import { Container } from './unraid-remote/utils/IDockerContainer';
 import { UserScript } from './unraid-remote/utils/IUserScript';
+import { VirtualMachine } from './unraid-remote/utils/IVirtualMachine';
+import { VMState } from '@ridenui/unraid/dist/modules/vms/vm';
 
 class UnraidRemoteDevice extends Homey.Device {
 
@@ -206,6 +208,16 @@ class UnraidRemoteDevice extends Homey.Device {
   async stopUserScriptExecution(userScriptName: string): Promise<void>{
     if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
     await this._unraidRemote.stopUserScript(userScriptName);
+  }
+
+  async vmList(): Promise<VirtualMachine[]>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.getAllVMs();
+  }
+
+  async getVMStatus(vmId: string): Promise<VMState | undefined>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.getVMStatus(vmId);
   }
 
   _setOffline(): void{

@@ -1,13 +1,13 @@
 {
   "title": {
-    "en": "Execute User Script in Foreground (Advanced)",
-    "it": "Esegui uno User Script in Foreground (Avanzato)",
-    "fr": "Exécuter un script utilisateur en premier plan (avancé)"
+    "en": "Execute User Script in Foreground and get the return code (Advanced)",
+    "it": "Esegui uno User Script in Foreground e ottieni il codice di ritorno (Avanzato)",
+    "fr": "Exécuter un script utilisateur en premier plan et obtenir le code de retour (avancé)"
   },
   "titleFormatted": {
-    "en": "Execute [[userscript]] in Foreground (Advanced)",
-    "it": "Esegui [[userscript]] in Foreground (Avanzato)",
-    "fr": "Exécuter [[userscript]] en premier plan (avancé)"
+    "en": "Execute [[userscript]] in Foreground and get the return code (Advanced)",
+    "it": "Esegui [[userscript]] in Foreground e ottieni il codice di ritorno (Avanzato)",
+    "fr": "Exécuter [[userscript]] en premier plan et obtenir le code de retour (avancé)"
   },
   "hint": {
     "en": "Execute a User Script and get the return code",
