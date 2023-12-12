@@ -11,4 +11,9 @@ interface State {
     description: string;
 }
 
-export {VirtualMachine, State};
+interface Mode {
+    name: string;
+    description: string;
+}
+
+export {VirtualMachine, State, Mode};

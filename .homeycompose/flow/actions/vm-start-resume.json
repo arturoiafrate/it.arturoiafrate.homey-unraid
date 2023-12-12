@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "Start/Resume the Virtual Machine",
+    "it": "Avvia/Riprendi la macchina virtuale",
+    "fr": "Démarrer/Reprendre la machine virtuelle"
+  },
+  "titleFormatted":{
+    "en": "Start/Resume [[vm]]",
+    "it" : "Avvia/Riprendi [[vm]]",
+    "fr": "Démarrer/Reprendre [[vm]]"
+  },
+  "hint": {
+    "en": "Start or resume, depending on the current state, the selected Virtual Machine",
+    "it": "Avvia o riprendi, a seconda dello stato corrente, la macchina virtuale selezionata",
+    "fr": "Démarrer ou reprendre, selon l'état actuel, la machine virtuelle sélectionnée"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "vm",
+      "placeholder": {
+        "en": "Virtual Machine",
+        "it": "Macchina Virtuale",
+        "fr": "Machine Virtuelle"
+      }
+    }
+  ]
+}

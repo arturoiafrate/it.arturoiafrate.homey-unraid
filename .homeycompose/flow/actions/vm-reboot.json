@@ -1,0 +1,37 @@
+{
+  "title": {
+    "en": "Reboot the Virtual Machine",
+    "it": "Riavvia la macchina virtuale",
+    "fr": "Redémarrer la machine virtuelle"
+  },
+  "titleFormatted": {
+    "en": "Reboot [[vm]] in [[mode]] mode",
+    "it": "Riavvia [[vm]] in modalità [[mode]]",
+    "fr": "Redémarrer [[vm]] en mode [[mode]]"
+  },
+  "hint": {
+    "en": "Reboot the Virtual Machine, if running",
+    "it": "Riavvia la macchina virtuale, se in esecuzione",
+    "fr": "Redémarrer la machine virtuelle, si en cours d'exécution"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "vm",
+      "placeholder": {
+        "en": "Virtual Machine",
+        "it": "Macchina Virtuale",
+        "fr": "Machine Virtuelle"
+      }
+    },
+    {
+      "type": "autocomplete",
+      "name": "mode",
+      "placeholder": {
+        "en": "Mode",
+        "it": "Modalità",
+        "fr": "Mode"
+      }
+    }
+  ]
+}

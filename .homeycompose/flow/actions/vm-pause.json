@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "Pause the Virtual Machine",
+    "it": "Sospendi la macchina virtuale",
+    "fr": "Mettre en pause la machine virtuelle"
+  },
+  "titleFormatted": {
+    "en": "Pause [[vm]]",
+    "it": "Sospendi [[vm]]",
+    "fr": "Mettre en pause [[vm]]"
+  },
+  "hint": {
+    "en": "Pause the Virtual Machine, if running",
+    "it": "Sospendi la macchina virtuale, se in esecuzione",
+    "fr": "Mettre en pause la machine virtuelle, si en cours d'exécution"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "vm",
+      "placeholder": {
+        "en": "Virtual Machine",
+        "it": "Macchina virtuale",
+        "fr": "Machine virtuelle"
+      }
+    }
+  ]
+}

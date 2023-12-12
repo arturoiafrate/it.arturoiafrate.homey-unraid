@@ -28,6 +28,7 @@ Install the app and add a new unraid device. Open the device settings and config
     - If the system uptime is over/under a threshold
     - If a specific container is running
     - If a specific userscript is running in background
+    - If a specific VM is in a certain state
 
 3. Actually you can do:
     - Execute a generic SSH command
@@ -35,6 +36,8 @@ Install the app and add a new unraid device. Open the device settings and config
     - Start/Stop/Toggle existing docker containers
     - Execute a user script (background or foreground [and wait for the output - Advanced Flow])
     - Stop a user script if it's running in background
+    - Start/Resume a VM
+    - Pause/Shutdown/Reboot a VM
 
 For each one of them you can trigger a flow. For example:
 **_When_ CPU Usage is changed _and_ CPU Usage is over a _threshold_, _execute_ something.**
@@ -42,7 +45,8 @@ For each one of them you can trigger a flow. For example:
 ### Roadmap
 - [x] Manage user scripts.
 - [x] Monitor and manage docker containers.
-- [ ] Monitor and manage VMs. 
+- [x] Monitor and manage VMs.
+- [ ] Create and manage files in shared folders.
 
 ### Disclaimer
 This is an unofficial integration provided for free, all features in this app is provided "as is", with no guarantee of completeness, accuracy, timeliness or of the results obtained from the use of this feature.

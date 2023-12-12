@@ -4,7 +4,8 @@ import { UnraidRemoteDevice } from './drivers/unraid-driver/device';
 import { Container } from './drivers/unraid-driver/unraid-remote/utils/IDockerContainer';
 import { UserScript } from './drivers/unraid-driver/unraid-remote/utils/IUserScript';
 import { VM, VMState } from '@ridenui/unraid/dist/modules/vms/vm';
-import { State } from './drivers/unraid-driver/unraid-remote/utils/IVirtualMachine';
+import { State, Mode } from './drivers/unraid-driver/unraid-remote/utils/IVirtualMachine';
+import { IVMRebootModes, IVMShutdownModes } from '@ridenui/unraid/dist/modules/vms/vm';
 const { Log } = require('homey-log');
 
 class UnraidRemoteApp extends Homey.App {
@@ -27,6 +28,7 @@ class UnraidRemoteApp extends Homey.App {
     await this._systemActionCards();
     await this._containerActionCards();
     await this._userScriptActionCards();
+    await this._vmActionCards();
   }
 
   async _systemConditionCards(): Promise<void> {
@@ -202,11 +204,8 @@ class UnraidRemoteApp extends Homey.App {
         throw new Error('No devices found')
       }
       const unraidDevice = devices[0] as UnraidRemoteDevice;
-      if(vm.id){
-        const vmState = await unraidDevice.getVMStatus(vm.id);
-        return Promise.resolve(vmState === VMState[state.name as keyof typeof VMState]);
-      }
-      return Promise.resolve(false);
+      const vmState = await unraidDevice.getVMStatus(vm.name);
+      return Promise.resolve(vmState === VMState[state.name as keyof typeof VMState]);
     });
   }
 
@@ -442,6 +441,139 @@ class UnraidRemoteApp extends Homey.App {
       }
       const unraidDevice = devices[0] as UnraidRemoteDevice;
       await unraidDevice.stopUserScriptExecution(userScript.name);
+    });
+  }
+
+  async _vmActionCards(): Promise<void> {
+    //Start/Resume VM
+    const startVMAction = this.homey.flow.getActionCard('vm-start-resume');
+    startVMAction.registerArgumentAutocompleteListener('vm', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const vms = await unraidDevice.vmList();
+      return vms.filter((vm) => {
+        return vm.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    startVMAction.registerRunListener(async (args) => {
+      if(!args.vm){
+        throw new Error('VM is not set');
+      }
+      const vm = args.vm as VM;
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      await unraidDevice.startOrResumeVM(vm.name);
+    });
+    //Shutdown VM
+    const shutdownVMAction = this.homey.flow.getActionCard('vm-shutdown');
+    shutdownVMAction.registerArgumentAutocompleteListener('vm', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const vms = await unraidDevice.vmList();
+      return vms.filter((vm) => {
+        return vm.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    shutdownVMAction.registerArgumentAutocompleteListener('mode', async (query, _args) => {
+      const modes : Mode[] = [
+        { name: 'acpi', description: 'acpi' },
+        { name: 'agent', description: 'agent' },
+        { name: 'initctl', description: 'initctl' },
+        { name: 'signal', description: 'signal' },
+        { name: 'paravirt', description: 'paravirt' }
+      ];
+      return modes.filter((mode) => {
+        return mode.description.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    shutdownVMAction.registerRunListener(async (args) => {
+      if(!args.vm){
+        throw new Error('VM is not set');
+      }
+      if(!args.mode){
+        throw new Error('Mode is not set');
+      }
+      const vm = args.vm as VM;
+      const mode = args.mode as Mode;
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      await unraidDevice.stopVM(vm.name, mode.name as IVMShutdownModes);
+    });
+    //Pause VM
+    const pauseVMAction = this.homey.flow.getActionCard('vm-pause');
+    pauseVMAction.registerArgumentAutocompleteListener('vm', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const vms = await unraidDevice.vmList();
+      return vms.filter((vm) => {
+        return vm.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    pauseVMAction.registerRunListener(async (args) => {
+      if(!args.vm){
+        throw new Error('VM is not set');
+      }
+      const vm = args.vm as VM;
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      await unraidDevice.pauseVM(vm.name);
+    });
+    //Reboot VM
+    const rebootVMAction = this.homey.flow.getActionCard('vm-reboot');
+    rebootVMAction.registerArgumentAutocompleteListener('vm', async (query, _args) => {
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const vms = await unraidDevice.vmList();
+      return vms.filter((vm) => {
+        return vm.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    rebootVMAction.registerArgumentAutocompleteListener('mode', async (query, _args) => {
+      const modes : Mode[] = [
+        { name: 'acpi', description: 'acpi' },
+        { name: 'agent', description: 'agent' },
+        { name: 'initctl', description: 'initctl' }
+      ];
+      return modes.filter((mode) => {
+        return mode.description.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    rebootVMAction.registerRunListener(async (args) => {
+      if(!args.vm){
+        throw new Error('VM is not set');
+      }
+      if(!args.mode){
+        throw new Error('Mode is not set');
+      }
+      const vm = args.vm as VM;
+      const mode = args.mode as Mode;
+      const devices : Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found')
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      await unraidDevice.rebootVM(vm.name, mode.name as IVMRebootModes);
     });
   }
 }

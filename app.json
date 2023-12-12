@@ -302,27 +302,37 @@
       },
       {
         "title": {
-          "en": "The VM is in a certain state"
+          "en": "The VM is in a certain state",
+          "it": "La VM è in uno stato specifico",
+          "fr": "La VM est dans un certain état"
         },
         "titleFormatted": {
-          "en": "[[vm]] !{{is|isn't}} [[state]]"
+          "en": "[[vm]] !{{is|isn't}} [[state]]",
+          "it": "[[vm]] !{{è|non è}} [[state]]",
+          "fr": "[[vm]] !{{est|n'est pas}} [[state]]"
         },
         "hint": {
-          "en": "Check if a VM is in a specific state"
+          "en": "Check if a VM is in a specific state",
+          "it": "Controlla se una VM è in uno stato specifico",
+          "fr": "Vérifiez si une VM est dans un état spécifique"
         },
         "args": [
           {
             "type": "autocomplete",
             "name": "vm",
             "placeholder": {
-              "en": "Virtual Machine"
+              "en": "Virtual Machine",
+              "it": "Macchina Virtuale",
+              "fr": "Machine Virtuelle"
             }
           },
           {
             "type": "autocomplete",
             "name": "state",
             "placeholder": {
-              "en": "State"
+              "en": "State",
+              "it": "Stato",
+              "fr": "État"
             }
           }
         ],
@@ -630,6 +640,140 @@
           }
         ],
         "id": "user-script-stop"
+      },
+      {
+        "title": {
+          "en": "Pause the Virtual Machine",
+          "it": "Sospendi la macchina virtuale",
+          "fr": "Mettre en pause la machine virtuelle"
+        },
+        "titleFormatted": {
+          "en": "Pause [[vm]]",
+          "it": "Sospendi [[vm]]",
+          "fr": "Mettre en pause [[vm]]"
+        },
+        "hint": {
+          "en": "Pause the Virtual Machine, if running",
+          "it": "Sospendi la macchina virtuale, se in esecuzione",
+          "fr": "Mettre en pause la machine virtuelle, si en cours d'exécution"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "vm",
+            "placeholder": {
+              "en": "Virtual Machine",
+              "it": "Macchina virtuale",
+              "fr": "Machine virtuelle"
+            }
+          }
+        ],
+        "id": "vm-pause"
+      },
+      {
+        "title": {
+          "en": "Reboot the Virtual Machine",
+          "it": "Riavvia la macchina virtuale",
+          "fr": "Redémarrer la machine virtuelle"
+        },
+        "titleFormatted": {
+          "en": "Reboot [[vm]] in [[mode]] mode",
+          "it": "Riavvia [[vm]] in modalità [[mode]]",
+          "fr": "Redémarrer [[vm]] en mode [[mode]]"
+        },
+        "hint": {
+          "en": "Reboot the Virtual Machine, if running",
+          "it": "Riavvia la macchina virtuale, se in esecuzione",
+          "fr": "Redémarrer la machine virtuelle, si en cours d'exécution"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "vm",
+            "placeholder": {
+              "en": "Virtual Machine",
+              "it": "Macchina Virtuale",
+              "fr": "Machine Virtuelle"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "mode",
+            "placeholder": {
+              "en": "Mode",
+              "it": "Modalità",
+              "fr": "Mode"
+            }
+          }
+        ],
+        "id": "vm-reboot"
+      },
+      {
+        "title": {
+          "en": "Shutdown the Virtual Machine",
+          "it": "Spegni la macchina virtuale",
+          "fr": "Éteindre la machine virtuelle"
+        },
+        "titleFormatted": {
+          "en": "Shutdown [[vm]] in [[mode]] mode",
+          "it": "Spegni [[vm]] in modalità [[mode]]",
+          "fr": "Éteindre [[vm]] en mode [[mode]]"
+        },
+        "hint": {
+          "en": "Shutdown the Virtual Machine, if running",
+          "it": "Spegni la macchina virtuale, se in esecuzione",
+          "fr": "Éteindre la machine virtuelle, si en cours d'exécution"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "vm",
+            "placeholder": {
+              "en": "Virtual Machine",
+              "it": "Macchina Virtuale",
+              "fr": "Machine Virtuelle"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "mode",
+            "placeholder": {
+              "en": "shutdown mode",
+              "it": "modalità di spegnimento",
+              "fr": "mode d'arrêt"
+            }
+          }
+        ],
+        "id": "vm-shutdown"
+      },
+      {
+        "title": {
+          "en": "Start/Resume the Virtual Machine",
+          "it": "Avvia/Riprendi la macchina virtuale",
+          "fr": "Démarrer/Reprendre la machine virtuelle"
+        },
+        "titleFormatted": {
+          "en": "Start/Resume [[vm]]",
+          "it": "Avvia/Riprendi [[vm]]",
+          "fr": "Démarrer/Reprendre [[vm]]"
+        },
+        "hint": {
+          "en": "Start or resume, depending on the current state, the selected Virtual Machine",
+          "it": "Avvia o riprendi, a seconda dello stato corrente, la macchina virtuale selezionata",
+          "fr": "Démarrer ou reprendre, selon l'état actuel, la machine virtuelle sélectionnée"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "vm",
+            "placeholder": {
+              "en": "Virtual Machine",
+              "it": "Macchina Virtuale",
+              "fr": "Machine Virtuelle"
+            }
+          }
+        ],
+        "id": "vm-start-resume"
       }
     ],
     "triggers": [

@@ -1,0 +1,37 @@
+{
+  "title": {
+    "en": "Shutdown the Virtual Machine",
+    "it": "Spegni la macchina virtuale",
+    "fr": "Éteindre la machine virtuelle"
+  },
+  "titleFormatted": {
+    "en": "Shutdown [[vm]] in [[mode]] mode",
+    "it": "Spegni [[vm]] in modalità [[mode]]",
+    "fr": "Éteindre [[vm]] en mode [[mode]]"
+  },
+  "hint": {
+    "en": "Shutdown the Virtual Machine, if running",
+    "it": "Spegni la macchina virtuale, se in esecuzione",
+    "fr": "Éteindre la machine virtuelle, si en cours d'exécution"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "vm",
+      "placeholder": {
+        "en": "Virtual Machine",
+        "it": "Macchina Virtuale",
+        "fr": "Machine Virtuelle"
+      }
+    },
+    {
+      "type": "autocomplete",
+      "name": "mode",
+      "placeholder": {
+        "en": "shutdown mode",
+        "it": "modalità di spegnimento",
+        "fr": "mode d'arrêt"
+      }
+    }
+  ]
+}

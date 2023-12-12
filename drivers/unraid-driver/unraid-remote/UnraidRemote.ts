@@ -9,7 +9,7 @@ import { Container } from './utils/IDockerContainer';
 import { UserScript as US } from '@ridenui/unraid/dist/modules/unraid/extensions/userscripts/user-script';
 import { UserScript } from './utils/IUserScript';
 import { VirtualMachine } from './utils/IVirtualMachine';
-import { VMState } from '@ridenui/unraid/dist/modules/vms/vm';
+import { IVMRebootModes, IVMShutdownModes, VMState } from '@ridenui/unraid/dist/modules/vms/vm';
 
 class UnraidRemote {
     private _url: string;
@@ -268,11 +268,11 @@ class UnraidRemote {
         return vms;
     }
 
-    async getVMStatus(vmId: string): Promise<VMState | undefined >{
+    async getVMStatus(vmName: string): Promise<VMState | undefined >{
         try{
             let vmList = await this._unraid.vm.list();
             if(vmList && vmList.length > 0){
-                let vm = vmList.find(vm => vm.id === vmId);
+                let vm = vmList.find(vm => vm.name === vmName);
                 if(vm){
                     return vm.state;
                 }
@@ -280,6 +280,81 @@ class UnraidRemote {
         }catch(error){
             //nothing
         }
+    }
+
+    async startOrResumeVM(vmName: string): Promise<boolean>{
+        try{
+            let vmList = await this._unraid.vm.list();
+            if(vmList && vmList.length > 0){
+                let vm = vmList.find(vm => vm.name === vmName);
+                if(vm){
+                    if(vm.state === VMState.PAUSED){
+                        await vm.resume();
+                        return true;
+                    } else if(vm.state === VMState.STOPPED || vm.state === VMState.CRASHED){
+                        await vm.start();
+                        return true;
+                    }
+                }
+            }
+        }catch(error){
+            //nothing
+        }
+        return false;
+    }
+
+    async pauseVM(vmName: string): Promise<boolean>{
+        try{
+            let vmList = await this._unraid.vm.list();
+            if(vmList && vmList.length > 0){
+                let vm = vmList.find(vm => vm.name === vmName);
+                if(vm){
+                    if(vm.state === VMState.RUNNING || vm.state === VMState.IDL){
+                        await vm.suspend();
+                        return true;
+                    }
+                }
+            }
+        }catch(error){
+            //nothing
+        }
+        return false;
+    }
+
+    async stopVM(vmName: string, shutdownMode : IVMShutdownModes): Promise<boolean>{
+        try{
+            let vmList = await this._unraid.vm.list();
+            if(vmList && vmList.length > 0){
+                let vm = vmList.find(vm => vm.name === vmName);
+                if(vm){
+                    if(vm.state === VMState.RUNNING || vm.state === VMState.IDL){
+                        await vm.shutdown(shutdownMode);
+                        return true;
+                    }
+                }
+            }
+        }catch(error){
+            //nothing
+        }
+        return false;
+    }
+
+    async rebootVM(vmName: string, rebootMode : IVMRebootModes): Promise<boolean>{
+        try{
+            let vmList = await this._unraid.vm.list();
+            if(vmList && vmList.length > 0){
+                let vm = vmList.find(vm => vm.name === vmName);
+                if(vm){
+                    if(vm.state !== VMState.IN_SHUTDOWN){
+                        await vm.reboot(rebootMode);
+                        return true;
+                    }
+                }
+            }
+        }catch(error){
+            //nothing
+        }
+        return false;
     }
 
     async getAllUserScripts():Promise<UserScript[]> {

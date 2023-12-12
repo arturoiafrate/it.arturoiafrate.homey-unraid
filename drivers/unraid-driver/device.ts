@@ -7,7 +7,7 @@ import { UnraidRemoteApp } from '../../app';
 import { Container } from './unraid-remote/utils/IDockerContainer';
 import { UserScript } from './unraid-remote/utils/IUserScript';
 import { VirtualMachine } from './unraid-remote/utils/IVirtualMachine';
-import { VMState } from '@ridenui/unraid/dist/modules/vms/vm';
+import { IVMRebootModes, IVMShutdownModes, VMState } from '@ridenui/unraid/dist/modules/vms/vm';
 
 class UnraidRemoteDevice extends Homey.Device {
 
@@ -215,9 +215,29 @@ class UnraidRemoteDevice extends Homey.Device {
     return await this._unraidRemote.getAllVMs();
   }
 
-  async getVMStatus(vmId: string): Promise<VMState | undefined>{
+  async getVMStatus(vmName: string): Promise<VMState | undefined>{
     if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
-    return await this._unraidRemote.getVMStatus(vmId);
+    return await this._unraidRemote.getVMStatus(vmName);
+  }
+
+  async startOrResumeVM(vmName: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.startOrResumeVM(vmName);
+  }
+
+  async stopVM(vmName: string, shutdownMode: IVMShutdownModes): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.stopVM(vmName, shutdownMode);
+  }
+
+  async pauseVM(vmName: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.pauseVM(vmName);
+  }
+
+  async rebootVM(vmName: string, rebootMode: IVMRebootModes): Promise<boolean>{//TODO
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.rebootVM(vmName, rebootMode);
   }
 
   _setOffline(): void{
