@@ -169,6 +169,82 @@
       },
       {
         "title": {
+          "en": "The file !{{exists|doesn't exist}}",
+          "it": "Il file !{{esiste|non esiste}}",
+          "fr": "Le fichier !{{existe|n'existe pas}}"
+        },
+        "titleFormatted": {
+          "en": "The file [[file]] in the share [[share]] !{{exists|doesn't exist}}",
+          "it": "Il file [[file]] nella condivisione [[share]] !{{esiste|non esiste}}",
+          "fr": "Le file [[file]] dans le partage [[share]] !{{existe|n'existe pas}}"
+        },
+        "hint": {
+          "en": "Check if the specified file exists",
+          "it": "Controlla se il file specificato esiste",
+          "fr": "Vérifiez si le fichier spécifié existe"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "file",
+            "placeholder": {
+              "en": "File",
+              "it": "File",
+              "fr": "File"
+            }
+          }
+        ],
+        "id": "file-exists-condition"
+      },
+      {
+        "title": {
+          "en": "The folder !{{exists|doesn't exist}}",
+          "it": "La cartella !{{esiste|non esiste}}",
+          "fr": "Le dossier !{{existe|n'existe pas}}"
+        },
+        "titleFormatted": {
+          "en": "The folder [[folder]] in the share [[share]] !{{exists|doesn't exist}}",
+          "it": "La cartella [[folder]] nella condivisione [[share]] !{{esiste|non esiste}}",
+          "fr": "Le dossier [[folder]] dans le partage [[share]] !{{existe|n'existe pas}}"
+        },
+        "hint": {
+          "en": "Check if the specified folder exists",
+          "it": "Controlla se la cartella specificata esiste",
+          "fr": "Vérifiez si le dossier spécifié existe"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "folder",
+            "placeholder": {
+              "en": "Folder",
+              "it": "Folder",
+              "fr": "Folder"
+            }
+          }
+        ],
+        "id": "folder-exists-condition"
+      },
+      {
+        "title": {
           "en": "The RAM usage is !{{over|under}} ",
           "it": "L'uso della RAM è !{{oltre|sotto}} ",
           "fr": "L'usage de la RAM est !{{over|under}} "
@@ -611,6 +687,397 @@
           }
         ],
         "id": "execute-user-script-fg-adv"
+      },
+      {
+        "title": {
+          "en": "Delete file content",
+          "it": "Cancella il contenuto del file",
+          "fr": "Supprimer le contenu du fichier"
+        },
+        "titleFormatted": {
+          "en": "Delete the content of the file [[file]] in the share [[share]]",
+          "it": "Cancella il contenuto del file [[file]] nella condivisione [[share]]",
+          "fr": "Supprimer le contenu du fichier [[file]] dans le partage [[share]]"
+        },
+        "hint": {
+          "en": "Delete the content of the file in the share",
+          "it": "Cancella il contenuto del file nella share",
+          "fr": "Supprimer le contenu du fichier dans le partage"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "file",
+            "placeholder": {
+              "en": "File",
+              "it": "File",
+              "fr": "File"
+            }
+          }
+        ],
+        "id": "file-content-erase"
+      },
+      {
+        "title": {
+          "en": "Create an empty file",
+          "it": "Crea un file vuoto",
+          "fr": "Créer un fichier vide"
+        },
+        "titleFormatted": {
+          "en": "Create an empty file with name [[file]] in the share [[share]]",
+          "it": "Crea un file vuoto con nome [[file]] nella condivisione [[share]]",
+          "fr": "Créer un fichier vide avec le nom [[file]] dans le partage [[share]]"
+        },
+        "hint": {
+          "en": "Create an empty file in the specified share",
+          "it": "Crea un file vuoto nella condivisione specificata",
+          "fr": "Créer un fichier vide dans le partage spécifié"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "file",
+            "placeholder": {
+              "en": "File",
+              "it": "File",
+              "fr": "File"
+            }
+          }
+        ],
+        "id": "file-create"
+      },
+      {
+        "title": {
+          "en": "Delete the file",
+          "it": "Elimina il file",
+          "fr": "Supprimer le fichier"
+        },
+        "titleFormatted": {
+          "en": "Delete the file [[file]] in the share [[share]]",
+          "it": "Elimina il file [[file]] nella condivisione [[share]]",
+          "fr": "Supprimer le fichier [[file]] dans le partage [[share]]"
+        },
+        "hint": {
+          "en": "Delete the file in the specified share",
+          "it": "Elimina il file nella condivisione specificata",
+          "fr": "Supprimer le fichier dans le partage spécifié"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "file",
+            "placeholder": {
+              "en": "File",
+              "it": "File",
+              "fr": "File"
+            }
+          }
+        ],
+        "id": "file-delete"
+      },
+      {
+        "title": {
+          "en": "Read the file (Advanced)",
+          "it": "Leggi il file (Avanzato)",
+          "fr": "Lire le fichier (Avancé)"
+        },
+        "titleFormatted": {
+          "en": "Read the file [[file]] from the share [[share]] and get the content as a string",
+          "it": "Leggi il file [[file]] dalla condivisione [[share]] e ottieni il contenuto come stringa",
+          "fr": "Lire le fichier [[file]] de la part [[share]] et obtenir le contenu comme une chaîne"
+        },
+        "hint": {
+          "en": "Read the file and get the content as a string",
+          "it": "Leggi il file e ottieni il contenuto come stringa",
+          "fr": "Lire le fichier et obtenir le contenu comme une chaîne"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "file",
+            "placeholder": {
+              "en": "File",
+              "it": "File",
+              "fr": "File"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "content",
+            "type": "string",
+            "title": {
+              "en": "File content",
+              "it": "Contenuto del file",
+              "fr": "Contenu du fichier"
+            }
+          }
+        ],
+        "id": "file-read"
+      },
+      {
+        "title": {
+          "en": "Create a file with content",
+          "it": "Crea un file con contenuto",
+          "fr": "Créer un fichier avec le contenu"
+        },
+        "titleFormatted": {
+          "en": "Create a file with name [[file]] and content [[content]] in the share [[share]]",
+          "it": "Crea un file con nome [[file]] e contenuto [[content]] nella condivisione [[share]]",
+          "fr": "Créer un fichier avec le nom [[file]] et le contenu [[content]] dans le partage [[share]]"
+        },
+        "hint": {
+          "en": "Create a file with a content in the specified share",
+          "it": "Crea un file con un contenuto nella condivisione specificata",
+          "fr": "Créer un fichier avec un contenu dans le partage spécifié"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "file",
+            "placeholder": {
+              "en": "File",
+              "it": "File",
+              "fr": "File"
+            }
+          },
+          {
+            "type": "text",
+            "name": "content",
+            "placeholder": {
+              "en": "Content",
+              "it": "Contenuto",
+              "fr": "Contenu"
+            }
+          }
+        ],
+        "id": "file-with-content-create"
+      },
+      {
+        "title": {
+          "en": "Write a file",
+          "it": "Scrivi un file",
+          "fr": "Écrire un fichier"
+        },
+        "titleFormatted": {
+          "en": "Write a file with name [[file]] in mode [[mode]] on share [[share]] with content [[content]]",
+          "it": "Scrivi un file con nome [[file]] in modalità [[mode]] sulla share [[share]] con contenuto [[content]]",
+          "fr": "Écrire un fichier avec le nom [[file]] en mode [[mode]] sur le partage [[share]] avec le contenu [[content]]"
+        },
+        "hint": {
+          "en": "Write a file and create if not exists",
+          "it": "Scrivi un file e crea se non esiste",
+          "fr": "Écrire un fichier et créer s'il n'existe pas"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "mode",
+            "placeholder": {
+              "en": "Mode",
+              "it": "Modalità",
+              "fr": "Mode"
+            }
+          },
+          {
+            "type": "text",
+            "name": "file",
+            "placeholder": {
+              "en": "File",
+              "it": "File",
+              "fr": "File"
+            }
+          },
+          {
+            "type": "text",
+            "name": "content",
+            "placeholder": {
+              "en": "Content",
+              "it": "Contenuto",
+              "fr": "Contenu"
+            }
+          }
+        ],
+        "id": "file-write"
+      },
+      {
+        "title": {
+          "en": "Create a folder",
+          "it": "Crea una cartella",
+          "fr": "Créer un dossier"
+        },
+        "titleFormatted": {
+          "en": "Create a folder [[folder]] in the share [[share]]",
+          "it": "Crea una cartella [[folder]] nella share [[share]]",
+          "fr": "Créer un dossier [[folder]] dans le share [[share]]"
+        },
+        "hint": {
+          "en": "Create a folder if not exists",
+          "it": "Crea una cartella se non esiste",
+          "fr": "Créer un dossier s'il n'existe pas"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "folder",
+            "placeholder": {
+              "en": "Folder",
+              "it": "Folder",
+              "fr": "Folder"
+            }
+          }
+        ],
+        "id": "folder-create"
+      },
+      {
+        "title": {
+          "en": "Delete the folder",
+          "it": "Cancella la cartella",
+          "fr": "Supprimer le dossier"
+        },
+        "titleFormatted": {
+          "en": "Delete the folder [[folder]] and it's content from the share [[share]]",
+          "it": "Cancella la cartella [[folder]] e il suo contenuto dalla condivisione [[share]]",
+          "fr": "Supprimer le dossier [[folder]] et son contenu de la partage [[share]]"
+        },
+        "hint": {
+          "en": "Delete the folder and it's content",
+          "it": "Cancella la cartella e il suo contenuto",
+          "fr": "Supprimer le dossier et son contenu"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "folder",
+            "placeholder": {
+              "en": "Folder",
+              "it": "Cartella",
+              "fr": "Dossier"
+            }
+          }
+        ],
+        "id": "folder-delete"
+      },
+      {
+        "title": {
+          "en": "Read the folder (Advanced)",
+          "it": "Leggi la cartella (Avanzato)",
+          "fr": "Lire le dossier (Avancé)"
+        },
+        "titleFormatted": {
+          "en": "Read the folder [[folder]] from the share [[share]] and get the content as JSON",
+          "it": "Leggi la cartella [[folder]] dalla condvisione [[share]] e ottieni il contenuto in formato JSON",
+          "fr": "Lire le dossier [[folder]] du partage [[share]] et obtenir le contenu au format JSON"
+        },
+        "hint": {
+          "en": "Read the folder and get the content as JSON",
+          "it": "Leggi la cartella e ottieni il contenuto in formato JSON",
+          "fr": "Lire le dossier et obtenir le contenu au format JSON"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "share",
+            "placeholder": {
+              "en": "Share",
+              "it": "Share",
+              "fr": "Share"
+            }
+          },
+          {
+            "type": "text",
+            "name": "folder",
+            "placeholder": {
+              "en": "Folder",
+              "it": "Folder",
+              "fr": "Folder"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "content",
+            "type": "string",
+            "title": {
+              "en": "Folder content",
+              "it": "Contenuto della cartella",
+              "fr": "Contenu du dossier"
+            }
+          }
+        ],
+        "id": "folder-read"
       },
       {
         "title": {

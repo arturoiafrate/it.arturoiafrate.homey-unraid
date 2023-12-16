@@ -1,0 +1,55 @@
+{
+  "title": {
+    "en": "Write a file",
+    "it": "Scrivi un file",
+    "fr": "Écrire un fichier"
+  },
+  "titleFormatted": {
+    "en": "Write a file with name [[file]] in mode [[mode]] on share [[share]] with content [[content]]",
+    "it": "Scrivi un file con nome [[file]] in modalità [[mode]] sulla share [[share]] con contenuto [[content]]",
+    "fr": "Écrire un fichier avec le nom [[file]] en mode [[mode]] sur le partage [[share]] avec le contenu [[content]]"
+  },
+  "hint": {
+    "en": "Write a file and create if not exists",
+    "it": "Scrivi un file e crea se non esiste",
+    "fr": "Écrire un fichier et créer s'il n'existe pas"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "share",
+      "placeholder": {
+        "en": "Share",
+        "it": "Share",
+        "fr": "Share"
+      }
+    },
+    {
+      "type": "autocomplete",
+      "name": "mode",
+      "placeholder": {
+        "en": "Mode",
+        "it": "Modalità",
+        "fr": "Mode"
+      }
+    },
+    {
+      "type": "text",
+      "name": "file",
+      "placeholder": {
+        "en": "File",
+        "it": "File",
+        "fr": "File"
+      }
+    },
+    {
+      "type": "text",
+      "name": "content",
+      "placeholder": {
+        "en": "Content",
+        "it": "Contenuto",
+        "fr": "Contenu"
+      }
+    }
+  ]
+}

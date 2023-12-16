@@ -1,0 +1,48 @@
+{
+  "title": {
+    "en": "Read the folder (Advanced)",
+    "it": "Leggi la cartella (Avanzato)",
+    "fr": "Lire le dossier (Avancé)"
+  },
+  "titleFormatted": {
+    "en": "Read the folder [[folder]] from the share [[share]] and get the content as JSON",
+    "it": "Leggi la cartella [[folder]] dalla condvisione [[share]] e ottieni il contenuto in formato JSON",
+    "fr": "Lire le dossier [[folder]] du partage [[share]] et obtenir le contenu au format JSON"
+  },
+  "hint": {
+    "en": "Read the folder and get the content as JSON",
+    "it": "Leggi la cartella e ottieni il contenuto in formato JSON",
+    "fr": "Lire le dossier et obtenir le contenu au format JSON"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "share",
+      "placeholder": {
+        "en": "Share",
+        "it": "Share",
+        "fr": "Share"
+      }
+    },
+    {
+      "type": "text",
+      "name": "folder",
+      "placeholder": {
+        "en": "Folder",
+        "it": "Folder",
+        "fr": "Folder"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "content",
+      "type": "string",
+      "title": {
+        "en": "Folder content",
+        "it": "Contenuto della cartella",
+        "fr": "Contenu du dossier"
+      }
+    }
+  ]
+}

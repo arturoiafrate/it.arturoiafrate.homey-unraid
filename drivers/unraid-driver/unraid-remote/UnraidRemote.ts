@@ -10,6 +10,7 @@ import { UserScript as US } from '@ridenui/unraid/dist/modules/unraid/extensions
 import { UserScript } from './utils/IUserScript';
 import { VirtualMachine } from './utils/IVirtualMachine';
 import { IVMRebootModes, IVMShutdownModes, VMState } from '@ridenui/unraid/dist/modules/vms/vm';
+import { File, FileManager, Share, WriteMode } from '../file-manager/FileManager';
 
 class UnraidRemote {
     private _url: string;
@@ -18,6 +19,7 @@ class UnraidRemote {
     private _port: number;
     private _unraid: Unraid;
     private _executor: SSHExecutor;
+    private _fileManager: FileManager;
 
     private _isOnline: boolean = false;
     private _isOnlineSubscribers: IPingEventSubscriber[] = [];
@@ -40,6 +42,7 @@ class UnraidRemote {
         });
 
         this._executor = this._unraid.executor as SSHExecutor;
+        this._fileManager = new FileManager(this._executor);
     }
 
     subscribeIsUnraidServerOnline(subscriber: IPingEventSubscriber): void {
@@ -475,18 +478,18 @@ class UnraidRemote {
     }
 
     /* Private methods */
-    _isNumber(value?: string | number): boolean
+    private _isNumber(value?: string | number): boolean
     {
        return ((value != null) &&
                (value !== '') &&
                !isNaN(Number(value.toString())));
     }
 
-    _isEmpty(value?: string): boolean{
+    private _isEmpty(value?: string): boolean{
        return ((value == null) || (value == undefined) || (value === ''));
     }
 
-    async _getRamInfo() : Promise<IMemoryUsage | undefined>{
+    private async _getRamInfo() : Promise<IMemoryUsage | undefined>{
         let ramInfo : IMemoryUsage = {
             total: 0,
             used: 0,
@@ -514,7 +517,7 @@ class UnraidRemote {
         }
     }
 
-    async _getArrayInfo() : Promise<IMemoryUsage | undefined>{
+    private async _getArrayInfo() : Promise<IMemoryUsage | undefined>{
         let arrayInfo : IMemoryUsage = {
             total: 0,
             used: 0,
@@ -540,7 +543,7 @@ class UnraidRemote {
         }
     }
 
-    async _getCacheInfo() : Promise<IMemoryUsage | undefined>{
+    private async _getCacheInfo() : Promise<IMemoryUsage | undefined>{
         let cacheInfo : IMemoryUsage = {
             raw: '',
             total: 0,
@@ -566,7 +569,7 @@ class UnraidRemote {
         }
     }
 
-    async _getUptime() : Promise<IUptimeExt | undefined> {
+    private async _getUptime() : Promise<IUptimeExt | undefined> {
         try{
             const { code, stdout } = await this._executor.executeSSH({
                 command: `awk '{print int($1/3600)"."int(($1%3600)/60)}' /proc/uptime`
@@ -581,7 +584,7 @@ class UnraidRemote {
         }
     }
 
-    async _getCpuUsage() : Promise<ICPUUsage | undefined>{
+    private async _getCpuUsage() : Promise<ICPUUsage | undefined>{
         try{
             const usage : CPUUsage = await this._unraid.system.usage();
             const cpuUsage : ICPUUsage = {
@@ -593,6 +596,55 @@ class UnraidRemote {
         } catch(error){
             return undefined;
         }
+    }
+
+    //File Manager methods
+    public async getShares(): Promise<Share[]>{
+        return await this._fileManager.getShares();
+    }
+
+    public async fileExists(pathToFile: string, userShare: string): Promise<boolean>{
+        return await this._fileManager.fileExists(pathToFile, userShare);
+    }
+
+    public async folderExists(pathToFolder: string, userShare: string): Promise<boolean>{
+        return await this._fileManager.folderExists(pathToFolder, userShare);
+    }
+
+    public async readFile(pathToFile: string, userShare: string): Promise<string>{
+        return await this._fileManager.readFile(pathToFile, userShare);
+    }
+
+    public async readFolder(pathToFolder: string, userShare: string): Promise<File[]>{
+        return await this._fileManager.readDir(pathToFolder, userShare);
+    }
+
+    public async createFile(pathToFile: string, userShare: string, content: string | undefined): Promise<boolean>{
+        if(!content){
+            return await this._fileManager.createFile(pathToFile, userShare);
+        } else {
+            return await this._fileManager.createFileWithContent(pathToFile, content, userShare);
+        };
+    }
+
+    public async writeFile(pathToFile: string, userShare: string, content: string, mode: WriteMode): Promise<boolean>{
+        return await this._fileManager.writeFile(pathToFile, userShare, content, mode);
+    }
+
+    public async truncateFile(pathToFile: string, userShare: string): Promise<boolean>{
+        return await this._fileManager.truncateFile(pathToFile, userShare);
+    }
+
+    public async deleteFile(pathToFile: string, userShare: string): Promise<boolean>{
+        return await this._fileManager.deleteFile(pathToFile, userShare);
+    }
+
+    public async deleteFolder(pathToFolder: string, userShare: string): Promise<boolean>{
+        return await this._fileManager.deleteFolder(pathToFolder, userShare);
+    }
+
+    public async createFolder(pathToFolder: string, userShare: string): Promise<boolean>{
+        return await this._fileManager.createFolder(pathToFolder, userShare);
     }
 }
 

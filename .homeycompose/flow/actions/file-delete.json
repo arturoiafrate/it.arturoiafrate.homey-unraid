@@ -1,0 +1,37 @@
+{
+  "title": {
+    "en": "Delete the file",
+    "it": "Elimina il file",
+    "fr": "Supprimer le fichier"
+  },
+  "titleFormatted": {
+    "en": "Delete the file [[file]] in the share [[share]]",
+    "it": "Elimina il file [[file]] nella condivisione [[share]]",
+    "fr": "Supprimer le fichier [[file]] dans le partage [[share]]"
+  },
+  "hint": {
+    "en": "Delete the file in the specified share",
+    "it": "Elimina il file nella condivisione specificata",
+    "fr": "Supprimer le fichier dans le partage spécifié"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "share",
+      "placeholder": {
+        "en": "Share",
+        "it": "Share",
+        "fr": "Share"
+      }
+    },
+    {
+      "type": "text",
+      "name": "file",
+      "placeholder": {
+        "en": "File",
+        "it": "File",
+        "fr": "File"
+      }
+    }
+  ]
+}

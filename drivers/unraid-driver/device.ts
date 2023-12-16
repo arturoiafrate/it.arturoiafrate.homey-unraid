@@ -8,6 +8,7 @@ import { Container } from './unraid-remote/utils/IDockerContainer';
 import { UserScript } from './unraid-remote/utils/IUserScript';
 import { VirtualMachine } from './unraid-remote/utils/IVirtualMachine';
 import { IVMRebootModes, IVMShutdownModes, VMState } from '@ridenui/unraid/dist/modules/vms/vm';
+import { File, Share, WriteMode } from '../unraid-driver/file-manager/FileManager';
 
 class UnraidRemoteDevice extends Homey.Device {
 
@@ -415,6 +416,60 @@ class UnraidRemoteDevice extends Homey.Device {
     }
   }
 
+  public getShares(): Promise<Share[]>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return this._unraidRemote.getShares();
+  }
+
+  public async fileExists(pathToFile: string, userShare: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.fileExists(pathToFile, userShare);
+  }
+
+  public async folderExists(pathToFolder: string, userShare: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.folderExists(pathToFolder, userShare);
+  }
+
+  public async readFile(pathToFile: string, userShare: string): Promise<string>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.readFile(pathToFile, userShare);
+  }
+
+  public async readFolder(pathToFolder: string, userShare: string): Promise<File[]>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.readFolder(pathToFolder, userShare);
+  }
+
+  public async createFile(pathToFile: string, userShare: string, content: string | undefined): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.createFile(pathToFile, userShare, content);
+  }
+
+  public async writeFile(pathToFile: string, userShare: string, content: string, mode: WriteMode): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.writeFile(pathToFile, userShare, content, mode);
+  }
+
+  public async truncateFile(pathToFile: string, userShare: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.truncateFile(pathToFile, userShare);
+  }
+
+  public async deleteFile(pathToFile: string, userShare: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.deleteFile(pathToFile, userShare);
+  }
+
+  public async deleteFolder(pathToFolder: string, userShare: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.deleteFolder(pathToFolder, userShare);
+  }
+
+  public async createFolder(pathToFolder: string, userShare: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.createFolder(pathToFolder, userShare);
+  }
 }
 
 module.exports = UnraidRemoteDevice;

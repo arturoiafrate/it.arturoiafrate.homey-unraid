@@ -29,6 +29,8 @@ Install the app and add a new unraid device. Open the device settings and config
     - If a specific container is running
     - If a specific userscript is running in background
     - If a specific VM is in a certain state
+    - If a file exists in a share
+    - If a folder exists in a share
 
 3. Actually you can do:
     - Execute a generic SSH command
@@ -38,6 +40,13 @@ Install the app and add a new unraid device. Open the device settings and config
     - Stop a user script if it's running in background
     - Start/Resume a VM
     - Pause/Shutdown/Reboot a VM
+    - Create/Delete a folder in a share
+    - Read a folder content as a JSON (Advanced Flow)
+    - Create a file (with or without content) in a share
+    - Delete a file or it's content in a share
+    - Write inside an existing file in a share (overwrite/append mode supported)
+    - Read a file in a share and get the content (Advanced Flow)
+
 
 For each one of them you can trigger a flow. For example:
 **_When_ CPU Usage is changed _and_ CPU Usage is over a _threshold_, _execute_ something.**
@@ -46,7 +55,7 @@ For each one of them you can trigger a flow. For example:
 - [x] Manage user scripts.
 - [x] Monitor and manage docker containers.
 - [x] Monitor and manage VMs.
-- [ ] Create and manage files in shared folders.
+- [x] Create and manage files in shared folders.
 
 ### Disclaimer
 This is an unofficial integration provided for free, all features in this app is provided "as is", with no guarantee of completeness, accuracy, timeliness or of the results obtained from the use of this feature.

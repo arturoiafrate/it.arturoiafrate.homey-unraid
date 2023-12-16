@@ -1,0 +1,37 @@
+{
+  "title": {
+    "en": "Delete the folder",
+    "it": "Cancella la cartella",
+    "fr": "Supprimer le dossier"
+  },
+  "titleFormatted": {
+    "en": "Delete the folder [[folder]] and it's content from the share [[share]]",
+    "it": "Cancella la cartella [[folder]] e il suo contenuto dalla condivisione [[share]]",
+    "fr": "Supprimer le dossier [[folder]] et son contenu de la partage [[share]]"
+  },
+  "hint": {
+    "en": "Delete the folder and it's content",
+    "it": "Cancella la cartella e il suo contenuto",
+    "fr": "Supprimer le dossier et son contenu"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "share",
+      "placeholder": {
+        "en": "Share",
+        "it": "Share",
+        "fr": "Share"
+      }
+    },
+    {
+      "type": "text",
+      "name": "folder",
+      "placeholder": {
+        "en": "Folder",
+        "it": "Cartella",
+        "fr": "Dossier"
+      }
+    }
+  ]
+}

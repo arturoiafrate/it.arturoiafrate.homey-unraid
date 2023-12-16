@@ -1,0 +1,46 @@
+{
+  "title": {
+    "en": "Create a file with content",
+    "it": "Crea un file con contenuto",
+    "fr": "Créer un fichier avec le contenu"
+  },
+  "titleFormatted": {
+    "en": "Create a file with name [[file]] and content [[content]] in the share [[share]]",
+    "it": "Crea un file con nome [[file]] e contenuto [[content]] nella condivisione [[share]]",
+    "fr": "Créer un fichier avec le nom [[file]] et le contenu [[content]] dans le partage [[share]]"
+  },
+  "hint": {
+    "en": "Create a file with a content in the specified share",
+    "it": "Crea un file con un contenuto nella condivisione specificata",
+    "fr": "Créer un fichier avec un contenu dans le partage spécifié"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "share",
+      "placeholder": {
+        "en": "Share",
+        "it": "Share",
+        "fr": "Share"
+      }
+    },
+    {
+      "type": "text",
+      "name": "file",
+      "placeholder": {
+        "en": "File",
+        "it": "File",
+        "fr": "File"
+      }
+    },
+    {
+      "type": "text",
+      "name": "content",
+      "placeholder": {
+        "en": "Content",
+        "it": "Contenuto",
+        "fr": "Contenu"
+      }
+    }
+  ]
+}

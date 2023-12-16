@@ -6,6 +6,7 @@ import { UserScript } from './drivers/unraid-driver/unraid-remote/utils/IUserScr
 import { VM, VMState } from '@ridenui/unraid/dist/modules/vms/vm';
 import { State, Mode } from './drivers/unraid-driver/unraid-remote/utils/IVirtualMachine';
 import { IVMRebootModes, IVMShutdownModes } from '@ridenui/unraid/dist/modules/vms/vm';
+import { Share, WriteModeElement, WriteMode } from './drivers/unraid-driver/file-manager/FileManager';
 const { Log } = require('homey-log');
 
 class UnraidRemoteApp extends Homey.App {
@@ -22,6 +23,7 @@ class UnraidRemoteApp extends Homey.App {
     await this._containerConditionCards();
     await this._userScriptConditionCards();
     await this._vmConditionCards();
+    await this._fileConditionCards();
   }
 
   async _initActionCards(): Promise<void> {
@@ -29,6 +31,7 @@ class UnraidRemoteApp extends Homey.App {
     await this._containerActionCards();
     await this._userScriptActionCards();
     await this._vmActionCards();
+    await this._fileActionCards();
   }
 
   async _systemConditionCards(): Promise<void> {
@@ -206,6 +209,69 @@ class UnraidRemoteApp extends Homey.App {
       const unraidDevice = devices[0] as UnraidRemoteDevice;
       const vmState = await unraidDevice.getVMStatus(vm.name);
       return Promise.resolve(vmState === VMState[state.name as keyof typeof VMState]);
+    });
+  }
+
+  async _fileConditionCards(): Promise<void> {
+    const fileExistsCondition = this.homey.flow.getConditionCard('file-exists-condition');
+    fileExistsCondition.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    })
+    fileExistsCondition.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.file){
+        throw new Error('file');
+      }
+      const share = args.share as Share;
+      const file = args.file as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      return unraidDevice.fileExists(file, share.path);
+    });
+    const folderExistsCondition = this.homey.flow.getConditionCard('folder-exists-condition');
+    folderExistsCondition.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    folderExistsCondition.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.folder){
+        throw new Error('folder');
+      }
+      const share = args.share as Share;
+      const folder = args.folder as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      return unraidDevice.folderExists(folder, share.path);
     });
   }
 
@@ -574,6 +640,357 @@ class UnraidRemoteApp extends Homey.App {
       }
       const unraidDevice = devices[0] as UnraidRemoteDevice;
       await unraidDevice.rebootVM(vm.name, mode.name as IVMRebootModes);
+    });
+  }
+
+  async _fileActionCards(): Promise<void> {
+    const readFileAction = this.homey.flow.getActionCard('file-read');
+    readFileAction.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    readFileAction.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.file){
+        throw new Error('file');
+      }
+      const share = args.share as Share;
+      const file = args.file as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const fileExists: boolean = await unraidDevice.fileExists(file, share.path);
+      if(!fileExists){
+        throw new Error('File does not exist');
+      }
+      const out = await unraidDevice.readFile(file, share.path);
+      return {
+        content: out
+      };
+    });
+    //Read folder
+    const readFolderAction = this.homey.flow.getActionCard('folder-read');
+    readFolderAction.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    readFolderAction.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.folder){
+        throw new Error('folder');
+      }
+      const share = args.share as Share;
+      const folder = args.folder as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const folderExists: boolean = await unraidDevice.folderExists(folder, share.path);
+      if(!folderExists){
+        throw new Error('Folder does not exist');
+      }
+      const out = await unraidDevice.readFolder(folder, share.path);
+      return {
+        content: JSON.stringify(out)
+      };
+    });
+    //Create empty file
+    const createEmptyFileAction = this.homey.flow.getActionCard('file-create');
+    createEmptyFileAction.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    createEmptyFileAction.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.file){
+        throw new Error('Filename is not set');
+      }
+      const share = args.share as Share;
+      const file = args.file as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const fileExists: boolean = await unraidDevice.fileExists(file, share.path);
+      if(fileExists){
+        throw new Error('File already exists');
+      }
+      const isCreated = await unraidDevice.createFile(file, share.path, undefined);
+      if(!isCreated){
+        throw new Error('File could not be created');
+      }
+    });
+    //Create file with content
+    const createFileAction = this.homey.flow.getActionCard('file-with-content-create');
+    createFileAction.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    createFileAction.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.file){
+        throw new Error('Filename is not set');
+      }
+      if(!args.content){
+        throw new Error('Content is not set');
+      }
+      const share = args.share as Share;
+      const file = args.file as string;
+      const content = args.content as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const fileExists: boolean = await unraidDevice.fileExists(file, share.path);
+      if(fileExists){
+        throw new Error('File already exists');
+      }
+      const isCreated: boolean = await unraidDevice.createFile(file, share.path, content);
+      if(!isCreated){
+        throw new Error('File could not be created');
+      }
+    });
+    //Write a file with content
+    const writeFileAction = this.homey.flow.getActionCard('file-write');
+    writeFileAction.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      //at moment only one device is supported
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    writeFileAction.registerArgumentAutocompleteListener('mode', async (query, _args) => {
+      const modes :WriteModeElement[] = [
+        { name: 'append', value: WriteMode.APPEND },
+        { name: 'overwrite', value: WriteMode.OVERWRITE }
+      ];
+      return modes.filter((mode) => {
+        return mode.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    writeFileAction.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.file){
+        throw new Error('Filename is not set');
+      }
+      if(!args.content){
+        throw new Error('Content is not set');
+      }
+      if(!args.mode){
+        throw new Error('Mode is not set');
+      }
+      const share = args.share as Share;
+      const file = args.file as string;
+      const content = args.content as string;
+      const mode = args.mode as WriteModeElement;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const isWritten = await unraidDevice.writeFile(file, content,share.path, mode.value);
+      if(!isWritten){
+        throw new Error('File could not be written');
+      }
+    });
+    //Erase the file content
+    const eraseFileAction = this.homey.flow.getActionCard('file-content-erase');
+    eraseFileAction.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    eraseFileAction.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.file){
+        throw new Error('Filename is not set');
+      }
+      const share = args.share as Share;
+      const file = args.file as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const fileExists: boolean = await unraidDevice.fileExists(file, share.path);
+      if(!fileExists){
+        throw new Error('File does not exist');
+      }
+      const isErased = await unraidDevice.truncateFile(file, share.path);
+      if(!isErased){
+        throw new Error('File could not be erased');
+      }
+    });
+    //Delete a file
+    const deleteFileAction = this.homey.flow.getActionCard('file-delete');
+    deleteFileAction.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    deleteFileAction.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.file){
+        throw new Error('Filename is not set');
+      }
+      const share = args.share as Share;
+      const file = args.file as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const fileExists: boolean = await unraidDevice.fileExists(file, share.path);
+      if(!fileExists){
+        throw new Error('File does not exist');
+      }
+      const isDeleted = await unraidDevice.deleteFile(file, share.path);
+      if(!isDeleted){
+        throw new Error('File could not be deleted');
+      }
+    });
+    //Create a folder
+    const createFolderAction = this.homey.flow.getActionCard('folder-create');
+    createFolderAction.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    createFolderAction.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.folder){
+        throw new Error('Folder is not set');
+      }
+      const share = args.share as Share;
+      const folder = args.folder as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if(devices.length === 0){
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const folderExists: boolean = await unraidDevice.folderExists(folder, share.path);
+      if(folderExists){
+        throw new Error('Folder already exists');
+      }
+      const isCreated = await unraidDevice.createFolder(folder, share.path);
+      if(!isCreated){
+        throw new Error('Folder could not be created');
+      }
+    });
+    //Delete a folder
+    const deleteFolderAction = this.homey.flow.getActionCard('folder-delete');
+    deleteFolderAction.registerArgumentAutocompleteListener('share', async (query, _args) => {
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const shares : Share[] = await unraidDevice.getShares();
+      return shares.filter((share) => {
+        return share.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+    deleteFolderAction.registerRunListener(async (args) => {
+      if(!args.share){
+        throw new Error('Share is not set');
+      }
+      if(!args.folder){
+        throw new Error('Folder is not set');
+      }
+      const share = args.share as Share;
+      const folder = args.folder as string;
+      const devices: Homey.Device[] = this.homey.drivers.getDriver('unraid-driver').getDevices();
+      if (devices.length === 0) {
+        throw new Error('No devices found');
+      }
+      const unraidDevice = devices[0] as UnraidRemoteDevice;
+      const folderExists: boolean = await unraidDevice.folderExists(folder, share.path);
+      if(!folderExists){
+        throw new Error('Folder does not exist');
+      }
+      const isDeleted = await unraidDevice.deleteFolder(folder, share.path);
+      if(!isDeleted){
+        throw new Error('Folder could not be deleted');
+      }
     });
   }
 }

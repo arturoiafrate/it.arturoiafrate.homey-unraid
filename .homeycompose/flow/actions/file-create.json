@@ -1,0 +1,37 @@
+{
+  "title": {
+    "en": "Create an empty file",
+    "it": "Crea un file vuoto",
+    "fr": "Créer un fichier vide"
+  },
+  "titleFormatted": {
+    "en": "Create an empty file with name [[file]] in the share [[share]]",
+    "it": "Crea un file vuoto con nome [[file]] nella condivisione [[share]]",
+    "fr": "Créer un fichier vide avec le nom [[file]] dans le partage [[share]]"
+  },
+  "hint": {
+    "en": "Create an empty file in the specified share",
+    "it": "Crea un file vuoto nella condivisione specificata",
+    "fr": "Créer un fichier vide dans le partage spécifié"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "share",
+      "placeholder": {
+        "en": "Share",
+        "it": "Share",
+        "fr": "Share"
+      }
+    },
+    {
+      "type": "text",
+      "name": "file",
+      "placeholder": {
+        "en": "File",
+        "it": "File",
+        "fr": "File"
+      }
+    }
+  ]
+}

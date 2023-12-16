@@ -1,0 +1,48 @@
+{
+  "title": {
+    "en": "Read the file (Advanced)",
+    "it": "Leggi il file (Avanzato)",
+    "fr": "Lire le fichier (Avancé)"
+  },
+  "titleFormatted": {
+    "en": "Read the file [[file]] from the share [[share]] and get the content as a string",
+    "it": "Leggi il file [[file]] dalla condivisione [[share]] e ottieni il contenuto come stringa",
+    "fr": "Lire le fichier [[file]] de la part [[share]] et obtenir le contenu comme une chaîne"
+  },
+  "hint": {
+    "en": "Read the file and get the content as a string",
+    "it": "Leggi il file e ottieni il contenuto come stringa",
+    "fr": "Lire le fichier et obtenir le contenu comme une chaîne"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "share",
+      "placeholder": {
+        "en": "Share",
+        "it": "Share",
+        "fr": "Share"
+      }
+    },
+    {
+      "type": "text",
+      "name": "file",
+      "placeholder": {
+        "en": "File",
+        "it": "File",
+        "fr": "File"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "content",
+      "type": "string",
+      "title": {
+        "en": "File content",
+        "it": "Contenuto del file",
+        "fr": "Contenu du fichier"
+      }
+    }
+  ]
+}
