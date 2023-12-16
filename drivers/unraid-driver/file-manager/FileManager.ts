@@ -153,7 +153,7 @@ class FileManager {
       }
     }
     let completeFilePath: string = userShare+'/'+this._formatPath(pathToFile);
-    const command: string = `echo "${content}" ${mode} ${completeFilePath}`;
+    const command: string = `echo '${content}' ${mode} ${completeFilePath}`;
     try{
       const { code, stdout, stderr } = await this._sshExecutor.execute(command);
       return code === 0;
