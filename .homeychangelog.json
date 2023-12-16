@@ -22,5 +22,8 @@
   },
   "1.4.0": {
     "en": "Adding file managing capabilites to unRAID integration."
+  },
+  "1.4.1": {
+    "en": "Hotfix for write file in append mode"
   }
 }
