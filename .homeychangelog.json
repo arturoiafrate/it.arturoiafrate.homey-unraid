@@ -25,5 +25,8 @@
   },
   "1.4.1": {
     "en": "Hotfix for write file in append mode"
+  },
+  "1.4.2": {
+    "en": "Docker management by container name instead of ID, added setting to ignore the onoff capability. Bug fixes and improvements."
   }
 }
