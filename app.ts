@@ -135,7 +135,7 @@ class UnraidRemoteApp extends Homey.App {
       }
       //at moment only one device is supported
       const unraidDevice = devices[0] as UnraidRemoteDevice;
-      return Promise.resolve(await unraidDevice.isContainerRunning(container.id));
+      return Promise.resolve(await unraidDevice.isContainerRunning(container.name));
     });
   }
 
@@ -341,7 +341,7 @@ class UnraidRemoteApp extends Homey.App {
       }
       //at moment only one device is supported
       const unraidDevice = devices[0] as UnraidRemoteDevice;
-      unraidDevice.startContainer(container.id);
+      unraidDevice.startContainer(container.name);
     });
     //Stop Container
     const stopContainerAction = this.homey.flow.getActionCard('container-stop');
@@ -368,7 +368,7 @@ class UnraidRemoteApp extends Homey.App {
       }
       //at moment only one device is supported
       const unraidDevice = devices[0] as UnraidRemoteDevice;
-      unraidDevice.stopContainer(container.id);
+      unraidDevice.stopContainer(container.name);
     });
     //Toggle Container
     const toggleContainerAction = this.homey.flow.getActionCard('container-toggle');
@@ -395,8 +395,8 @@ class UnraidRemoteApp extends Homey.App {
       }
       //at moment only one device is supported
       const unraidDevice = devices[0] as UnraidRemoteDevice;
-      const isOnline : boolean = await unraidDevice.isContainerRunning(container.id);
-      isOnline ? unraidDevice.stopContainer(container.id) : unraidDevice.startContainer(container.id);
+      const isOnline : boolean = await unraidDevice.isContainerRunning(container.name);
+      isOnline ? unraidDevice.stopContainer(container.name) : unraidDevice.startContainer(container.name);
     });
   }
 

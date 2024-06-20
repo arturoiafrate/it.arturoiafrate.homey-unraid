@@ -102,5 +102,18 @@
         "en": "Enable docker monitoring",
         "it": "Abilita il monitoraggio di docker"
       }
+    },
+    {
+      "id": "disableUnraidToggle",
+      "type": "checkbox",
+      "value": true,
+      "label": {
+        "en": "Unraid server Toggle",
+        "it": "Interruttore server Unraid"
+      },
+      "hint": {
+        "en": "Disable the Unraid server toggle when the device card is pressed",
+        "it": "Disabilita l'interruttore del server Unraid quando viene premuta la scheda del dispositivo"
+      }
     }
 ]

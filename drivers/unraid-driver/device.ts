@@ -18,6 +18,7 @@ class UnraidRemoteDevice extends Homey.Device {
   private _isInit: boolean = false;
   private _flowTriggers?: UnraidRemoteFlowTrigger;
   private _enableDockerMonitoring: boolean = false;
+  private _disableUnraidToggle: boolean = true;
 
 
   async onInit() {
@@ -37,6 +38,7 @@ class UnraidRemoteDevice extends Homey.Device {
     });
     let settings = await this.getSettings();
     this._enableDockerMonitoring = settings.enableDockerMonitoring as boolean;
+    this._disableUnraidToggle = settings.disableUnraidToggle as boolean;
     this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
   }
 
@@ -61,6 +63,7 @@ class UnraidRemoteDevice extends Homey.Device {
       checkSSHConnection = await UnraidRemote.testSSHConnection(newSettings.host as string, newSettings.port as number, newSettings.username as string, newSettings.password as string);
     }
     this._enableDockerMonitoring = newSettings.enableDockerMonitoring as boolean;
+    this._disableUnraidToggle = newSettings.disableUnraidToggle as boolean;
     this._initUnraidRemote(newSettings.host as string, newSettings.username as string, newSettings.password as string, newSettings.port as number, newSettings.pingInterval as number, newSettings.checkInterval as number);
     if(checkConnection && checkSSHConnection){
       return this.homey.__("settings_saved_ok");
@@ -171,19 +174,20 @@ class UnraidRemoteDevice extends Homey.Device {
     return await this._unraidRemote.containerList();
   }
 
-  async isContainerRunning(containerId: string): Promise<boolean>{
+  async isContainerRunning(containerName: string): Promise<boolean>{
     if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
-    return await this._unraidRemote.isContainerRunning(containerId);
+    //return await this._unraidRemote.isContainerRunning(containerId);
+    return await this._unraidRemote.isContainerRunningByName(containerName);
   }
 
-  async startContainer(containerId: string): Promise<boolean>{
+  async startContainer(containerReference: string): Promise<boolean>{
     if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
-    return await this._unraidRemote.startContainer(containerId);
+    return await this._unraidRemote.startContainer(containerReference);
   }
 
-  async stopContainer(containerId: string): Promise<boolean>{
+  async stopContainer(containerReference: string): Promise<boolean>{
     if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
-    return await this._unraidRemote.stopContainer(containerId);
+    return await this._unraidRemote.stopContainer(containerReference);
   }
 
   async userScriptList(): Promise<UserScript[]>{
@@ -308,16 +312,16 @@ class UnraidRemoteDevice extends Homey.Device {
     if(systemStats.cacheUsage) this._updateCacheUsedCapability(systemStats.cacheUsage.percentUsed);
     if(systemStats.ramUsage) this._updateRamUsedCapability(systemStats.ramUsage.percentUsed);
     if(this._enableDockerMonitoring){
-      this._flowTriggers?.triggerDockerContainerStatusChangedFlowCard(this, await this.containerList());
+      this._flowTriggers?.triggerDockerContainerStatusChangedFlowCard(this, await this.containerList(), this.homey.app as UnraidRemoteApp);
     }
   }
 
   _updateUptimeCapability(uptime : number|undefined) : void{
-    this.setCapabilityValue("uptime", uptime);//.catch(this.error);
     let days = 0;
     let hours = 0;
     let minutes = '0';
     if(uptime && typeof uptime === 'number'){
+      this.setCapabilityValue("uptime", uptime);//.catch(this.error);
       let integerPart = Math.trunc(uptime);
       minutes = Number((uptime-integerPart).toFixed(2)).toString().split('.')[1];
       if(integerPart > 24){
@@ -326,6 +330,9 @@ class UnraidRemoteDevice extends Homey.Device {
       } else {
         hours = integerPart;
       }
+      
+    } else {
+      this.setCapabilityValue("uptime", 0);
     }
     const uptimeString = days + 'd ' + hours + 'h ' + minutes + 'm';
     this.setCapabilityValue("friendlyUptime", uptimeString)//.catch(this.error);
@@ -369,6 +376,7 @@ class UnraidRemoteDevice extends Homey.Device {
       }
     }
     this._enableDockerMonitoring = settings.enableDockerMonitoring as boolean;
+    this._disableUnraidToggle = settings.disableUnraidToggle as boolean;
     this._initUnraidRemote(settings.host, settings.username, settings.password, settings.port, settings.pingInterval, settings.checkInterval);
   }
 
@@ -384,6 +392,7 @@ class UnraidRemoteDevice extends Homey.Device {
   
   async _addCapabilities(): Promise<void> {
     this.registerCapabilityListener("onoff", async (value, opts) => {
+      if(this._disableUnraidToggle) return;
       if(value){
         await this._turnOn();
       } else {

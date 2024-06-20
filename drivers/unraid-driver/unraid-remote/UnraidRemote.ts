@@ -182,6 +182,10 @@ class UnraidRemote {
         return sysStats;
     }
 
+    /**
+     * 
+     * @returns list of all containers
+     */
     async containerList() : Promise<Container[]>{
         let containers : Container[] = [];
         try{
@@ -205,6 +209,31 @@ class UnraidRemote {
         return containers;
     }
 
+    /**
+     * 
+     * @param containerName the container name
+     * @returns true if container is running, false otherwise
+     */
+    async isContainerRunningByName(containerName: string) : Promise<boolean>{
+        try{
+            const { code, stdout, stderr } = await this._executor.executeSSH({
+                command: `docker ps --no-trunc --format '{{.Names}}' | tr '[:lower:]' '[:upper:]' | grep ${containerName.toUpperCase()}`
+            });
+            if(code === 0 && stdout && stdout.length > 0){
+                if(stdout[0].trim() === containerName.toUpperCase()){
+                    return true;
+                }
+            }
+        } catch(error){
+            //nothing
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @deprecated deprecated method. Use isContainerRunningByName instead 
+     */
     async isContainerRunning(containerId: string) : Promise<boolean>{
         try{
             const { code, stdout, stderr } = await this._executor.executeSSH({
@@ -221,10 +250,15 @@ class UnraidRemote {
         return false;
     }
 
-    async startContainer(containerId: string) : Promise<boolean>{
+    /**
+     * 
+     * @param containerReference -> can be container name or container id
+     * @returns true if container is started successfully, false otherwise
+     */
+    async startContainer(containerReference: string) : Promise<boolean>{
         try{
             const { code, stdout, stderr } = await this._executor.executeSSH({
-                command: `docker start ${containerId}`
+                command: `docker start ${containerReference}`
             });
             return code === 0;
         } catch(error){
@@ -232,10 +266,15 @@ class UnraidRemote {
         }     
     }
 
-    async stopContainer(containerId: string) : Promise<boolean>{
+    /**
+     * 
+     * @param containerReference -> can be container name or container id
+     * @returns true if container is stopped successfully, false otherwise
+     */
+    async stopContainer(containerReference: string) : Promise<boolean>{
         try{
             const { code, stdout, stderr } = await this._executor.executeSSH({
-                command: `docker stop ${containerId}`
+                command: `docker stop ${containerReference}`
             });
             return code === 0;
         } catch(error){
