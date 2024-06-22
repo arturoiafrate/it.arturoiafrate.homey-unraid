@@ -190,6 +190,17 @@ class UnraidRemoteDevice extends Homey.Device {
     return await this._unraidRemote.stopContainer(containerReference);
   }
 
+  async dockerExecNoWait(containerReference: string, command: string): Promise<boolean>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    const { code } = await this._unraidRemote.executeContainerCommand(containerReference, command, true);
+    return code === 0;
+  }
+
+  async dockerExec(containerReference: string, command: string, flags: string[]): Promise<ISSHCommandOutput>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.executeContainerCommand(containerReference, command, false, flags);
+  }
+
   async userScriptList(): Promise<UserScript[]>{
     if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
     return await this._unraidRemote.getAllUserScripts();
@@ -210,9 +221,9 @@ class UnraidRemoteDevice extends Homey.Device {
     return await this._unraidRemote.runUserScriptFgMode(userScriptName);
   }
 
-  async stopUserScriptExecution(userScriptName: string): Promise<void>{
+  async stopUserScriptExecution(userScriptName: string): Promise<boolean>{
     if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
-    await this._unraidRemote.stopUserScript(userScriptName);
+    return await this._unraidRemote.stopUserScript(userScriptName);
   }
 
   async vmList(): Promise<VirtualMachine[]>{
@@ -240,7 +251,7 @@ class UnraidRemoteDevice extends Homey.Device {
     return await this._unraidRemote.pauseVM(vmName);
   }
 
-  async rebootVM(vmName: string, rebootMode: IVMRebootModes): Promise<boolean>{//TODO
+  async rebootVM(vmName: string, rebootMode: IVMRebootModes): Promise<boolean>{
     if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
     return await this._unraidRemote.rebootVM(vmName, rebootMode);
   }
@@ -478,6 +489,11 @@ class UnraidRemoteDevice extends Homey.Device {
   public async createFolder(pathToFolder: string, userShare: string): Promise<boolean>{
     if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
     return await this._unraidRemote.createFolder(pathToFolder, userShare);
+  }
+
+  public async getSystemInfo(): Promise<ISystemStats>{
+    if(!this._unraidRemote) throw new Error('UnraidRemote is not initialized');
+    return await this._unraidRemote.systemStats();
   }
 }
 

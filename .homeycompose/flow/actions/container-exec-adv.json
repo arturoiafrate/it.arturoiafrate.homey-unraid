@@ -1,0 +1,75 @@
+{
+  "title": {
+    "en": "Execute command in container and get the output (Advanced)",
+    "it": "Esegui comando nel container e attendi l'output (Avanzato)",
+    "fr": "Exécuter une commande dans le conteneur et attendre le résultat (Avancé)"
+  },
+  "titleFormatted": {
+    "en": "Execute [[command]] in [[container]] with [[flags]] and get the output (Advanced)",
+    "it": "Esegui [[command]] in [[container]] con i [[flags]] e attendi l'output (Avanzato)",
+    "fr": "Exécuter [[command]] dans [[container]] avec [[flags]] et attendre le résultat (Avancé)"
+  },
+  "hint": {
+    "en": "Execute the specified command in the selected container with the specified flags and wait for the output",
+    "it": "Esegui il comando specificato nel container selezionato con i flags specificati e attendi l'output",
+    "fr": "Exécutez la commande spécifiée dans le conteneur sélectionné avec les flags spécifiés et attendez le résultat"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "container",
+      "placeholder": {
+        "en": "container",
+        "it": "container",
+        "fr": "conteneur"
+      }
+    },
+    {
+      "type": "text",
+      "name": "command",
+      "placeholder": {
+        "en": "command",
+        "it": "comando",
+        "fr": "commande"
+      }
+    },
+    {
+      "type": "text",
+      "name": "flags",
+      "placeholder": {
+        "en": "flags",
+        "it": "flags",
+        "fr": "flags"
+      },
+      "required": false
+    }
+  ],
+  "tokens": [
+    {
+      "name": "code",
+      "type": "number",
+      "title": {
+        "en": "Error code",
+        "it": "Codice di errore",
+        "fr": "Code d'erreur"
+      }
+    },
+    {
+      "name": "stdout",
+      "type": "string",
+      "title": {
+        "en": "Standard Output",
+        "it": "Standard Output",
+        "fr": "Sortie standard"
+      }
+    },{
+      "name": "stderr",
+      "type": "string",
+      "title": {
+        "en": "Standard Error",
+        "it": "Standard Error",
+        "fr": "Erreur standard"
+      }
+    }
+  ]
+}

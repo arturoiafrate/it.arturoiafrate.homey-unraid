@@ -1,7 +1,6 @@
 import Homey, { FlowCardTriggerDevice } from 'homey';
 import { Container, DockerMonitor } from '../utils/IDockerContainer';
 import { UnraidRemoteApp } from '../../../../app';
-import { LogLevel, logMessageToSentry } from '../../../../utils/utilites';
 
 interface DeviceTriggerCards {
     cpuUsageTriggerCard: FlowCardTriggerDevice,

@@ -1,3 +1,4 @@
+import path from "path";
 import { UnraidRemoteApp }  from "../app";
 import Homey from 'homey';
 
@@ -39,4 +40,127 @@ export const logErrorToSentry = (appInstance: UnraidRemoteApp, err: Error) : voi
     if(appInstance.homeyLog && currentLogLevel != LogLevel.DISABLED){
         appInstance.homeyLog.captureError(err);
     }
+}
+
+export interface APIDefinition {
+    method: string;
+    path: string;
+    query?: Record<string, string>,
+    body?: Record<string, string>;
+    description: string;
+    output: string;
+}
+
+export interface APIError {
+    error: string,
+    code?: Number
+}
+
+export enum ContainerActionEnum  {
+    TURN_ON = 'TURN_ON',
+    TURN_OFF = 'TURN_OFF',
+    EXEC = 'EXEC'
+}
+
+export enum UserScriptActionEnum  {
+    START = 'START',
+    STOP = 'STOP',
+    IS_RUNNING = 'IS_RUNNING'
+}
+
+export enum VMActionEnum {
+    START = 'START',
+    RESUME = 'RESUME',
+    STOP = 'STOP',
+    PAUSE = 'PAUSE',
+    REBOOT = 'REBOOT'
+}
+
+export enum FileActionEnum {
+    CREATE = 'CREATE',
+    DELETE = 'DELETE',
+    TRUNCATE = 'TRUNCATE',
+    READ = 'READ',
+    WRITE = 'WRITE',
+    LIST = 'LIST'
+}
+
+export enum FolderActionEnum {
+    CREATE = 'CREATE',
+    DELETE = 'DELETE',
+    READ = 'READ'
+}
+
+export interface APIAction {
+    container_id?: string,
+    container_name?: string,
+    user_script_name?: string,
+    virtual_machine_name?: string,
+    file_name?: string,
+    folder_name?: string,
+    share_name?: string,
+    action?: ContainerActionEnum | UserScriptActionEnum | VMActionEnum | FileActionEnum | FolderActionEnum,
+    command?: string,
+    runInBackground?: boolean
+    params?: any
+}
+
+export interface APIOutput{
+    operationDone: boolean,
+    message?: string
+    params?: any[]
+}
+
+export const APIDefinition_Description = {
+    method: "string",
+    path: "string",
+    query: "optional<Record<string, string>>",
+    body: "optional<Record<string, string>>",
+    description: "string",
+    output: "string"
+}
+
+export const Share_Description = {
+    name: "string",
+    path: "string",
+    description: "string"
+}
+
+export const Container_Description = {
+    id: "string",
+    name: "string",
+    status: "string"
+}
+
+export const ISystemStats_Description = {
+    cpuUsage: "optional<{percentIdle, percentBusy, {coreCount, cores, raw}}>",
+    uptime: "optional<{upSince, {raw, upSince}}>",
+    arrayUsage: "optional<{raw, total, used, free, percentUsed}>",
+    cacheUsage: "optional<{raw, total, used, free, percentUsed}>",
+    ramUsage: "optional<{raw, total, used, free, percentUsed}>",
+    memoryUsage: "optional<{raw, lastPid, loadAverage}>",
+    diskUsage: "optional<[{fs, blocks, used, available, mounted}]>"
+}
+
+export const UserScript_Description = {
+    name: "string",
+    foregroundOnly: "boolean",
+    backgroundOnly: "boolean"
+}
+
+export const VirtualMachine_Description = {
+    name: "string",
+    id: "optional<string>",
+    state: "string"
+}
+
+export const APIError_Description = {
+    error: "string",
+    code: "optional<Number>" 
+}
+
+export const APIOutput_Descrption = {
+    operationDone: "boolean",
+    message: "optional<string>",
+    params: "optional<any>"
 }

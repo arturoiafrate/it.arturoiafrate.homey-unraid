@@ -263,7 +263,7 @@ class UnraidRemote {
             return code === 0;
         } catch(error){
             return false;
-        }     
+        }
     }
 
     /**
@@ -279,6 +279,35 @@ class UnraidRemote {
             return code === 0;
         } catch(error){
             return false;
+        }
+    }
+
+    async executeContainerCommand(containerReference: string, command: string, detached: boolean, flags?: string[]) : Promise<ISSHCommandOutput>{
+        if(typeof flags === 'undefined'){
+            flags = [];
+        }
+        if(detached){
+            flags.push('-d');
+        }
+        if(command.includes(' && ')){
+            command = command.replace('"', '\'');
+            command = `sh -c "${command}"`;
+        }
+        try{
+            const { code, stdout, stderr } = await this._executor.executeSSH({
+                command: `docker exec ${flags.join(' ')} ${containerReference} ${command}`
+            });
+            return {
+                code: code,
+                stdout: stdout ? stdout.join(';') : '',
+                stderr: stderr ? stderr.join(';') : ''
+            };
+        } catch(error){
+            return {
+                code: -999,
+                stdout: '',
+                stderr: 'Exception occured while executing command'
+            };
         }
     }
 
