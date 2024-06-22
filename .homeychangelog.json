@@ -28,5 +28,8 @@
   },
   "1.4.2": {
     "en": "Docker management by container name instead of ID, added setting to ignore the onoff capability. Bug fixes and improvements."
+  },
+  "1.5.0": {
+    "en": "new Action Flow -> Run command in container; new Action Flow -> Run command in container and get the output (advanced); Introducing Unraid integration API: now the integration exposes APIs, you can do everything via HomeyFlow!"
   }
 }

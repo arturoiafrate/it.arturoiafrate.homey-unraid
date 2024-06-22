@@ -1,6 +1,6 @@
 {
   "id": "it.arturoiafrate.h-unraid-integration",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#f05727",
@@ -70,5 +70,59 @@
   "bugs": {
     "url": "https://github.com/arturoiafrate/it.arturoiafrate.homey-unraid/issues"
   },
-  "homeyCommunityTopicId": 96005
+  "homeyCommunityTopicId": 96005,
+  "api": {
+    "getOperationList": {
+      "method": "GET",
+      "path": "/operationList"
+    },
+    "getDatatypeInfo": {
+      "method": "GET",
+      "path": "/datatypeInfo/:datatype"
+    },
+    "getSystemInfo": {
+      "method": "GET",
+      "path": "/systemInfo"
+    },
+    "doShellExec": {
+      "method": "POST",
+      "path": "/shellExec"
+    },
+    "getShares": {
+      "method": "GET",
+      "path": "/shares"
+    },
+    "doFileAction": {
+      "method": "POST",
+      "path": "/fileAction"
+    },
+    "doFolderAction": {
+      "method": "POST",
+      "path": "/folderAction"
+    },
+    "getContainerList": {
+      "method": "GET",
+      "path": "/dockerManagement/containerList"
+    },
+    "doContainerAction": {
+      "method": "POST",
+      "path": "/dockerManagement/action"
+    },
+    "getUserScriptList": {
+      "method": "GET",
+      "path": "/userScript/scriptList"
+    },
+    "doUserScriptAction": {
+      "method": "POST",
+      "path": "/userScript/action"
+    },
+    "getVMList": {
+      "method": "GET",
+      "path": "/vm/vmList"
+    },
+    "doVMAction": {
+      "method": "POST",
+      "path": "/vm/action"
+    }
+  }
 }
